@@ -1,0 +1,70 @@
+{
+	"manifest_version": 2,
+	"name": "FurAffinity Bootstrap Styler",
+	"description": "Extension to restyle FurAffinity with Bootstrap.",
+	"version": "0.0",
+	"browser_action": {
+		"default_icon":"icon.png",
+		"default_popup":"popup.html"
+	},
+	"permissions": [
+		"activeTab",
+		"http://www.furaffinity.net/"
+	],
+	"content_scripts":[
+		{
+			"matches": ["http://www.furaffinity.net/*"],
+			"css": ["sandstone/bootstrap.min.css"],
+			"js": ["jquery.min.js","bootstrap.min.js","render.js"]
+		},
+		{
+			"matches": [
+				"http://www.furaffinity.net/user/*",
+				"http://www.furaffinity.net/commissions/*",
+				"http://www.furaffinity.net/journals/*",
+				"http://www.furaffinity.net/journal/*",
+				"http://www.furaffinity.net/gallery/*",
+				"http://www.furaffinity.net/scraps/*",
+				"http://www.furaffinity.net/favorites/*",
+				"http://www.furaffinity.net/stats/*"
+			],
+			"js": ["userbar.js"]
+		},
+		{
+			"matches": ["http://www.furaffinity.net/user/*"],
+			"js": ["user.js"]
+		},
+		{
+			"matches": [
+				"http://www.furaffinity.net/gallery/*",
+				"http://www.furaffinity.net/scraps/*",
+				"http://www.furaffinity.net/favorites/*",
+				"http://www.furaffinity.net/browse/",
+				"http://www.furaffinity.net/search*",
+				"http://www.furaffinity.net/",
+				"http://www.furaffinity.net/msg/submissions*"
+			],
+			"js": ["gallery.js"]
+		},
+		{
+			"matches": [
+				"http://www.furaffinity.net/view/*",
+				"http://www.furaffinity.net/full/*",
+				"http://www.furaffinity.net/journal/*"
+			],
+			"js": ["submission.js"]
+		},
+		{
+			"matches": ["http://www.furaffinity.net/search*"],
+			"js": ["search.js"]
+		},
+		{
+			"matches": ["http://www.furaffinity.net/msg/others*"],
+			"js": ["messages.js"]
+		},
+		{
+			"matches": ["http://www.furaffinity.net/controls/messages/"],
+			"js": ["messagelist.js"]
+		}
+	]
+}
