@@ -241,6 +241,7 @@ $(document).ready(function(){
 			.click(toggleSummary)
 
 	} else {$('#summary-well').css({'overflow-x':'hidden'})}
+	$('.bbcode_center').css({'text-align':'center'})
 
 	// Submissions
 	subs = $('.flow.userpage-submissions.twolines a')
