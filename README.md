@@ -1,12 +1,12 @@
 # fastyle
-Chrome extension to restyle and enhance FurAffinity.net
+Chrome and Firefox extension to restyle and enhance FurAffinity.net
 
 ### Wait No Longer!
 If you cry yourself to sleep at night wondering if FA is *ever*
 going to update their UI, cry no more! Your prayers have been
 answered!
 
-The **FAStyle** Chrome Extension restyles and enhances FurAffinity.net
+The **FAStyle** Extension restyles and enhances FurAffinity.net
 with [Bootstrap](http://getbootstrap.com/) and [jQuery](http://jquery.com/)
 so you can stay furry without being trapped in the Internet of the 90s.
 
@@ -17,7 +17,16 @@ so you can stay furry without being trapped in the Internet of the 90s.
 * A cleaner, sleeker, and more visual experience with an emphasis on content.
 * Much more!
 
-### Setup
+### Firefox Setup
+A precompiled `.xpi` file is included in this repo for easy support with
+Firefox! This is all you have to do:
+
+1. **Clone** or **[Download](https://github.com/CopperBadger/fastyle/archive/master.zip)** this repo.
+2. In Firefox, press <kbd>Ctrl</kbd>+<kbd>O</kbd> / <kbd>Cmd</kbd>+<kbd>O</kbd> and select `fastyle-moz.xpi`
+3. Follow the prompts to install the Add-On.
+4. That's it! [Go to FA](http://www.furaffinity.net/) and enjoy!
+
+### Chrome Setup
 Setup for FAStyle from source is super easy:
 
 1. **Clone** or **[Download](https://github.com/CopperBadger/fastyle/archive/master.zip)** this repo.
