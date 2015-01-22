@@ -34,6 +34,25 @@ here:
 * <https://developer.chrome.com/extensions/getstarted>
 * <https://developer.chrome.com/extensions/content_scripts>
 
+### Using Other Themes (including Dark Themes)
+
+Since FAStyle is bulit on Bootstrap, it is compatible with all 16 of the
+[wonderful and free bootswatch themes](http://bootswatch.com/), most of
+which have been included in this repository in the `lib/css` directory.
+Eventually, you will be able to change the theme of the extension through
+a toolbar dropdown, but you can always change it manually.
+
+Changing the theme isn't hard! Just do this:
+
+1. Open **manifest.json**
+2. Change `lib/css/united/bootstrap.min.css` (should be around line 17) to `lib/css/(theme)/bootstrap.min.css`, where (theme) is the name of the theme you want to use
+3. Reload **chrome://extensions** by pressing the "Reload" link or using <kbd>Ctrl</kbd>+<kbd>R</kbd> / <kbd>Cmd</kbd>+<kbd>R</kbd>.
+4. Reload FA to see the new theme!
+
+Specifically **cyborg**, **darkly**, **slate**, and **superhero** are all
+darker themes. (Superhero looks a lot like FA's original style, if you're
+partial to the blue theming)
+
 ### Alpha Disclaimer and Warranty
 FAStyle is still in development! There are still a good number of
 To-Dos to take care of before the extension can be considered ready
