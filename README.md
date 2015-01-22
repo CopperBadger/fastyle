@@ -45,6 +45,9 @@ here:
 
 ### Using Other Themes (including Dark Themes)
 
+Switching themes isn't yet supported in the Firefox Add-On, but it's
+on it's way!
+
 Since FAStyle is bulit on Bootstrap, it is compatible with all 16 of the
 [wonderful and free bootswatch themes](http://bootswatch.com/), most of
 which have been included in this repository in the `lib/css` directory.
