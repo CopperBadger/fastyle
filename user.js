@@ -245,7 +245,7 @@ $(document).ready(function(){
 	// Submissions
 	subs = $('.flow.userpage-submissions.twolines a')
 	if(subs.length) {
-		$('<div class="panel panel-default"></div>').appendTo(col)
+		pan = $('<div class="panel panel-default"></div>').appendTo(col)
 			.append("<div class='panel-heading'><a href='http://www.furaffinity.net/gallery/"+truncatedName+"/'>Submissions</a></div>")
 			.append("<div class='panel-body'><div class='row'><div class='col-md-12' id='submission-well'></div></div></div>")
 		list = $('#submission-well')
@@ -264,12 +264,14 @@ $(document).ready(function(){
 				return false;
 			}
 		})
+
+		$('.userpage-first-submission .popup_date').addClass('pull-right text-muted').remove().appendTo($(pan).find('.panel-heading')).prepend("Last submission: ")
 	}
 
 	// Favorites
 	faves = $('.flow.userpage-favorites.twolines a')
 	if(faves.length) {
-		$('<div class="panel panel-default"></div>').appendTo(col)
+		pan = $('<div class="panel panel-default"></div>').appendTo(col)
 			.append("<div class='panel-heading'><a href='http://www.furaffinity.net/favorites/"+truncatedName+"/'>Favorites</a></div>")
 			.append("<div class='panel-body'><div class='row'><div class='col-md-12' id='favorites-well'></div></div></div>")
 		list = $('#favorites-well')
@@ -288,6 +290,8 @@ $(document).ready(function(){
 				return false;
 			}
 		})
+
+		$('.userpage-first-favorite .popup_date').addClass('pull-right text-muted').remove().appendTo($(pan).find('.panel-heading')).prepend("Last favorite: ")
 	}
 
 	// Shouts

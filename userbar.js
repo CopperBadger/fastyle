@@ -9,16 +9,18 @@ $(document).ready(function(){
 	}).end().remove()
 
 	// Make Watch / Unwatch asynchronous
-	funTitles=["Give us a Moment","Just a Second","Please Wait","Doing the Thing","Hold on a Sec","Stuff is Happening"]
+	
 	$('a[href^="http://www.furaffinity.net/unwatch"]')
 	.on("click",function(){
-		$(this).text(funTitles[Math.floor(Math.random()*funTitles.length)])
+		$(this).text(window.fastyle.funTitles[Math.floor(Math.random()*window.fastyle.funTitles.length)])
 		self = this
 		$.ajax({
 			url:$(this).attr("href"),
 			type:"GET",
 			complete:function(xhr){
-				$(self).text("Unwatched!").unbind("click")
+				$(self).text("Unwatched!")
+					.unbind("click")
+					.on("click",function(){return false})
 			}
 		})
 		return false
@@ -26,13 +28,15 @@ $(document).ready(function(){
 
 	$('a[href^="http://www.furaffinity.net/watch"]')
 	.on("click",function(){
-		$(this).text(funTitles[Math.floor(Math.random()*funTitles.length)])
+		$(this).text(window.fastyle.funTitles[Math.floor(Math.random()*window.fastyle.funTitles.length)])
 		self = this
 		$.ajax({
 			url:$(this).attr("href"),
 			type:"GET",
 			complete:function(xhr){
-				$(self).text("Watched!").unbind("click")
+				$(self).text("Watched!")
+					.unbind("click")
+					.on("click",function(){return false})
 			}
 		})
 		return false

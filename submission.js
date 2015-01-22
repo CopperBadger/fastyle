@@ -2,7 +2,7 @@ function renderComments(srcWrapper,outWrapper,startFrom,stack){
 
 	var newComment = function(par,src){
 		if(par){par = $(par).find('.media-body:first')}
-		out = $("<li class='media' id='"+$(src).attr('id')+"'>").appendTo(par||outWrapper)
+		out = $("<li class='media' id='"+$(src).attr('id')+"'>").appendTo(par)
 			.html($(src).find('.icon').html())
 				.find('a').addClass("media-left").end()
 				//.find('img').attr('src','http://a.facdn.net/copperbadger.gif').end()
@@ -45,46 +45,35 @@ function renderComments(srcWrapper,outWrapper,startFrom,stack){
 	return [comment,stack]
 }
 
-$(document).ready(function(){
-	/*wrapper = $('#page-comments');
-	if(!wrapper.length) {wrapper = $('b:contains(User comments)').parents("tr:nth-child(2)").next("tr").children("td:first")}
-	$(wrapper).attr('align','')
-
-	section = $("<ul class='media-list' id='comments'>").prependTo(wrapper)
-
-	last = renderComments(wrapper,section,null)
-	scrollThresh = ($('#comments').position().top+$('#comments').height())-$(window).height()*1.5
-
-	$(document).scroll(function(){
-		if(scrollThresh && $(document).scrollTop()>scrollThresh){
-			console.log("Doing render...")
-			scrollThresh = 0
-			last = renderComments(wrapper,section,last[0],last[1])
-			scrollThresh = ($('#comments').position().top+$('#comments').height())-$(window).height()*1.5
-		}
-	})*/
-
+$(document).ready(function() {
 	
 	row = $('<div class="row">').insertBefore(".content.maintable")
 
 	subimg = $('#submissionImg')
 	subimgSrc = subimg.attr('src')
-	subimgName = subimg.attr('alt')
+	subimgName = $('.maintable .cat>b:first').text()
+	audio = (t=(t=$('embed[src="/embed/player.swf"]').attr('flashvars')||"").match(/file=(.+)$/))?t[1]:null;
+	text = $('strong:contains(File type)').parents('td').html()
 	author = $('b:contains(Submission information)').parents('table').eq(1).find('a[href*="/user"]')
 	authorHref = author.eq(0).attr('href')
 	authorName = author.eq(0).text()
 	authorAvatar = author.eq(1).find('img').attr('src')
 
+	eval($('.alt1 script').text()) // Grab image urls
+
 	$('<div class="col-xs-12 media">').appendTo(row)
 		.html("<div class='media-left'><a href='"+authorHref+"'><img src='"+authorAvatar+"' class='img img-rounded' /></a></div><div class='media-body'><div class='media-heading'><h3>"+subimgName+"</h3></div>by <a href='"+authorHref+"'>"+authorName+"</a></div>")
 
-	imgwrap = $('<div class="container-fluid">').css({'text-align':'center'}).insertAfter($(".container:first"))
+	imgwrap = $('<div class="container-fluid">').css({'text-align':'center',margin:'16px 0'}).insertAfter($(".container:first"))
 	$(imgwrap).html("<div class='row'><div class='col-xs-12'><img src='"+subimgSrc+"' id='sub-img'/></div>")
+	if(audio){
+		$('#sub-img').after("<br><audio controls='controls'><source src='"+audio+"' /></audio>")
+	}
 
 	$('#sub-img').click(function(){
 		h = $(this).attr('src')
 		$(this).attr('src',h.search(/\/\/t/)!=-1?full_url:small_url)
-	}).css({cursor:'pointer'})
+	}).css({cursor:'pointer',margin:'16px 0'})
 
 	infowrap = $('<div class="container">').insertAfter(imgwrap)
 	row = $('<div class="row">').appendTo(infowrap)
@@ -92,7 +81,6 @@ $(document).ready(function(){
 	authorwrap = $('<div class="col-xs-12">').appendTo(row)
 	$('<div class="panel panel-default" id="author-info">').appendTo(authorwrap)
 		.append("<div class='panel-body'>")
-		.css({margin:'16px 0'})
 	$('#author-info .panel-body')
 		.append("<div class='col-xs-12' id='sub-info'><div class='btn-group' id='button-well'></div>")
 		.wrapInner("<div class='row'>")
@@ -104,14 +92,30 @@ $(document).ready(function(){
 	description = $(author).eq(1).parents()
 	$(author).eq(1).remove()
 
-	$('#sub-info')
-		.append("<div>"+description.html()+"</div>")
 
-	row = $('<div class="row">').appendTo(infowrap)
+	$('#sub-info').append("<div>"+description.html()+"</div>")
+	if(text){$('#sub-info').append("<hr><h4>File Text</h4>"+text)}
+
+	row = $('<div class="row" id="comment-wrapper">').appendTo(infowrap)
 
 	commentwrap = $('<div class="col-md-12">').appendTo(row)
 
 	$('.footer').remove().insertAfter(infowrap)
-	$('.content.maintable').remove().insertAfter(infowrap)
+
+	$('a[href^="/fav"]').on("click",function(){
+		msg = $(this).text().search("Remove")!=-1?"Unfaved":"Faved!"
+		$(this).text(window.fastyle.funTitles[Math.floor(Math.random()*window.fastyle.funTitles.length)])
+		self = this
+		$.ajax({
+			url:$(this).attr("href"),
+			type:"GET",
+			complete:function(xhr){
+				$(self).text(msg)
+					.unbind("click")
+					.on("click",function(){return false})
+			}
+		})
+		return false
+	})
 
 })

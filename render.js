@@ -1,7 +1,9 @@
-//$('body').hide()
+$('body').hide()
 
 $(document).ready(function(){
 	window.fastyle = {}
+
+	window.fastyle.funTitles=["Give us a Moment","Just a Second","Please Wait","Doing the Thing","Hold on a Sec","Stuff is Happening"]
 
 	banner = $('#fa_header').css('background-image')
 

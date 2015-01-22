@@ -14,8 +14,8 @@
 	"content_scripts":[
 		{
 			"matches": ["http://www.furaffinity.net/*"],
-			"css": ["sandstone/bootstrap.min.css"],
-			"js": ["jquery.min.js","bootstrap.min.js","render.js"]
+			"css": ["lib/css/united/bootstrap.min.css"],
+			"js": ["lib/js/jquery.min.js","lib/js/bootstrap.min.js","render.js"]
 		},
 		{
 			"matches": [
@@ -49,10 +49,9 @@
 		{
 			"matches": [
 				"http://www.furaffinity.net/view/*",
-				"http://www.furaffinity.net/full/*",
-				"http://www.furaffinity.net/journal/*"
+				"http://www.furaffinity.net/full/*"
 			],
-			"js": ["submission.js"]
+			"js": ["submission.js","comments.js"]
 		},
 		{
 			"matches": ["http://www.furaffinity.net/search*"],
@@ -65,6 +64,18 @@
 		{
 			"matches": ["http://www.furaffinity.net/controls/messages/"],
 			"js": ["messagelist.js"]
+		},
+		{
+			"matches": ["http://www.furaffinity.net/journals/*"],
+			"js": ["journallist.js"]
+		},
+		{
+			"matches": ["http://www.furaffinity.net/journal/*"],
+			"js": ["journal.js","comments.js"]
+		},
+		{
+			"matches": ["http://www.furaffinity.net/*"],
+			"js": ["cleanup.js"]
 		}
 	]
 }
