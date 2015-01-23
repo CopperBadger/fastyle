@@ -4,6 +4,9 @@ function capitalize(src){
 	return src?(src[0].toUpperCase()+src.substring(1)):src
 }
 
+isHttps = document.location.protocol == "https:"
+ss = "//maxcdn.bootstrapcdn.com/bootswatch/3.3.1/"+(sessionStorage.getItem('theme')||'simplex')+"/bootstrap.min.css"
+
 $(document).ready(function(){
 	window.fastyle = {}
 
@@ -12,7 +15,7 @@ $(document).ready(function(){
 	banner = $('#fa_header').css('background-image')
 
 	$('link[rel=stylesheet]').remove()
-	$('<link rel="stylesheet" href="http://www.bootswatch.com/'+(sessionStorage.getItem('theme')||'simplex')+'/bootstrap.min.css" id="stylesheet">').appendTo('head')
+	$('<link rel="stylesheet" href="'+ss+'" id="stylesheet">').appendTo('head')
 	$('a.iconusername img').css({'width':'64px'})
 	logo = $('.falogo').remove()
 	$('.ads').remove()
@@ -81,7 +84,7 @@ $(document).ready(function(){
 				'<span class="sr-only">Toggle Dropdown</span>' +
 			'</button>' +
 			'<ul class="dropdown-menu" role="menu" id="theme-list"></ul>' +
-		'</div>').css({position:'fixed',bottom:'16px',left:'16px'})
+		'</div>').css({position:'fixed',bottom:'16px',left:'16px','z-index':50})
 
 	themes = ['cerulean','cosmo','cyborg','darkly','flatly','journal','lumen','paper','readable','sandstone','simplex','slate','spacelab','superhero','united','yeti']
 
@@ -94,7 +97,7 @@ $(document).ready(function(){
 	}
 
 	$('body').on('click','.theme-anchor',function(){
-		$('#stylesheet').attr('href',"http://www.bootswatch.com/"+$(this).attr('data-theme')+"/bootstrap.min.css")
+		$('#stylesheet').attr('href',"//maxcdn.bootstrapcdn.com/bootswatch/3.3.1/"+$(this).attr('data-theme')+"/bootstrap.min.css")
 		sessionStorage.setItem("theme",$(this).attr('data-theme'))
 	})
 })
