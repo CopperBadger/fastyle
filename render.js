@@ -73,23 +73,24 @@ $(document).ready(function(){
 	theme = sessionStorage.getItem('theme')
 	if(!theme){sessionStorage.setItem('theme','simplex')}
 
-	themes = ['cerulean','cosmo','cyborg','darkly','flatly','journal','lumen','paper','readable','sandstone','simplex','slate','spacelab','superhero','united','yeti']
-
-	$('<div id="theme-selector">').appendTo('body')
+	$('<div id="theme-selector">').prependTo('body')
 		.html('<div class="btn-group dropup">' +
-			'<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">' +
+			'<button class="btn btn-default dropdown-toggle" id="theme-list-toggle" data-toggle="dropdown" aria-expanded="false">' +
 				'Select Theme ' +
 				'<span class="caret"></span>' +
 				'<span class="sr-only">Toggle Dropdown</span>' +
 			'</button>' +
-			'<ul class="dropdown-menu" role="menu" id="theme-list">' +
-			'</ul>' +
+			'<ul class="dropdown-menu" role="menu" id="theme-list"></ul>' +
 		'</div>').css({position:'fixed',bottom:'16px',left:'16px'})
 
-	for(t in themes){
-		$("<a href='javascript:void(0)' class='theme-anchor' data-theme='"+themes[t]+"'>").appendTo('#theme-list')
-			.text(capitalize(themes[t]))
-			.wrap('<li>')
+	themes = ['cerulean','cosmo','cyborg','darkly','flatly','journal','lumen','paper','readable','sandstone','simplex','slate','spacelab','superhero','united','yeti']
+
+	for(t in themes) {
+		t = themes[t]
+		if(typeof t !="string"){continue;}
+		$("<li>").appendTo($('#theme-list'))
+			.text(capitalize(t))
+			.wrapInner("<a href='javascript:void(0)' class='theme-anchor' data-theme='"+t+"'>")
 	}
 
 	$('body').on('click','.theme-anchor',function(){
