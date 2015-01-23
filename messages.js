@@ -16,7 +16,29 @@ function serialize(el) {
 
 $(document).ready(function() {
 
-	var newRow = function(){return $("<div class='row'>").insertBefore('.content.maintable')}
+	var newRow = function(){return $("<div class='row' style='margin:16px 0'>").insertBefore('.content.maintable')}
+
+	row = newRow()
+
+	$(row).append("<div class='col-md-12'><div class='pull-right'><button class='btn btn-danger' id='everything-nuke'>Nuke It All!</button></div></div>")
+
+	$('#everything-nuke').on("click",function(){
+		dat = {}
+		$.map($('.list-group-item [type=checkbox]'),function(e){
+			if(!dat[n=(e=$(e)).attr('name')]){dat[n]=[]}
+			dat[n].push($(e).attr('value'))
+		})
+		dat['remove-all'] = "Global remove selected"
+		$('.panel').css({opacity:0.8})
+		$.ajax({
+			url:"/msg/others/",
+			type: "POST",
+			data: dat,
+			complete: function(){
+				$('.panel').fadeOut(function(){$(this).remove()})
+			}
+		})
+	})
 
 	$('.message-stream').each(function() {
 		row = newRow()
@@ -24,7 +46,8 @@ $(document).ready(function() {
 		pan = $("<div class='panel panel-default'>").appendTo(col)
 			.append("<div class='panel-heading'>")
 
-		$(pan).find('.panel-heading').text($(this).prev("h3").text())
+		title = $(this).prev("h3").text()
+		$(pan).find('.panel-heading').text(title)
 		list = $('<ul class="list-group">').appendTo(pan)
 		$(this).find('li').each(function(){
 			id = (cbx=$(this).find('input[type=checkbox]').remove()).val()
@@ -37,12 +60,13 @@ $(document).ready(function() {
 		})
 
 		submitButton = $(this).find('.button.remove')
+		nukeButton = $(this).parent().find('[name^=nuke]')
 		actions = $(list).find('.list-group-item:last')
 		$("<li class='list-group-item'>").appendTo(list)
 			.html('<button class="btn btn-default select-all">Select All</button> ' +
 			'<button class="btn btn-default deselect-all">Deselect All</button> ' +
 			'<button class="btn btn-primary messages-clear" name="'+submitButton.attr('name')+'">Remove Selected</button> ' +
-			'<button class="btn btn-default">(Nuke coming soon)</button>')
+			'<button class="btn btn-danger messages-nuke" name="'+nukeButton.attr('name')+'" data-value="'+nukeButton.attr('value')+'">Nuke '+title+'</button>')
 		$(actions).remove()
 	})
 
@@ -65,6 +89,20 @@ $(document).ready(function() {
 			type: "POST",
 			complete:function(xhr) {
 				$(list).find(':checked').parents('a.list-group-item').slideUp(function(){$(this).remove()})
+			}
+		})
+	})
+
+	$('.messages-nuke').on("click",function(){
+		tgt = $(this).parents('ul').find('a.list-group-item').css({opacity:'0.8'})
+		dat = {};
+		dat[$(this).attr('name')] = $(this).attr('data-value')
+		$.ajax({
+			url: "/msg/others/",
+			type: "POST",
+			data: dat,
+			complete:function(xhr){
+				$(tgt).slideUp(function(){$(this).remove()})
 			}
 		})
 	})

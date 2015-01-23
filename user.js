@@ -130,7 +130,11 @@ $(document).ready(function(){
 			$("<div class='panel panel-default'><div class='panel-heading'>"+key+"</div><div class='panel-body'><div class='embed-responsive embed-responsive-16by9'><iframe src='//www.youtube.com/embed/"+id+"' class='embed-responsive-item' frameborder='0' allowfullscreen></iframe></div></div>")
 				.insertBefore('#profile-info')
 			}
-		return (key&&val)?$('<tr>').appendTo(inftab).append("<td>"+key+"</td>").append("<td>"+capitalize(val)+"</td>"):null
+
+		//URL RegEx credit: http://code.tutsplus.com/tutorials/8-regular-expressions-you-should-know--net-6149
+		if(val.search(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/)==-1){val=capitalize(val)}
+			else{val = "<a href='"+val+"' target='_blank'>"+val+"</a>"}
+		return (key&&val)?$('<tr>').appendTo(inftab).append("<td>"+key+"</td>").append("<td>"+val+"</td>"):null
 	}
 
 	for(i in a=[["Basic Information",info],["Extended Information",info2],["Contact Information",contact],["Statistics",stats]]){

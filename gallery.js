@@ -48,7 +48,8 @@ $(document).ready(function(){
 		row = $('<div class="row" id="gallery-controls">').insertBefore(".content.maintable:first")
 			.html('<button class="btn btn-default select-all">Select All</button> ' +
 				'<button class="btn btn-default deselect-all">Deselect All</button> ' +
-				'<button class="btn btn-primary submissions-clear">Remove Selected</button>')
+				'<button class="btn btn-primary submissions-clear">Remove Selected</button> ' +
+				'<button class="btn btn-danger nuke-submissions">Nuke All Submissions</button>')
 			.wrapInner('<div class="col=md-12">')
 
 		$('.select-all, .deselect-all').on("click",function(){
@@ -66,6 +67,17 @@ $(document).ready(function(){
 				type: "POST",
 				complete: function(xhr){
 					tgt.html("<div class='thumb-title'>Deleted</div>").css({opacity:0.2})
+				}
+			})
+		})
+
+		$('.nuke-submissions').on("click",function(){
+			$('#gallery-container').css({opacity:'0.8'})
+			$.ajax({
+				url: "/msg/submissions/",
+				type: "POST",
+				complete:function(xhr){
+					$('#gallery-container').remove()
 				}
 			})
 		})
