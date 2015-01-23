@@ -19,7 +19,9 @@ so you can stay furry without being trapped in the Internet of the 90s.
 
 ### Firefox Setup
 A precompiled `.xpi` file is included in this repo for easy support with
-Firefox! This is all you have to do:
+Firefox! Please note, the add-on may lag behind the Chrome extension a bit
+because some special steps and testing have to preceed each compilation.
+This is all you have to do:
 
 1. **Clone** or **[Download](https://github.com/CopperBadger/fastyle/archive/master.zip)** this repo.
 2. In Firefox, press <kbd>Ctrl</kbd>+<kbd>O</kbd> / <kbd>Cmd</kbd>+<kbd>O</kbd> and select `fastyle-moz.xpi`
