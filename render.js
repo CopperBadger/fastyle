@@ -1,5 +1,9 @@
 $('body').hide()
 
+function capitalize(src){
+	return src?(src[0].toUpperCase()+src.substring(1)):src
+}
+
 $(document).ready(function(){
 	window.fastyle = {}
 
@@ -8,6 +12,7 @@ $(document).ready(function(){
 	banner = $('#fa_header').css('background-image')
 
 	$('link[rel=stylesheet]').remove()
+	$('<link rel="stylesheet" href="http://www.bootswatch.com/'+(sessionStorage.getItem('theme')||'simplex')+'/bootstrap.min.css" id="stylesheet">').appendTo('head')
 	$('a.iconusername img').css({'width':'64px'})
 	logo = $('.falogo').remove()
 	$('.ads').remove()
@@ -63,5 +68,32 @@ $(document).ready(function(){
 		$(this).css({'background-size':'contain'}).find('.thumb-title').hide()
 	}).on("mouseout",".contain-hover",function(){
 		$(this).css({'background-size':'cover'}).find('.thumb-title').show()
+	})
+
+	theme = sessionStorage.getItem('theme')
+	if(!theme){sessionStorage.setItem('theme','simplex')}
+
+	themes = ['cerulean','cosmo','cyborg','darkly','flatly','journal','lumen','paper','readable','sandstone','simplex','slate','spacelab','superhero','united','yeti']
+
+	$('<div id="theme-selector">').appendTo('body')
+		.html('<div class="btn-group dropup">' +
+			'<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">' +
+				'Select Theme ' +
+				'<span class="caret"></span>' +
+				'<span class="sr-only">Toggle Dropdown</span>' +
+			'</button>' +
+			'<ul class="dropdown-menu" role="menu" id="theme-list">' +
+			'</ul>' +
+		'</div>').css({position:'fixed',bottom:'16px',left:'16px'})
+
+	for(t in themes){
+		$("<a href='javascript:void(0)' class='theme-anchor' data-theme='"+themes[t]+"'>").appendTo('#theme-list')
+			.text(capitalize(themes[t]))
+			.wrap('<li>')
+	}
+
+	$('body').on('click','.theme-anchor',function(){
+		$('#stylesheet').attr('href',"http://www.bootswatch.com/"+$(this).attr('data-theme')+"/bootstrap.min.css")
+		sessionStorage.setItem("theme",$(this).attr('data-theme'))
 	})
 })
