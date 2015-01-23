@@ -126,6 +126,10 @@ $(document).ready(function(){
 		retab(contact)
 
 	var addRow = function(key,val){
+		if(id=(t=val.match(/(?:v=|\.be\/)(.{11})/))?t[1]:""){
+			$("<div class='panel panel-default'><div class='panel-heading'>"+key+"</div><div class='panel-body'><div class='embed-responsive embed-responsive-16by9'><iframe src='//www.youtube.com/embed/"+id+"' class='embed-responsive-item' frameborder='0' allowfullscreen></iframe></div></div>")
+				.insertBefore('#profile-info')
+			}
 		return (key&&val)?$('<tr>').appendTo(inftab).append("<td>"+key+"</td>").append("<td>"+capitalize(val)+"</td>"):null
 	}
 
