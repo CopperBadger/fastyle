@@ -2,12 +2,27 @@ function renderImages(src){
 	row = $('#gallery-container')
 	return $(src||'body').find('.r-general, .r-mature, .r-adult').each(function(){
 		au = $(this).find('small a')
-		$('<a href="'+(href=(hor=$(this).find('s a')).attr('href'))+'">').appendTo(row)
+		cbx = $(this).find('small input[type=checkbox]')
+		s = $('<a href="'+(href=(hor=$(this).find('s a')).attr('href'))+'" class="submission-item" style="text-decoration:none">').appendTo(row)
 			.addClass('thumbnail contain-hover').attr('title',title=$(this).find('span').text())
 			.css({background:'transparent url("'+($(this).find('img').attr('src').replace(/@\d+/,'@400'))+'") 50% 50% / cover no-repeat',height:'224px',padding:'0'})
 			.wrap('<div class="col-md-3 col-xs-6">')
-			.html("<div style='background-color:rgba(0,0,0,0.6);color:#FFF;padding:2px 6px' class='thumb-title'><strong>"+title+"</strong>"+(au.length?(" by "+$(au).text()):"")+"</div>")
-	}).remove().length
+			.html("<div class='thumb-title'>" +
+					"<strong>"+title+"</strong>" +
+					(au.length?(" by "+$(au).text()):"") +
+				"</div>")
+		if(cbx.length){
+			$(s).append("<a href='javascript:void(0)' style='background-color:rgba(64,0,0,0.6);color:#FFF;padding:6px;display:block;text-decoration:none' class='thumb-checkbox'>" +
+					" <strong>Select</strong>" +
+				"</a>").find('.thumb-checkbox').prepend($(cbx).remove())
+				.on("click",function(e){
+					
+					$(this).parents('.contain-hover').toggleClass('checked-for-deletion',
+						$(this).find('[type=checkbox]').click().is(':checked'));
+				})
+				.hide()
+		}
+	}).length
 }
 
 function serialize(el) {
@@ -29,11 +44,40 @@ $(document).ready(function(){
 
 	console.log("gallery.js, reporting in")
 
+	row = $('<div class="row" id="gallery-controls">').insertBefore(".content.maintable:first")
+		.html('<button class="btn btn-default select-all">Select All</button> ' +
+			'<button class="btn btn-default deselect-all">Deselect All</button> ' +
+			'<button class="btn btn-primary submissions-clear">Remove Selected</button>')
+		.wrapInner('<div class="col=md-12">')
+
+	$('.select-all, .deselect-all').on("click",function(){
+		$('.thumb-checkbox').find('[type=checkbox]').prop('checked',$(this).is('.deselect-all'))
+			.end().click()
+	})
+
+	$('.submissions-clear').on("click",function(){
+		dat = {'messagecenter-action':'Remove checked'}
+		dat['submissions[]'] = $.map(chx=$('.submission-item :checked'),function(e){return $(e).val()})
+		tgt = $(chx).parents(".submission-item").css({opacity:0.8})
+		$.ajax({
+			url:"/msg/submissions/",
+			data: dat,
+			type: "POST",
+			complete: function(xhr){
+				tgt.html("<div class='thumb-title'>Deleted</div>").css({opacity:0.2})
+			}
+		})
+	})
+
 	row = $('<div class="row" id="gallery-container">').insertBefore(".content.maintable:first")
 	renderImages()
 
+	$('.content.maintable').hide()
+
 	window.fastyle.scrollThresh = Math.round($(document).height()-($(window).height()*1.5))
 	console.log("Initializing scroll thresh = "+window.fastyle.scrollThresh + ", doc height = "+$(document).height())
+
+	$('.content.maintable').show()
 
 	page = (t=document.location.href.match(/\.net\/(.+)\d?\/?/))?t[1]:""
 	window.fastyle.pageNumber = parseInt((t=document.location.href.match(/(\d)\//))?t[1]:1)

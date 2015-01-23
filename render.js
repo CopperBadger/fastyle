@@ -82,9 +82,13 @@ $(document).ready(function() {
 	$('#news').addClass('alert alert-info')
 
 	$('body').on("mouseover",".contain-hover",function(){
-		$(this).css({'background-size':'contain'}).find('.thumb-title').hide()
+		$(this).css({'background-size':'contain'})
+			.find('.thumb-title').hide().end()
+			.find('.thumb-checkbox').show()
 	}).on("mouseout",".contain-hover",function(){
-		$(this).css({'background-size':'cover'}).find('.thumb-title').show()
+		$(this).css({'background-size':'cover'})
+			.find('.thumb-title').show().end()
+			.find('.thumb-checkbox').hide()
 	})
 
 	theme = sessionStorage.getItem('theme')

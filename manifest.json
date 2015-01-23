@@ -42,7 +42,8 @@
 				"*://*.furaffinity.net/",
 				"*://*.furaffinity.net/msg/submissions*"
 			],
-			"js": ["gallery.js"]
+			"js": ["gallery.js"],
+			"css": ["lib/css/gallery.css"]
 		},
 		{
 			"matches": [
