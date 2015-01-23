@@ -10,7 +10,7 @@ $(document).ready(function(){
 
 	// Make Watch / Unwatch asynchronous
 	
-	$('a[href^="http://www.furaffinity.net/unwatch"]')
+	$('a[href*="furaffinity.net/unwatch"]')
 	.on("click",function(){
 		$(this).text(window.fastyle.funTitles[Math.floor(Math.random()*window.fastyle.funTitles.length)])
 		self = this
@@ -26,7 +26,7 @@ $(document).ready(function(){
 		return false
 	})
 
-	$('a[href^="http://www.furaffinity.net/watch"]')
+	$('a[href*="furaffinity.net/watch"]')
 	.on("click",function(){
 		$(this).text(window.fastyle.funTitles[Math.floor(Math.random()*window.fastyle.funTitles.length)])
 		self = this
