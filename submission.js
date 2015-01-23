@@ -8,6 +8,7 @@ $(document).ready(function() {
 	subimgName = $('.maintable .cat>b:first').text()
 	audio = (t=(t=$('embed[src="/embed/player.swf"]').attr('flashvars')||"").match(/file=(.+)$/))?t[1]:null;
 	text = $('strong:contains(File type)').parents('td').html()
+	flash = $('object[type="application/x-shockwave-flash"]')
 	infoWrapper = $('b:contains(Submission information)').parents('td:first')
 	author = $(infoWrapper).parents('table').eq(1).find('a[href*="/user"]')
 	authorHref = author.eq(0).attr('href')
@@ -22,11 +23,17 @@ $(document).ready(function() {
 	eval($('.alt1 script').text()) // Grab image urls
 
 	imgwrap = $('<div class="container-fluid">').css({'text-align':'center',margin:'16px 0'}).insertAfter($(".container:first"))
-	$(imgwrap).html("<div class='row'><div class='col-xs-12'><img src='"+subimgSrc+"' id='sub-img'/></div>")
+	$(imgwrap).html("<div class='row'><div class='col-xs-12' id='submission-wrapper'></div>")
+	if(subimgSrc){
+		$('#submission-wrapper').append("<img src='"+subimgSrc+"' id='sub-img'/>")
+	}
 	if(audio){
-		$('#sub-img')
-			.after("<br><a href='"+audio+"' class='btn btn-primary' style='margin:4px;' download>Download</a>")
-			.after("<br><audio controls='controls'><source src='"+audio+"' /></audio>")
+		$('#submission-wrapper')
+			.append("<br><a href='"+audio+"' class='btn btn-primary' style='margin:4px;' download>Download</a>")
+			.append("<br><audio controls='controls'><source src='"+audio+"' /></audio>")
+	}
+	if(flash.length){
+		$('#submission-wrapper').append(flash.remove())
 	}
 
 	$('#sub-img').click(function(){

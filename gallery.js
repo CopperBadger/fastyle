@@ -31,7 +31,7 @@ function serialize(el) {
   $.map($(el).find('input:not([type=radio]:not(:checked)), select, textarea'),function(e) {
     if(n=(e=$(e)).prop('name')) {
       o[n]=((e.is('[type=password]'))
-        ?MD5(e.val())
+	        ?MD5(e.val())
         :((e.is('[type=checkbox]'))
           ?e.is(':checked')
           :e.val()));
@@ -44,30 +44,32 @@ $(document).ready(function(){
 
 	console.log("gallery.js, reporting in")
 
-	row = $('<div class="row" id="gallery-controls">').insertBefore(".content.maintable:first")
-		.html('<button class="btn btn-default select-all">Select All</button> ' +
-			'<button class="btn btn-default deselect-all">Deselect All</button> ' +
-			'<button class="btn btn-primary submissions-clear">Remove Selected</button>')
-		.wrapInner('<div class="col=md-12">')
+	if(document.location.pathname=="/msg/submissions/"){
+		row = $('<div class="row" id="gallery-controls">').insertBefore(".content.maintable:first")
+			.html('<button class="btn btn-default select-all">Select All</button> ' +
+				'<button class="btn btn-default deselect-all">Deselect All</button> ' +
+				'<button class="btn btn-primary submissions-clear">Remove Selected</button>')
+			.wrapInner('<div class="col=md-12">')
 
-	$('.select-all, .deselect-all').on("click",function(){
-		$('.thumb-checkbox').find('[type=checkbox]').prop('checked',$(this).is('.deselect-all'))
-			.end().click()
-	})
-
-	$('.submissions-clear').on("click",function(){
-		dat = {'messagecenter-action':'Remove checked'}
-		dat['submissions[]'] = $.map(chx=$('.submission-item :checked'),function(e){return $(e).val()})
-		tgt = $(chx).parents(".submission-item").css({opacity:0.8})
-		$.ajax({
-			url:"/msg/submissions/",
-			data: dat,
-			type: "POST",
-			complete: function(xhr){
-				tgt.html("<div class='thumb-title'>Deleted</div>").css({opacity:0.2})
-			}
+		$('.select-all, .deselect-all').on("click",function(){
+			$('.thumb-checkbox').find('[type=checkbox]').prop('checked',$(this).is('.deselect-all'))
+				.end().click()
 		})
-	})
+
+		$('.submissions-clear').on("click",function(){
+			dat = {'messagecenter-action':'Remove checked'}
+			dat['submissions[]'] = $.map(chx=$('.submission-item :checked'),function(e){return $(e).val()})
+			tgt = $(chx).parents(".submission-item").css({opacity:0.8})
+			$.ajax({
+				url:"/msg/submissions/",
+				data: dat,
+				type: "POST",
+				complete: function(xhr){
+					tgt.html("<div class='thumb-title'>Deleted</div>").css({opacity:0.2})
+				}
+			})
+		})
+	}
 
 	row = $('<div class="row" id="gallery-container">').insertBefore(".content.maintable:first")
 	renderImages()
