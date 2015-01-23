@@ -28,7 +28,7 @@ function makeCommentForm(cid) {
 }
 
 $(document).ready(function(){
-	console.log("comments.js, reporting in")
+	if(window.fastyle.disabled){return false;}
 
 	row = $('#comment-wrapper')
 	if(!row.length){row = $("<div class='row'>").insertBefore(".content.maintable")}
@@ -54,6 +54,7 @@ $(document).ready(function(){
 	}
 
 	// Need to do this because WebKit messes up media displays for some reason
+	// Sometimes it works, sometimes it doesn't. No clue why :(
 	$('.media-body').css({display:'table-cell'})
 
 	num = $('.container-comment').each(function(){

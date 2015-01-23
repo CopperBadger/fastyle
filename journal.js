@@ -14,9 +14,9 @@ $(document).ready(function(){
 		.html('<div class="media">' +
 			'<div class="media-left"><a href="'+authorHref+'"><img src="'+authorAvatar+'" class="img img-rounded" alt="'+authorName+'"></a></div>' +
 			'<div class="media-body">' +
-				'<div class="media-heading">' +
+				'<div class="media-heading" id="journal-heading">' +
 					'<h3>'+title+'</h3>' +
-					'by <a href="'+authorHref+'">'+authorName+'</a>' +
+					'by <a href="'+authorHref+'">'+authorName+'</a>, ' +
 				'</div>' +
 			'</div>' +
 		'</div>').css({'padding-bottom':'16px'})
@@ -24,6 +24,8 @@ $(document).ready(function(){
 	tab = tab.parents('table:first')
 
 	row = $("<div class='row'>").insertBefore(".content.maintable")
+
+	$('#journal-heading').append(pubDate.remove())
 
 	$("<div class='col-xs-12'>").appendTo(row)
 		.html($(tab).find('td.alt1 .no_overflow').html())

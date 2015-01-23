@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	if(window.fastyle.disabled){return false;}
 	
 	row = $('<div class="row">').insertBefore(".content.maintable")
 
@@ -17,13 +18,15 @@ $(document).ready(function() {
 	$('<div class="col-xs-12 media">').appendTo(row)
 		.html("<div class='media-left'><a href='"+authorHref+"'><img src='"+authorAvatar+"' class='img img-rounded' /></a></div><div class='media-body'><div class='media-heading'><h3>"+subimgName+"</h3></div>by <a href='"+authorHref+"'>"+authorName+"</a></div>")
 
-	// Image
+	// Submission Content
 	eval($('.alt1 script').text()) // Grab image urls
 
 	imgwrap = $('<div class="container-fluid">').css({'text-align':'center',margin:'16px 0'}).insertAfter($(".container:first"))
 	$(imgwrap).html("<div class='row'><div class='col-xs-12'><img src='"+subimgSrc+"' id='sub-img'/></div>")
 	if(audio){
-		$('#sub-img').after("<br><audio controls='controls'><source src='"+audio+"' /></audio>")
+		$('#sub-img')
+			.after("<br><a href='"+audio+"' class='btn btn-primary' style='margin:4px;' download>Download</a>")
+			.after("<br><audio controls='controls'><source src='"+audio+"' /></audio>")
 	}
 
 	$('#sub-img').click(function(){
@@ -48,18 +51,39 @@ $(document).ready(function() {
 	description = $(author).eq(1).parents()
 	$(author).eq(1).remove()
 
-	$('#sub-info-wrapper').append("<div class='row'><div class='col-md-8' id='sub-info'>"+description.html()+"</div><div class='col-md-4' style='padding:8px 0'>"+(h=$(infoWrapper).html()).substring(0,h.search(q='<b>Keywords'))+"</div></div>")
+	$('#sub-info-wrapper').append("<div class='row'><div class='col-md-8' id='sub-info'>" +
+		description.html() + "</div><div class='col-md-4' style='padding:8px 0'>" +
+		(h=$(infoWrapper).html()).substring(0,(x=h.search(q='<b>Keywords'))!=-1?x:h.length) +
+	"</div></div>")
+
+	// Detect YouTube videos and embed
+	videoids = {};
+	$('#sub-info a[href*=youtu]').each(function(){
+		if(id=(t=$(this).attr('href').match(/(?:v=|\.be\/)(.{11})/))?t[1]:""){
+			videoids[id] = 1
+		}
+	})
+	for(v in videoids){
+		$('#sub-info')
+			.append('<hr>')
+			.append('<div class="embed-responsive embed-responsive-16by9"><iframe src="//www.youtube.com/embed/'+v+'" class="embed-responsive-item" frameborder="0" allowfullscreen> </iframe></div>')
+	}
+
 	if(text){$('#sub-info').append("<hr><h4>File Text</h4>"+text)}
 
+	// Keywords
 	$("<ul class='list-group'><li class='list-group-item' id='keyword-wrapper'></li></ul>").appendTo('#author-info')
 	w = $('#keyword-wrapper')
-	$('#keywords a').each(function(){
+	keywordAnchors = $('#keywords a')
+	keywordAnchors.each(function(){
 		if($(this).text()){
 			w.append("<a href='"+$(this).attr('href')+"' class='btn btn-default' style='margin:2px;'>"+$(this).text()+"</a>")
 			
 		}
 	})
-
+	if(!keywordAnchors.length){
+		$('#keyword-wrapper').html("<em>No Keywords</em>")
+	}
 
 	// Prepare comment wrapper
 	row = $('<div class="row" id="comment-wrapper">').appendTo(infowrap)

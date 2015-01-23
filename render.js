@@ -1,28 +1,42 @@
-$('body').hide()
-
 function capitalize(src){
 	return src?(src[0].toUpperCase()+src.substring(1)):src
 }
 
-isHttps = document.location.protocol == "https:"
+// Set up globals
+window.fastyle = {}
+developerMode = window.fastyle.developerMode = document.location.hash == "#dev"
+disabled = window.fastyle.disabled = document.location.hash == "#nofastyle"
+isHttps = window.fastyle.isHttps = document.location.protocol == "https:"
 ss = "//maxcdn.bootstrapcdn.com/bootswatch/3.3.1/"+(sessionStorage.getItem('theme')||'simplex')+"/bootstrap.min.css"
+window.fastyle.funTitles=["Give us a Moment","Just a Second","Please Wait","Doing the Thing","Hold on a Sec","Stuff is Happening"]
 
-$(document).ready(function(){
-	window.fastyle = {}
+// Replace native style, make background color transition smooth
+precolor = $('body').css('background-color')
+	$('body').css({'background-color':precolor})
+$('link[rel=stylesheet]').remove()
+$('<link rel="stylesheet" href="'+ss+'" id="stylesheet">').appendTo('head')
 
-	window.fastyle.funTitles=["Give us a Moment","Just a Second","Please Wait","Doing the Thing","Hold on a Sec","Stuff is Happening"]
+if(!disabled){
+	$('body').wrapInner('<div class="container" id="body-wrapper"></div>')
+	$('#body-wrapper').hide()
+}
+
+$(document).ready(function() {
+	if(window.fastyle.disabled){return false;}
 
 	banner = $('#fa_header').css('background-image')
 
-	$('link[rel=stylesheet]').remove()
-	$('<link rel="stylesheet" href="'+ss+'" id="stylesheet">').appendTo('head')
-	$('a.iconusername img').css({'width':'64px'})
+	
 	logo = $('.falogo').remove()
 	$('.ads').remove()
 
-	$('head').append("<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>")
+	if(window.fastyle.developerMode) {
+		$('head').append("<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>")
+	}
 
-	$('body').show().wrapInner('<div class="container">')
+	$('#body-wrapper').show()
+	$('body').css({'background-color':''})
+
 	$('a[name=top]').remove()
 	tabnav = $('.block-menu-top')
 	tabnavCol = $(tabnav).find('tr td:first')
@@ -78,7 +92,7 @@ $(document).ready(function(){
 
 	$('<div id="theme-selector">').prependTo('body')
 		.html('<div class="btn-group dropup">' +
-			'<button class="btn btn-default dropdown-toggle" id="theme-list-toggle" data-toggle="dropdown" aria-expanded="false">' +
+			'<button class="btn btn-info dropdown-toggle" id="theme-list-toggle" data-toggle="dropdown" aria-expanded="false">' +
 				'Select Theme ' +
 				'<span class="caret"></span>' +
 				'<span class="sr-only">Toggle Dropdown</span>' +
