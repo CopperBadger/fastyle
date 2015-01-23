@@ -9,72 +9,72 @@
 	},
 	"permissions": [
 		"activeTab",
-		"http://www.furaffinity.net/"
+		"*://*.furaffinity.net/"
 	],
 	"content_scripts":[
 		{
-			"matches": ["http://www.furaffinity.net/*"],
+			"matches": ["*://*.furaffinity.net/*"],
 			"css": ["lib/css/united/bootstrap.min.css"],
 			"js": ["lib/js/jquery.min.js","lib/js/bootstrap.min.js","render.js"]
 		},
 		{
 			"matches": [
-				"http://www.furaffinity.net/user/*",
-				"http://www.furaffinity.net/commissions/*",
-				"http://www.furaffinity.net/journals/*",
-				"http://www.furaffinity.net/journal/*",
-				"http://www.furaffinity.net/gallery/*",
-				"http://www.furaffinity.net/scraps/*",
-				"http://www.furaffinity.net/favorites/*",
-				"http://www.furaffinity.net/stats/*"
-			],
+				"*://*.furaffinity.net/user/*",
+				"*://*.furaffinity.net/commissions/*",
+				"*://*.furaffinity.net/journals/*",
+				"*://*.furaffinity.net/journal/*",
+				"*://*.furaffinity.net/gallery/*",
+				"*://*.furaffinity.net/scraps/*",
+				"*://*.furaffinity.net/favorites/*",
+				"*://*.furaffinity.net/stats/*"
+			],	
 			"js": ["userbar.js"]
 		},
 		{
-			"matches": ["http://www.furaffinity.net/user/*"],
+			"matches": ["*://*.furaffinity.net/user/*"],
 			"js": ["user.js"]
 		},
 		{
 			"matches": [
-				"http://www.furaffinity.net/gallery/*",
-				"http://www.furaffinity.net/scraps/*",
-				"http://www.furaffinity.net/favorites/*",
-				"http://www.furaffinity.net/browse/",
-				"http://www.furaffinity.net/search*",
-				"http://www.furaffinity.net/",
-				"http://www.furaffinity.net/msg/submissions*"
+				"*://*.furaffinity.net/gallery/*",
+				"*://*.furaffinity.net/scraps/*",
+				"*://*.furaffinity.net/favorites/*",
+				"*://*.furaffinity.net/browse/",
+				"*://*.furaffinity.net/search*",
+				"*://*.furaffinity.net/",
+				"*://*.furaffinity.net/msg/submissions*"
 			],
 			"js": ["gallery.js"]
 		},
 		{
 			"matches": [
-				"http://www.furaffinity.net/view/*",
-				"http://www.furaffinity.net/full/*"
+				"*://*.furaffinity.net/view/*",
+				"*://*.furaffinity.net/full/*"
 			],
 			"js": ["submission.js","comments.js"]
 		},
 		{
-			"matches": ["http://www.furaffinity.net/search*"],
+			"matches": ["*://*.furaffinity.net/search*"],
 			"js": ["search.js"]
 		},
 		{
-			"matches": ["http://www.furaffinity.net/msg/others*"],
+			"matches": ["*://*.furaffinity.net/msg/others*"],
 			"js": ["messages.js"]
 		},
 		{
-			"matches": ["http://www.furaffinity.net/controls/messages/"],
+			"matches": ["*://*.furaffinity.net/controls/messages/"],
 			"js": ["messagelist.js"]
 		},
 		{
-			"matches": ["http://www.furaffinity.net/journals/*"],
+			"matches": ["*://*.furaffinity.net/journals/*"],
 			"js": ["journallist.js"]
 		},
 		{
-			"matches": ["http://www.furaffinity.net/journal/*"],
+			"matches": ["*://*.furaffinity.net/journal/*"],
 			"js": ["journal.js","comments.js"]
 		},
 		{
-			"matches": ["http://www.furaffinity.net/*"],
+			"matches": ["*://*.furaffinity.net/*"],
 			"js": ["cleanup.js"]
 		}
 	]
