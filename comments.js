@@ -1,3 +1,32 @@
+function serialize(el) {
+  var MD5 = function(src){return "";} //Dummy encryption function
+  var o={};
+  $.map($(el).find('input:not([type=radio]:not(:checked)), select, textarea'),function(e) {
+    if(n=(e=$(e)).prop('name')) {
+      o[n]=((e.is('[type=password]'))
+        ?MD5(e.val())
+        :((e.is('[type=checkbox]'))
+          ?e.is(':checked')
+          :e.val()));
+    }
+  });
+  return o;
+}
+
+function makeCommentForm(cid) {
+	return '<form action="javascript:void(0)" class="form well comment-form">' +
+		'<input type="hidden" name="action" value="replyto" />' +
+		'<input type="hidden" name="replyto" value="'+(cid||'')+'" />' +
+		'<div class="form-group">' +
+			'<label class="control-label" for="reply-input">Reply</label>' +
+			'<textarea class="form-control" name="reply" id="reply-input"></textarea>' +
+		'</div>' +
+		'<div class="form-group">' +
+			'<input class="btn btn-default pull-right" type="submit" value="Reply" />' +
+		'</div>' +
+	'</form>'
+}
+
 $(document).ready(function(){
 	console.log("comments.js, reporting in")
 
@@ -6,13 +35,13 @@ $(document).ready(function(){
 	row.append("<div class='col-xs-12'>")
 	$(row).find('.col-xs-12')
 		.html('<div class="panel panel-default">' +
-			'<div class="panel-heading" id="commend-header"></div>' +
+			'<div class="panel-heading" id="comment-header"></div>' +
 			'<div class="panel-body"><ul class="media-list" id="comment-list"></ul></div>' +
 		'</div>')
 
 	var newComment = function(par,src){
-		//if(par){par = $(par).find('.media-body:first')}
-		out = $("<li class='media' id='"+$(src).attr('id')+"'>").appendTo(par||outWrapper)
+		if(!(t=$(src).attr('id'))||t.search(/cid\:\d+/)==-1){return null}
+		out = $("<li class='media' id='"+$(src).attr('id')+"'>").appendTo(par)
 			.html($(src).find('.icon').html())
 				.find('a').addClass("media-left").end()
 				.find('img').addClass('img img-rounded').css({'width':'64px'}).end()
@@ -24,9 +53,38 @@ $(document).ready(function(){
 		return out
 	}
 
+	// Need to do this because WebKit messes up media displays for some reason
+	$('.media-body').css({display:'table-cell'})
+
 	num = $('.container-comment').each(function(){
 		newComment('#comment-list',this)
-	}).remove().length
+	}).length
 
-	$("#commend-header").html("Comments &#183; "+num)
+	$("#comment-header").html("Comments &#183; "+num)
+
+	/*$('<div id="comment-form-wrapper"></div>').insertAfter('#comment-list')
+		.html(makeCommentForm())
+
+	var getId = function(e){
+		return parseInt(t=((t=$(e).attr('id'))?t.match(/\d+/):["0","0"])?t[1]:0)
+	}
+
+	$('body').on("submit",".comment-form",function(){
+		obj = serialize(this)
+		console.log(obj)
+		tgt = (n=obj.replyto)?$('#cid:'+n):$('.container-comment:last');
+		self = this
+		$.ajax({
+			url: document.location.href,
+			type: "POST",
+			data:obj,
+			complete:function(xhr){
+				$(self).find('textarea').val();
+				newComment($('#comment-list'),$(xhr.responseText)
+					.find('.container-comment a[href*='+window.fastyle.truncateduname+']')
+					.parents('.container-comment').sort(function(a,b){return getId(a)>getId(b)})
+					.remove()).remove().insertAfter(tgt).hide().slideDown()
+			}
+		})
+	})*/
 })

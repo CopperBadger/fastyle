@@ -44,7 +44,7 @@ $(document).ready(function(){
 
 	firstTable = $('.ldot>b:contains(Full Name)').parents('.maintable:first').children('tbody')
 	window.fastyle.profile_of = $(firstTable).find('tr:nth-child(2)>.addpad.lead>b').text().substring(1)
-	truncatedName = window.fastyle.profile_of.toLowerCase().match(/[a-z0-9\-]+/g).join('')
+	truncatedName = window.fastyle.truncateduname = window.fastyle.profile_of.toLowerCase().match(/[a-z0-9\-]+/g).join('')
 
 	// Page header
 	if(userBannerHref = (a=$('#featured-submission a')).attr("href")||(a=$('.flow.userpage-first-submission a')).attr("href")){
@@ -143,13 +143,14 @@ $(document).ready(function(){
 				.attr('data-expanded','false')
 		} else {
 			$('#profile-info-expander').text("Show Less")
-			$('#profile-info .panel-body').animate({'max-height':$('#profile-info').attr('data-full-height')})
+			h = $('#profile-info .panel-body').css({'max-height':''}).height()
+			$('#profile-info .panel-body').css({'max-height':'196px'}).animate({'max-height':h})
 				.attr('data-expanded','true')
 		}
 	}
 
 	$('<ul class="list-group"><a href="javascript:void(0)" class="list-group-item" id="profile-info-expander">Read More</a></ul>')
-		.appendTo((e=$('#profile-info')).attr('data-full-height',e.height()+72)
+		.appendTo((e=$('#profile-info'))
 		.find('.panel-body').css({'max-height':'196px','overflow':'hidden'}).end())
 		.click(toggleInfo)
 
