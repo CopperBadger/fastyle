@@ -44,7 +44,7 @@ $(document).ready(function(){
 
 	firstTable = $('.ldot>b:contains(Full Name)').parents('.maintable:first').children('tbody')
 	window.fastyle.profile_of = $(firstTable).find('tr:nth-child(2)>.addpad.lead>b').text().substring(1)
-	truncatedName = window.fastyle.truncateduname = window.fastyle.profile_of.toLowerCase().match(/[a-z0-9\-]+/g).join('')
+	truncatedName = window.fastyle.truncateduname = window.fastyle.profile_of.toLowerCase().match(/[a-z0-9\-\~\.]+/g).join('')
 
 	// Page header
 	if(userBannerHref = (a=$('#featured-submission a')).attr("href")||(a=$('.flow.userpage-first-submission a')).attr("href")){
@@ -250,7 +250,6 @@ $(document).ready(function(){
 			.click(toggleSummary)
 
 	} else {$('#summary-well').css({'overflow-x':'hidden'})}
-	$('.bbcode_center').css({'text-align':'center'})
 
 	// Submissions
 	subs = $('.flow.userpage-submissions.twolines a')
