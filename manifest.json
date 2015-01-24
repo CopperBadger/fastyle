@@ -33,6 +33,10 @@
 			"js": ["user.js"]
 		},
 		{
+			"matches": ["*://*.furaffinity.net/commissions/*"],
+			"js": ["commissions.js"]
+		},
+		{
 			"matches": [
 				"*://*.furaffinity.net/gallery/*",
 				"*://*.furaffinity.net/scraps/*",
