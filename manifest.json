@@ -77,12 +77,16 @@
 			"js": ["journal.js","comments.js"]
 		},
 		{
-			"matches": ["*://*.furaffinity.net/*"],
-			"js": ["cleanup.js"]
-		},
-		{
 			"matches": ["*://*.furaffinity.net/msg/pms*"],
 			"js": ["notes.js"]
+		},
+		{
+			"matches": ["*://*.furaffinity.net/login*"],
+			"js": ["login.js"]
+		},
+		{
+			"matches": ["*://*.furaffinity.net/*"],
+			"js": ["cleanup.js"]
 		}
 	]
 }
