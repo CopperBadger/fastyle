@@ -77,6 +77,10 @@
 			"js": ["journal.js","comments.js"]
 		},
 		{
+			"matches": ["*://*.furaffinity.net/controls/journal*"],
+			"js": ["composejournal.js"]
+		},
+		{
 			"matches": ["*://*.furaffinity.net/msg/pms*"],
 			"js": ["notes.js"]
 		},
