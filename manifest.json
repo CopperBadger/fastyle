@@ -75,6 +75,10 @@
 		{
 			"matches": ["*://*.furaffinity.net/*"],
 			"js": ["cleanup.js"]
+		},
+		{
+			"matches": ["*://*.furaffinity.net/msg/pms*"],
+			"js": ["notes.js"]
 		}
 	]
 }
