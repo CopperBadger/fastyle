@@ -42,8 +42,6 @@ function serialize(el) {
 
 $(document).ready(function(){
 
-	console.log("gallery.js, reporting in")
-
 	if(document.location.pathname=="/msg/submissions/"){
 		row = $('<div class="row" id="gallery-controls">').insertBefore(".content.maintable:first")
 			.html('<button class="btn btn-default select-all">Select All</button> ' +
@@ -76,6 +74,7 @@ $(document).ready(function(){
 			$.ajax({
 				url: "/msg/submissions/",
 				type: "POST",
+				data: {'messagecenter-action':'Nuke all Submissions'},
 				complete:function(xhr){
 					$('#gallery-container').remove()
 				}
@@ -97,7 +96,11 @@ $(document).ready(function(){
 	window.fastyle.pageNumber = parseInt((t=document.location.href.match(/(\d)\//))?t[1]:1)
 	window.fastyle.fetchSize = 36
 
-	if(page){
+	if($('#no-images').length){
+		$('#gallery-container').append("<h3 style='text-align:center'>(No items to list)</h3>")
+	}
+
+	if(page) {
 		$(document).scroll(function(){
 			if(window.fastyle.scrollThresh>0 && $(document).scrollTop() > window.fastyle.scrollThresh) {
 				if(ta=(window.fastyle.nextHref||$('a.more:first').attr('href'))){
