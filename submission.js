@@ -99,7 +99,7 @@ $(document).ready(function() {
 	$('.footer').remove().insertAfter(infowrap)
 
 	// Make favorite button asynchronous
-	$('a[href^="/fav"]').on("click",function(){
+	$('a[href^="/fav/"]').on("click",function(){
 		msg = $(this).text().search("Remove")!=-1?"Unfaved":"Faved!"
 		$(this).text(window.fastyle.funTitles[Math.floor(Math.random()*window.fastyle.funTitles.length)])
 		self = this

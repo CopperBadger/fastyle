@@ -23,10 +23,10 @@ $(document).ready(function(){
 
 	tab = tab.parents('table:first')
 
-	row = $("<div class='row'>").insertBefore(".content.maintable")
+	row = $("<div class='row' style='margin:16px 0'>").insertBefore(".content.maintable")
 
 	$('#journal-heading').append(pubDate.remove())
 
-	$("<div class='col-xs-12'>").appendTo(row)
+	$("<div class='col-xs-12 well'>").appendTo(row)
 		.html($(tab).find('td.alt1 .no_overflow').html())
 })
