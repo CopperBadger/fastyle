@@ -63,9 +63,10 @@ $(document).ready(function(){
 
 	$("#comment-header").html("Comments &#183; "+num)
 
-	/*$('<div id="comment-form-wrapper"></div>').insertAfter('#comment-list')
-		.html(makeCommentForm())
-
+	$('<div id="comment-form-wrapper"></div>').insertAfter('#comment-list')
+		.html("<h3>Comment form under development <em>right now</em>.</h3>")
+		//.html(makeCommentForm())
+	/*
 	var getId = function(e){
 		return parseInt(t=((t=$(e).attr('id'))?t.match(/\d+/):["0","0"])?t[1]:0)
 	}
