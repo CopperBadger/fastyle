@@ -85,12 +85,6 @@ $(document).ready(function(){
 	row = $('<div class="row" id="gallery-container">').insertBefore(".content.maintable:first")
 	renderImages()
 
-	$('.content.maintable').hide()
-
-	window.fastyle.scrollThresh = Math.round($(document).height()-($(window).height()*1.5))
-	console.log("Initializing scroll thresh = "+window.fastyle.scrollThresh + ", doc height = "+$(document).height())
-
-	$('.content.maintable').show()
 
 	page = (t=document.location.href.match(/\.net\/(.+)\d?\/?/))?t[1]:""
 	window.fastyle.pageNumber = parseInt((t=document.location.href.match(/(\d)\//))?t[1]:1)
@@ -100,13 +94,20 @@ $(document).ready(function(){
 		$('#gallery-container').append("<h3 style='text-align:center'>(No items to list)</h3>")
 	}
 
+	$('.content.maintable').hide()
+
+	window.fastyle.scrollThresh = Math.round($(document).height() - $(window).height()*2)
+	console.log("Initializing scroll thresh = "+window.fastyle.scrollThresh + ", doc height = "+$(document).height())
+
+	$('.content.maintable').show()
+
 	if(page) {
 		$(document).scroll(function(){
 			if(window.fastyle.scrollThresh>0 && $(document).scrollTop() > window.fastyle.scrollThresh) {
 				if(ta=(window.fastyle.nextHref||$('a.more:first').attr('href'))){
 					u = ta
 				} else {
-					u = "http://www.furaffinity.net/"+page+"/"+(++window.fastyle.pageNumber)
+					u = document.location.protocol+"//"+window.fastyle.domain+".furaffinity.net/"+page+"/"+(++window.fastyle.pageNumber)
 				}
 
 				d = serialize(sf=$('#search-form'));
@@ -126,12 +127,18 @@ $(document).ready(function(){
 						n = renderImages(res)
 						console.log("Rendered "+n+" images")
 						if(n==window.fastyle.fetchSize) {
-							window.fastyle.scrollThresh = Math.round($(document).height()-($(window).height()*1.5))
+							window.fastyle.scrollThresh = Math.round($(document).height() - $(window).height()*2)
 							console.log("Setting scroll thresh = "+window.fastyle.scrollThresh + ", doc height = "+$(document).height())
 						}
 					}
 				})
 			}
+		})
+
+		$(window).on("resize",function(){
+			console.log("resizing window...")
+			window.fastyle.scrollThresh = Math.round($(document).height() - $(window).height()*2)
+			console.log("Setting scroll thresh = "+window.fastyle.scrollThresh + ", doc height = "+$(document).height())
 		})
 	}
 	$('#new-search-form').remove().insertBefore(row)
