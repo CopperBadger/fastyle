@@ -87,7 +87,7 @@ $(document).ready(function(){
 	$(firstTable).css({'background-color':'rgba(0,0,0,0.1)'})
 
 	idpic = (idlink=$('#profilepic-submission a')).find('img').attr('src')
-	avatar = ("http://a.facdn.net/"+truncatedName+'.gif')
+	avatar = ("//a.facdn.net/"+truncatedName+'.gif')
 
 	// --- First Column: ID Badge + Info, Watches list, Watchers list
 	col = $('<div class="col-md-4">').appendTo(cursorRow)
@@ -203,7 +203,7 @@ $(document).ready(function(){
 		$(watchers).each(function() {
 			name = $(this).text()
 			$("<div class='col-xs-3'>").appendTo(row)
-				.append("<img src='http://a.facdn.net/"+((t=$(this).attr("href").match(/([^\/]+)\/$/))?t[1]:'null/undefined')+".gif' alt='"+name+"' />")
+				.append("<img src='//a.facdn.net/"+((t=$(this).attr("href").match(/([^\/]+)\/$/))?t[1]:'null/undefined')+".gif' alt='"+name+"' />")
 				.wrapInner("<a href='"+$(this).attr("href")+"' class='thumbnail' title='"+name+"'>")
 			if(++idx==4) {row = $("<div class='row'>").insertAfter(row);idx=0;}
 		});
@@ -255,7 +255,7 @@ $(document).ready(function(){
 	subs = $('.flow.userpage-submissions.twolines a')
 	if(subs.length) {
 		pan = $('<div class="panel panel-default"></div>').appendTo(col)
-			.append("<div class='panel-heading'><a href='http://www.furaffinity.net/gallery/"+truncatedName+"/'>Submissions</a></div>")
+			.append("<div class='panel-heading'><a href='//"+window.fastyle.domain+".furaffinity.net/gallery/"+truncatedName+"/'>Submissions</a></div>")
 			.append("<div class='panel-body'><div class='row'><div class='col-md-12' id='submission-well'></div></div></div>")
 		list = $('#submission-well')
 		var newRow = function(){return $('<div class="row"></div>').appendTo(list)}
@@ -281,7 +281,7 @@ $(document).ready(function(){
 	faves = $('.flow.userpage-favorites.twolines a')
 	if(faves.length) {
 		pan = $('<div class="panel panel-default"></div>').appendTo(col)
-			.append("<div class='panel-heading'><a href='http://www.furaffinity.net/favorites/"+truncatedName+"/'>Favorites</a></div>")
+			.append("<div class='panel-heading'><a href='//"+window.fastyle.domain+".furaffinity.net/favorites/"+truncatedName+"/'>Favorites</a></div>")
 			.append("<div class='panel-body'><div class='row'><div class='col-md-12' id='favorites-well'></div></div></div>")
 		list = $('#favorites-well')
 		var newRow = function(){return $('<div class="row"></div>').appendTo(list)}

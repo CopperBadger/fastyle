@@ -97,8 +97,8 @@ $(document).ready(function(){
 		obj = serialize(this)
 		obj.subject = ""
 		obj.f = ""
-		console.log(obj)
-		tgt = (n=obj.replyto)?$('[data-cid="cid:'+n+'"]'):$('#comment-list li.media:last');
+		target = after = undefined
+		target = (after=!!(n=obj.replyto))?$('[data-cid="cid:'+n+'"]'):$('#comment-list li.media:last');
 		self = this
 		$.ajax({
 			url: document.location.href,
@@ -106,10 +106,10 @@ $(document).ready(function(){
 			data:obj,
 			complete:function(xhr){
 				$(self).find('textarea').val("");
-				newComment($(tgt),$($(xhr.responseText).find('.container-comment[data-timestamp!=""] a[href*="copperbadger"]')
+				newComment($(target),$($(xhr.responseText).find('.container-comment[data-timestamp!=""] a[href*="copperbadger"]')
 				.parents('.container-comment').sort(function(a,b){
 					return parseInt($(a).attr('data-timestamp'))>parseInt($(b).attr('data-timestamp'))
-				}).last()),true).hide().slideDown()
+				}).last()),after).hide().slideDown()
 			}
 		})
 	})
