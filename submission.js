@@ -14,10 +14,11 @@ $(document).ready(function() {
 	authorHref = author.eq(0).attr('href')
 	authorName = author.eq(0).text()
 	authorAvatar = author.eq(1).find('img').attr('src')
+	pubdate = $('.popup_date:first').wrap('<span>').parent().html()
 
 	// Header
 	$('<div class="col-xs-12 media">').appendTo(row)
-		.html("<div class='media-left'><a href='"+authorHref+"'><img src='"+authorAvatar+"' class='img img-rounded' /></a></div><div class='media-body'><div class='media-heading'><h3>"+subimgName+"</h3></div>by <a href='"+authorHref+"'>"+authorName+"</a></div>")
+		.html("<div class='media-left'><a href='"+authorHref+"'><img src='"+authorAvatar+"' class='img img-rounded' /></a></div><div class='media-body'><div class='media-heading'><h3>"+subimgName+"</h3></div>by <a href='"+authorHref+"'>"+authorName+"</a>, "+pubdate+"</div>")
 
 	// Submission Content
 	eval($('.alt1 script').text()) // Grab image urls

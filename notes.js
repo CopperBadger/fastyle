@@ -74,7 +74,7 @@ $(document).ready(function(){
 		senderAnchor = $(this).find('a[href*="user/"]')
 		senderHref = senderAnchor.attr('href')
 		senderName = window.fastyle.truncateName(((t=senderAnchor.text())?t.substring(1):"")||"")
-		sentDate = $(this).find('.popup_date').wrap('<span>').html()
+		sentDate = $(this).find('.popup_date').wrap('<span>').parent().html()
 
 		// Skip for rows that aren't actually messages
 		if(!senderName){return true}
