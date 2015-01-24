@@ -13,7 +13,7 @@
 			"matches": [
 				"*://*.furaffinity.net/*"
 			],
-			"js": ["lib/js/jquery.min.js","lib/js/bootstrap.min.js","render.js"]
+			"js": ["lib/js/jquery.min.js","lib/js/bootstrap.min.js","setup.js","render.js"]
 		},
 		{
 			"matches": [
