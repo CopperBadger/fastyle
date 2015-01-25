@@ -61,6 +61,10 @@
 			"js": ["search.js"]
 		},
 		{
+			"matches": ["*://*.furaffinity.net/controls/profile*"],
+			"js": ["profileinfo.js"]
+		},
+		{
 			"matches": ["*://*.furaffinity.net/msg/others*"],
 			"js": ["messages.js"]
 		},
