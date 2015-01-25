@@ -133,10 +133,27 @@ var formSkel =
 	'</div>'+
 '</div>';
 
+function couldBeUsername(username) {
+	var isValid = false;
+	
+	var alphanumerics = username.replace("[^a-zA-Z0-9]", "");
+	var countAlphaNum = alphanumerics.length;
+	
+	var allowedChars = new RegExp("^[A-Za-z0-9-_~\.]+$");
+	var isAllowed = allowedChars.test(username);
+	
+	if ( (countAlphaNum >= 3) && (isAllowed)){
+		isValid = true;
+	}
+	
+	return isValid;
+}
+
 $(document).ready(function(){
 	
-	$(topSkel).insertBefore("#gallery-container");
-	
+	if ($("#search-results").length > 0) {
+		$(topSkel).insertBefore("#gallery-container");
+	}
 	$(formSkel).insertBefore('.content.maintable');
 
 	$('#search-form fieldset:first').hide();
@@ -144,10 +161,7 @@ $(document).ready(function(){
 	var searchQuery = $("#q").val();
 	$("#query-text").text(searchQuery);
 	
-	var usernamePattern = new RegExp("^[A-Za-z0-9-_~\.]+$");
-	var isValidUsername = usernamePattern.test(searchQuery);
-	
-	if (isValidUsername) {
+	if (couldBeUsername(searchQuery)) {
 	
 		$.ajax({
 		    url : '/register/?phase=5&mode=check_username',
@@ -163,10 +177,6 @@ $(document).ready(function(){
 				if (status == 1) {
 					$("#username-link").removeClass('hidden').attr('href','/user/' + searchQuery);
 					$("#found-img").attr('src', '//a.facdn.net/'+ searchQuery +'.gif');
-					console.log("username found");
-				}
-				else {
-					console.log("username not found");
 				}
 				$("#username-searching").remove();
 				$("#username-error").remove();
@@ -183,7 +193,6 @@ $(document).ready(function(){
 	else {
 		$("#username-searching").remove();
 		$("#username-error").remove();
-		console.log("regex mismatch");
 	}
 
 })
