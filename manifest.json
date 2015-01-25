@@ -89,6 +89,14 @@
 			"js": ["notes.js"]
 		},
 		{
+			"matches": [
+				"*://*.furaffinity.net/viewmessage*",
+				"*://*.furaffinity.net/msg/compose*",
+				"*://*.furaffinity.net/newpm*"
+			],
+			"js": ["notecompose.js"]
+		},
+		{
 			"matches": ["*://*.furaffinity.net/login*"],
 			"js": ["login.js"]
 		},
