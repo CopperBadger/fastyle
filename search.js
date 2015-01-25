@@ -1,6 +1,25 @@
-$(document).ready(function(){
+var topSkel = 
+	'<div class="row" id="new-search-query">'+
+		'<div class="col-sm-12">'+
+			'<h3>Search results for <span id="query-text"></span></h3>'+
+		'</div>'+
+	'</div>'+
+	
+	'<div class="row" id="username-found">'+
+		'<div class="col-sm-12">'+
+			'<div class="list-group">'+
+				'<a href="#" class="list-group-item" id="username-searching">Checking if Username exists...</a>'+
+				'<a href="#" class="list-group-item list-group-item-danger hidden" id="username-error">Error checking for username</a>'+
+				'<a style="padding: 3px 5px 5px 5px;" href="#" class="list-group-item list-group-item-success hidden" id="username-link"><img style="width:35px; margin-right: 5px;" id="found-img" class="img-rounded" />&nbsp;<div style="margin-top:8px;display:inline-block;">Found a matching username! Click here to go to their profile.</div></a>'+
+			'</div>'+
+		'</div>'+
+	'</div>';
 
-	$('<div class="row" id="new-search-form">').insertBefore('.content.maintable').html('<div class="page-header"><h2>Search</h2></div>' +
+
+var formSkel = 
+'<div class="row" id="new-search-form">' +
+'<div class="col-sm-12">'+
+	'<div class="page-header"><h2>Search</h2></div>' +
 		'<form class="form form-horizontal" method="POST" action="/search">' +
 			'<div class="col-sm-6">'+
 				'<div class="form-group">' +
@@ -110,11 +129,61 @@ $(document).ready(function(){
 					'</div>' +
 				'</div>' +
 			'</div>' +
+		'</form>'+
+	'</div>'+
+'</div>';
 
-		'</form>')
+$(document).ready(function(){
+	
+	$(topSkel).insertBefore("#gallery-container");
+	
+	$(formSkel).insertBefore('.content.maintable');
 
-	$('.page-header').wrap('<div class="col-sm-12">')
-
-	$('#search-form fieldset:first').hide()
+	$('#search-form fieldset:first').hide();
+		
+	var searchQuery = $("#q").val();
+	$("#query-text").text(searchQuery);
+	
+	var usernamePattern = new RegExp("^[A-Za-z0-9-_~\.]+$");
+	var isValidUsername = usernamePattern.test(searchQuery);
+	
+	if (isValidUsername) {
+	
+		$.ajax({
+		    url : '/register/?phase=5&mode=check_username',
+		    type: 'POST',
+		    data : {
+			    username: searchQuery
+			},
+		    success: function(ret){
+			    
+			    var result = ret.replace("/*-secure-\n","").replace("*/","");
+				result = JSON.parse(result);
+				status = result.status;
+				if (status == 1) {
+					$("#username-link").removeClass('hidden').attr('href','/user/' + searchQuery);
+					$("#found-img").attr('src', '//a.facdn.net/'+ searchQuery +'.gif');
+					console.log("username found");
+				}
+				else {
+					console.log("username not found");
+				}
+				$("#username-searching").remove();
+				$("#username-error").remove();
+		    },
+		    error: function (result){
+		 		$("#username-link").removeClass('hidden').
+				$("#username-searching").remove();
+				$("#username-link").remove();
+		    }
+		});
+		
+	}
+	
+	else {
+		$("#username-searching").remove();
+		$("#username-error").remove();
+		console.log("regex mismatch");
+	}
 
 })
