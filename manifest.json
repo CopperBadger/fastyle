@@ -89,6 +89,21 @@
 			"js": ["login.js"]
 		},
 		{
+			"matches": [
+				"*://*.furaffinity.net/register/",
+				"*://*.furaffinity.net/register"
+				],
+			"js": ["register.js"]
+		},
+		{
+			"matches": ["*://*.furaffinity.net/register/finalize*"],
+			"js": ["registerfinalize.js"]
+		},
+		{
+			"matches": ["*://*.furaffinity.net/register/welcome*"],
+			"js": ["welcome.js"]
+		},
+		{
 			"matches": ["*://*.furaffinity.net/*"],
 			"js": ["cleanup.js"]
 		}

@@ -1,26 +1,32 @@
+
 skel = '<div class="row">' +
 	'<div class="col-md-6 col-md-push-3">' +
 		'<div class="page-header">' +
-			'<h2>Log in to FurAffinity</h2>' +
+			'<h2>Welcome to FurAffinity</h2>' +
 		'</div>' +
-		'<form action="/login/?ref=http://www.furaffinity.net/" method="POST" class="form well" id="login-form">' +
-			'<input type="hidden" name="action" value="login" />' +
-			'<input type="hidden" name="retard_protection" value="1" />' + //I honestly don't know, but it was in the original markup so :shrugs:
-			'<div class="form-group">' +
-				'<label for="username-input" class="control-label">Username</label>' +
-				'<input type="text" name="name" class="form-control" id="username-input" placeholder="Username" />' +
+		'<div class="panel panel-default">' +
+			'<div class="panel-heading">Login</div>' +
+			'<div class="panel-body">' +
+				'<form action="/login/?ref=http://www.furaffinity.net/" method="POST" class="form" id="login-form">' +
+					'<input type="hidden" name="action" value="login" />' +
+					'<input type="hidden" name="retard_protection" value="1" />' + //I honestly don't know, but it was in the original markup so :shrugs:
+					'<div class="form-group">' +
+						'<label for="username-input" class="control-label">Username</label>' +
+						'<input type="text" name="name" class="form-control" id="username-input" placeholder="Username" />' +
+					'</div>' +
+					'<div class="form-group">' +
+						'<label for="password-input" class="control-label">Password</label>' +
+						'<input type="password" name="pass" class="form-control" id="password-input" placeholder="Password" />' +
+					'</div>' +
+					'<div class="form-group">' +
+						'<label for=""></label>' +
+						'<button type="submit" class="btn btn-primary">' +
+							'Log In' +
+						'</button>' +
+					'</div>' +
+				'</form>' +
 			'</div>' +
-			'<div class="form-group">' +
-				'<label for="password-input" class="control-label">Password</label>' +
-				'<input type="password" name="pass" class="form-control" id="password-input" placeholder="Password" />' +
-			'</div>' +
-			'<div class="form-group">' +
-				'<label for=""></label>' +
-				'<button type="submit" class="btn btn-primary">' +
-					'Log In' +
-				'</button>' +
-			'</div>' +
-		'</form>' +
+		'</div>' +
 	'</div>' +
 	'<div class="col-md-3 col-md-pull-3"></div>' +
 	'<div class="col-md-3"></div>' +
