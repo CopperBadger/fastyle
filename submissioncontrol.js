@@ -10,10 +10,9 @@ function renderThumbs(){
 
 		submissionAnchor = $(par).find('a[href*=view]')
 		submissionHref = $(submissionAnchor).attr('href')
-		submissionID = submissionHref.match(/\d+/)[0]
 		submissionThumb = submissionAnchor.find('img').attr('src')
-		deleteKey = $(par).find('.hlp').attr('onclick')
-			.match(/key=([^&]+)/)[1]
+		deletePath = $(par).find('.hlp').attr('onclick')
+			.match(/\'(\/[^\']+)\'/)[1]
 		$(par).find('a,br').remove()
 		submissionName = $(par).text().replace(/\s*\[\s*\]\s*$/,'')
 
@@ -26,7 +25,7 @@ function renderThumbs(){
 				'</div>' +
 				'<div class="col-xs-8">' +
 					'<h4 class="submission-title"><a href="'+submissionHref+'">'+submissionName+'</a></h4>' +
-					'<a href="javascript:void(0)" data-id="'+submissionID+'" data-key="'+deleteKey+'" class="btn btn-danger delete-confirm">Delete</a>' +
+					'<a href="javascript:void(0)" data-delete-path="'+deletePath+'" class="btn btn-danger delete-confirm">Remove</a>' +
 				'</div>' +
 			'</div>' +
 		'</div>').appendTo(row)
@@ -54,24 +53,26 @@ $(document).ready(function(){
 	renderThumbs()
 
 	// Next / Previous paging buttons
-	pageNum = parseInt((t=document.location.pathname.match(/\d+/))?t[0]:0)
-	$('#next-page-button').attr('href','/controls/submissions/'+(pageNum+1)+'/')
+	path = document.location.pathname
+	page = path.match(/controls\/([^\/]+)/)[1]
+	pageNum = parseInt((t=path.match(/\d+/))?t[0]:0)
+	$('#next-page-button').attr('href','/controls/'+page+'/'+(pageNum+1)+'/')
 	if(!pageNum) {
 		$('#prev-page-button').parent('li').remove()
 	} else {
-		$('#prev-page-button').attr('href','/controls/submissions/'+(pageNum-1)+'/')
+		$('#prev-page-button').attr('href','/controls/'+page+'/'+(pageNum-1)+'/')
 	}
 
 	// Event Bindings
 	$('.delete-confirm').on("click",function(){
-		if(confirm("Are you absolutely sure you want to delete this submission? This cannot be undone.")){
+		if(confirm("Are you absolutely sure you want to remove this submission?")){
 			tgt = $(this).parents('.submission-row:first').css({opacity:0.8})
 			$.ajax({
-				url: "/controls/submissions/delete/"+$(this).attr('data-id')+"/?key="+$(this).attr('data-key')+"&page="+pageNum,
+				url: $(this).attr('data-delete-path'),
 				type: "POST",
 				complete: function(){
-					$(this).parents('.submission-row:first').css({opacity:0.2})
-						.find('.submission-title').text("Deleted")
+					$(tgt).css({opacity:0.2})
+						.find('.submission-title').text("Removed")
 				}
 			})
 		}
