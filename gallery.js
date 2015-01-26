@@ -147,11 +147,14 @@ $(document).ready(function(){
 	}
 
 	var getNextURL = function(){
+		out = ""
 		if(ta=(window.fastyle.nextHref||$('a.more:first').attr('href'))){
-			return ta
+			out = ta
 		} else {
-			return document.location.protocol+"//"+window.fastyle.domain+".furaffinity.net/"+page+"/"+(++window.fastyle.pageNumber)
+			out = document.location.protocol+"//"+window.fastyle.domain+".furaffinity.net/"+page+"/"+(++window.fastyle.pageNumber)
 		}
+
+		return out.replace(/([^\:])\/{2,}/g,'$1/')
 	}
 
 	if(page && imagesExist) {
