@@ -72,6 +72,7 @@
 			"matches": ["*://*.furaffinity.net/controls/messages/"],
 			"js": ["messagelist.js"]
 		},
+
 		{
 			"matches": ["*://*.furaffinity.net/journals/*"],
 			"js": ["journallist.js"]
@@ -83,6 +84,10 @@
 		{
 			"matches": ["*://*.furaffinity.net/controls/journalsettings*"],
 			"js": ["journalsettings.js"]
+		},
+		{
+			"matches": ["*://*.furaffinity.net/controls/submissions*"],
+			"js": ["submissioncontrol.js"]
 		},
 		{
 			"matches": ["*://*.furaffinity.net/controls/journal/*"],
