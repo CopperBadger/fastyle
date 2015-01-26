@@ -38,7 +38,7 @@ function serialize(el) {
     }
   });
   return o;
-} 
+}
 
 $(document).ready(function(){
 
@@ -101,39 +101,71 @@ $(document).ready(function(){
 
 	$('.content.maintable').show()
 
-	if(page) {
-		$(document).scroll(function(){
-			if(window.fastyle.scrollThresh>0 && $(document).scrollTop() > window.fastyle.scrollThresh) {
-				if(ta=(window.fastyle.nextHref||$('a.more:first').attr('href'))){
-					u = ta
-				} else {
-					u = document.location.protocol+"//"+window.fastyle.domain+".furaffinity.net/"+page+"/"+(++window.fastyle.pageNumber)
-				}
+	window.fastyle.clearToLoad = true
+	var imagesExist = $('.r-general, .r-mature, .r-adult').length
 
-				d = serialize(sf=$('#search-form'));
+	var loadMore = function(){
+		if(window.fastyle.clearToLoad) {
+			window.fastyle.clearToLoad = false
+			$('#load-more-button').text("Loading More...")
+
+			u = getNextURL()
+			d = serialize(sf=$('#search-form'));
 					d.perpage=window.fastyle.fetchSize
 					d.go="Next"
 					if(sf.length){d.page = window.fastyle.pageNumber-1}
 					delete d.do_search
-				console.log("Triggered! Going to "+u)
-				window.fastyle.scrollThresh = 0
-				$.ajax({
-					url:u,
-					type:(page=="browse/")?"GET":"POST",
-					data:d,
-					complete:function(xhr){
-						res = $(xhr.responseText)
-						window.fastyle.nextHref = $(res).find('a.more:first').attr('href')
-						n = renderImages(res)
-						console.log("Rendered "+n+" images")
-						if(n==window.fastyle.fetchSize) {
+
+			console.log("Triggered! Going to "+u)
+			$.ajax({
+				url:u,
+				type:(page=="browse/")?"GET":"POST",
+				data:d,
+				complete:function(xhr){
+					res = $(xhr.responseText)
+					window.fastyle.nextHref = $(res).find('a.more:first').attr('href')
+					n = renderImages(res)
+					console.log("Rendered "+n+" images")
+
+					if(n==window.fastyle.fetchSize) {
+						setTimeout(function(){
+							window.fastyle.clearToLoad = true
 							window.fastyle.scrollThresh = Math.round($(document).height() - $(window).height()*2)
-							console.log("Setting scroll thresh = "+window.fastyle.scrollThresh + ", doc height = "+$(document).height())
-						}
+							$(document).trigger('scroll')
+							$('#load-more-button').text("Load More")
+						},5000)
+						console.log("Setting scroll thresh = "+window.fastyle.scrollThresh + ", doc height = "+$(document).height())
+					} else {
+						$('#load-more-button').before("<p>No more images to load!</p>").remove()
 					}
-				})
+				}
+			})
+		} else {
+			$('#load-more-button').text("Please wait...")
+			console.log("Failed to reinitiate: ctl="+window.fastyle.clearToLoad+", thresh="+window.fastyle.scrollThresh)
+		}
+	}
+
+	var getNextURL = function(){
+		if(ta=(window.fastyle.nextHref||$('a.more:first').attr('href'))){
+			return ta
+		} else {
+			return document.location.protocol+"//"+window.fastyle.domain+".furaffinity.net/"+page+"/"+(++window.fastyle.pageNumber)
+		}
+	}
+
+	if(page && imagesExist) {
+		$(document).scroll(function(){
+			if(window.fastyle.scrollThresh>0 && $(document).scrollTop() > window.fastyle.scrollThresh) {
+				
+				window.fastyle.scrollThresh = 0
+				loadMore()
 			}
 		})
+		
+		$('<a href="javascript:void(0)" class="btn btn-primary" id="load-more-button">Load More</a>')
+			.insertBefore('.content.maintable')
+			.on("click",loadMore)
 
 		$(window).on("resize",function(){
 			console.log("resizing window...")
