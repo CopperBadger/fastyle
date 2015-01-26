@@ -2,13 +2,13 @@
 Chrome and Firefox extension to restyle and enhance FurAffinity.net
 
 ### Wait No Longer!
-If you cry yourself to sleep at night wondering if FA is *ever*
-going to update their UI, cry no more! Your prayers have been
-answered!
+Are you waiting for a new FurAffinity experience? Wait no longer!
+You can get it right here, right now! The **FAStyle** Extension
+restyles and enhances FurAffinity.net with
+[Bootstrap](http://getbootstrap.com/) and [jQuery](http://jquery.com/)
+so you can stay furry with style and efficiency.
 
-The **FAStyle** Extension restyles and enhances FurAffinity.net
-with [Bootstrap](http://getbootstrap.com/) and [jQuery](http://jquery.com/)
-so you can stay furry without being trapped in the Internet of the 90s.
+![FAStyle in the "Superhero" Theme](http://i.imgur.com/2OiGB5e.png)
 
 ### Highlight Features
 
