@@ -81,7 +81,11 @@
 			"js": ["journal.js","comments.js"]
 		},
 		{
-			"matches": ["*://*.furaffinity.net/controls/journal*"],
+			"matches": ["*://*.furaffinity.net/controls/journalsettings*"],
+			"js": ["journalsettings.js"]
+		},
+		{
+			"matches": ["*://*.furaffinity.net/controls/journal/*"],
 			"js": ["composejournal.js"]
 		},
 		{
