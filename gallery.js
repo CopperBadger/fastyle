@@ -127,7 +127,7 @@ $(document).ready(function(){
 					n = renderImages(res)
 					console.log("Rendered "+n+" images")
 
-					if(n==window.fastyle.fetchSize) {
+					if(n!=0) {
 						setTimeout(function(){
 							window.fastyle.clearToLoad = true
 							window.fastyle.scrollThresh = Math.round($(document).height() - $(window).height()*2)
@@ -162,7 +162,7 @@ $(document).ready(function(){
 				loadMore()
 			}
 		})
-		
+
 		$('<a href="javascript:void(0)" class="btn btn-primary" id="load-more-button">Load More</a>')
 			.insertBefore('.content.maintable')
 			.on("click",loadMore)
