@@ -2,3 +2,7 @@
 	width:42px;
 	margin:2px;
 }
+
+.sfw-toggled {
+	background-color:rgba(0,0,0,0.2);
+}

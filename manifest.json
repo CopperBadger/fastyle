@@ -9,7 +9,7 @@
 		"storage"
 	],
 	"content_scripts":[
-		// Navbar contents, in order
+		
 		{
 			"matches": [
 				"*://*.furaffinity.net/*"
@@ -17,6 +17,39 @@
 			"js": ["lib/js/jquery.min.js","lib/js/bootstrap.min.js","setup.js","render.js"],
 			"css": ["lib/css/style.css"]
 		},
+		// Userbar content, in order
+		{
+			"matches": [
+				"*://*.furaffinity.net/user/*",
+				"*://*.furaffinity.net/commissions/*",
+				"*://*.furaffinity.net/journals/*",
+				"*://*.furaffinity.net/journal/*",
+				"*://*.furaffinity.net/gallery/*",
+				"*://*.furaffinity.net/scraps/*",
+				"*://*.furaffinity.net/favorites/*",
+				"*://*.furaffinity.net/stats/*"
+			],
+			"js": ["userbar.js"]
+		},
+		{
+			"matches": ["*://*.furaffinity.net/user/*"],
+			"js": ["user.js"]
+		},
+		{
+			"matches": ["*://*.furaffinity.net/commissions/*"],
+			"js": ["commissions.js"]
+		},
+			// -- Gallery + Favorites + Scraps included in navbar section
+		{
+			"matches": ["*://*.furaffinity.net/journals/*"],
+			"js": ["journallist.js"]
+		},
+		{
+			"matches": ["*://*.furaffinity.net/journal/*"],
+			"js": ["journal.js","comments.js"]
+		},
+
+		// Navbar contents, in order
 		{
 			"matches": [
 				"*://*.furaffinity.net/",
@@ -61,38 +94,6 @@
 			"js": ["welcome.js"]
 		},
 		
-		// Userbar content, in order
-		{
-			"matches": [
-				"*://*.furaffinity.net/user/*",
-				"*://*.furaffinity.net/commissions/*",
-				"*://*.furaffinity.net/journals/*",
-				"*://*.furaffinity.net/journal/*",
-				"*://*.furaffinity.net/gallery/*",
-				"*://*.furaffinity.net/scraps/*",
-				"*://*.furaffinity.net/favorites/*",
-				"*://*.furaffinity.net/stats/*"
-			],
-			"js": ["userbar.js"]
-		},
-		{
-			"matches": ["*://*.furaffinity.net/user/*"],
-			"js": ["user.js"]
-		},
-		{
-			"matches": ["*://*.furaffinity.net/commissions/*"],
-			"js": ["commissions.js"]
-		},
-			// -- Gallery + Favorites + Scraps included in navbar section
-		{
-			"matches": ["*://*.furaffinity.net/journals/*"],
-			"js": ["journallist.js"]
-		},
-		{
-			"matches": ["*://*.furaffinity.net/journal/*"],
-			"js": ["journal.js","comments.js"]
-		},
-
 		// Page Management controls
 		{
 			"matches": ["*://*.furaffinity.net/controls/journal/*"],
