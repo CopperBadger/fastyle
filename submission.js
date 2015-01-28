@@ -66,15 +66,18 @@ $(document).ready(function() {
 
 	// Detect YouTube videos and embed
 	videoids = {};
-	$('#sub-info a[href*=youtu]').each(function(){
-		if(id=(t=$(this).attr('href').match(/(?:v=|\.be\/)(.{11})/))?t[1]:""){
+	videoMatches = $('#sub-info').html().match(/youtu[^\s]+/g)
+	for(vm in videoMatches){
+		if(id=(t=videoMatches[vm].match(/(?:v=|\.be\/)([^\s]{11})/))?t[1]:""){
 			videoids[id] = 1
 		}
-	})
+	}
 	for(v in videoids){
-		$('#sub-info')
-			.append('<hr>')
-			.append('<div class="embed-responsive embed-responsive-16by9"><iframe src="//www.youtube.com/embed/'+v+'" class="embed-responsive-item" frameborder="0" allowfullscreen> </iframe></div>')
+		if(typeof videoids[v] == "number"){
+			$('#sub-info')
+				.append('<hr>')
+				.append('<div class="embed-responsive embed-responsive-16by9"><iframe src="//www.youtube.com/embed/'+v+'" class="embed-responsive-item" frameborder="0" allowfullscreen> </iframe></div>')
+		}
 	}
 
 	if(text){$('#sub-info').append("<hr><h4>File Text</h4>"+text)}

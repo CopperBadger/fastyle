@@ -90,7 +90,7 @@ $(document).ready(function(){
 
 	// Formatting. TODO: Make CSS
 	$('.small-thumb').css({width:'42px'})
-	folder = document.cookie.match(/folder=(.+)/)[1]
+	folder = document.cookie.match(/folder=([A-Za-z0-9]+)/)[1]
 	$('a[href*='+folder+']').parent().addClass('active')
 	if(folder=="archive"||folder=="trash"){
 		$('#restore-button').show()

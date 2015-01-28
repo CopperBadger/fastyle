@@ -1,3 +1,7 @@
+// This page is used for both submission control and favorites control,
+// so please be mindful that whatever you change will apply to both
+// /controls/submissions and /controls/favorites
+
 function renderThumbs(){
 	idx = 0
 	var newRow = function(){return $("<div class='row well' style='margin:4px 0'>").appendTo('#submission-container')}
