@@ -100,7 +100,7 @@ $(document).ready(function(){
 	idbadge
 		.append('<table class="table" id="profile-info-table">')
 
-	if(idlink){
+	if(idlink.attr('href')){
 		$('#badge-pic').wrap("<a href='"+idlink.attr('href')+"'>")
 	}
 
