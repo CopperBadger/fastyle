@@ -9,6 +9,7 @@
 		"storage"
 	],
 	"content_scripts":[
+		// Navbar contents, in order
 		{
 			"matches": [
 				"*://*.furaffinity.net/*"
@@ -16,6 +17,51 @@
 			"js": ["lib/js/jquery.min.js","lib/js/bootstrap.min.js","setup.js","render.js"],
 			"css": ["lib/css/style.css"]
 		},
+		{
+			"matches": [
+				"*://*.furaffinity.net/",
+				"*://*.furaffinity.net/browse/",
+				"*://*.furaffinity.net/search*",
+				"*://*.furaffinity.net/gallery/*",
+				"*://*.furaffinity.net/scraps/*",
+				"*://*.furaffinity.net/favorites/*",
+				"*://*.furaffinity.net/msg/submissions*"
+			],
+			"js": ["gallery.js"],
+			"css": ["lib/css/gallery.css"]
+		},
+		{
+			"matches": [
+				"*://*.furaffinity.net/view/*",
+				"*://*.furaffinity.net/full/*"
+			],
+			"js": ["submission.js","comments.js"]
+		},
+		{
+			"matches": ["*://*.furaffinity.net/search*"],
+			"js": ["search.js"]
+		},
+		{
+			"matches": ["*://*.furaffinity.net/login*"],
+			"js": ["login.js"]
+		},
+		{
+			"matches": [
+				"*://*.furaffinity.net/register/",
+				"*://*.furaffinity.net/register"
+				],
+			"js": ["register.js"]
+		},
+		{
+			"matches": ["*://*.furaffinity.net/register/finalize*"],
+			"js": ["registerfinalize.js"]
+		},
+		{
+			"matches": ["*://*.furaffinity.net/register/welcome*"],
+			"js": ["welcome.js"]
+		},
+		
+		// Userbar content, in order
 		{
 			"matches": [
 				"*://*.furaffinity.net/user/*",
@@ -37,42 +83,7 @@
 			"matches": ["*://*.furaffinity.net/commissions/*"],
 			"js": ["commissions.js"]
 		},
-		{
-			"matches": [
-				"*://*.furaffinity.net/gallery/*",
-				"*://*.furaffinity.net/scraps/*",
-				"*://*.furaffinity.net/favorites/*",
-				"*://*.furaffinity.net/browse/",
-				"*://*.furaffinity.net/search*",
-				"*://*.furaffinity.net/",
-				"*://*.furaffinity.net/msg/submissions*"
-			],
-			"js": ["gallery.js"],
-			"css": ["lib/css/gallery.css"]
-		},
-		{
-			"matches": [
-				"*://*.furaffinity.net/view/*",
-				"*://*.furaffinity.net/full/*"
-			],
-			"js": ["submission.js","comments.js"]
-		},
-		{
-			"matches": ["*://*.furaffinity.net/search*"],
-			"js": ["search.js"]
-		},
-		{
-			"matches": ["*://*.furaffinity.net/controls/profile*"],
-			"js": ["profileinfo.js"]
-		},
-		{
-			"matches": ["*://*.furaffinity.net/msg/others*"],
-			"js": ["messages.js"]
-		},
-		{
-			"matches": ["*://*.furaffinity.net/controls/messages/"],
-			"js": ["messagelist.js"]
-		},
+			// -- Gallery + Favorites + Scraps included in navbar section
 		{
 			"matches": ["*://*.furaffinity.net/journals/*"],
 			"js": ["journallist.js"]
@@ -81,28 +92,46 @@
 			"matches": ["*://*.furaffinity.net/journal/*"],
 			"js": ["journal.js","comments.js"]
 		},
+
+		// Page Management controls
+		{
+			"matches": ["*://*.furaffinity.net/controls/journal/*"],
+			"js": ["pagemanagementbar.js","composejournal.js"]
+		},
 		{
 			"matches": ["*://*.furaffinity.net/controls/journalsettings*"],
-			"js": ["journalsettings.js"]
+			"js": ["pagemanagementbar.js","journalsettings.js"]
 		},
 		{
 			"matches": [
 				"*://*.furaffinity.net/controls/submissions*",
 				"*://*.furaffinity.net/controls/favorites*"
 				],
-			"js": ["submissioncontrol.js"]
-		},
-		{
-			"matches": ["*://*.furaffinity.net/controls/buddylist*"],
-			"js": ["buddycontrol.js"]
+			"js": ["pagemanagementbar.js","submissioncontrol.js"]
 		},
 		{
 			"matches": ["*://*.furaffinity.net/controls/shouts*"],
-			"js": ["shoutcontrol.js"]
+			"js": ["pagemanagementbar.js","shoutcontrol.js"]
 		},
 		{
-			"matches": ["*://*.furaffinity.net/controls/journal/*"],
-			"js": ["composejournal.js"]
+			"matches": ["*://*.furaffinity.net/controls/buddylist*"],
+			"js": ["pagemanagementbar.js","buddycontrol.js"]
+		},
+
+		// Account Management controls
+		{
+			"matches": ["*://*.furaffinity.net/controls/profile*"],
+			"js": ["profileinfo.js"]
+		},
+
+		// Notes and Notifications
+		{
+			"matches": ["*://*.furaffinity.net/msg/others*"],
+			"js": ["messages.js"]
+		},
+		{
+			"matches": ["*://*.furaffinity.net/controls/messages/"],
+			"js": ["messagelist.js"]
 		},
 		{
 			"matches": ["*://*.furaffinity.net/msg/pms*"],
@@ -116,25 +145,8 @@
 			],
 			"js": ["notecompose.js"]
 		},
-		{
-			"matches": ["*://*.furaffinity.net/login*"],
-			"js": ["login.js"]
-		},
-		{
-			"matches": [
-				"*://*.furaffinity.net/register/",
-				"*://*.furaffinity.net/register"
-				],
-			"js": ["register.js"]
-		},
-		{
-			"matches": ["*://*.furaffinity.net/register/finalize*"],
-			"js": ["registerfinalize.js"]
-		},
-		{
-			"matches": ["*://*.furaffinity.net/register/welcome*"],
-			"js": ["welcome.js"]
-		},
+
+		// Cleanup
 		{
 			"matches": ["*://*.furaffinity.net/*"],
 			"js": ["cleanup.js"]
