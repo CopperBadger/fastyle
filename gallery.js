@@ -154,7 +154,7 @@ $(document).ready(function(){
 			out = document.location.protocol+"//"+window.fastyle.domain+".furaffinity.net/"+page+"/"+(++window.fastyle.pageNumber)
 		}
 
-		return out.replace(/([^\:])\/{2,}/g,'$1/')
+		return out.replace(/([^\:])\/{2,}/g,'$1/').replace(/search\/@.+/,'search/')
 	}
 
 	if(page && imagesExist) {
