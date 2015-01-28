@@ -92,6 +92,10 @@
 			"js": ["submissioncontrol.js"]
 		},
 		{
+			"matches": ["*://*.furaffinity.net/controls/buddylist*"],
+			"js": ["buddycontrol.js"]
+		},
+		{
 			"matches": ["*://*.furaffinity.net/controls/journal/*"],
 			"js": ["composejournal.js"]
 		},
