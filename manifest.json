@@ -13,7 +13,8 @@
 			"matches": [
 				"*://*.furaffinity.net/*"
 			],
-			"js": ["lib/js/jquery.min.js","lib/js/bootstrap.min.js","setup.js","render.js"]
+			"js": ["lib/js/jquery.min.js","lib/js/bootstrap.min.js","setup.js","render.js"],
+			"css": ["lib/css/style.css"]
 		},
 		{
 			"matches": [
@@ -94,6 +95,10 @@
 		{
 			"matches": ["*://*.furaffinity.net/controls/buddylist*"],
 			"js": ["buddycontrol.js"]
+		},
+		{
+			"matches": ["*://*.furaffinity.net/controls/shouts*"],
+			"js": ["shoutcontrol.js"]
 		},
 		{
 			"matches": ["*://*.furaffinity.net/controls/journal/*"],
