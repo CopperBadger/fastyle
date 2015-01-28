@@ -83,6 +83,16 @@ $(document).ready(function() {
 			.find('.thumb-checkbox').hide()
 	})
 
+	SFWToggled = parseInt((t=document.cookie.match(/sfw=(\d)/))?t[1]:0)
+	$('.navbar-nav a:contains(SFW)').on("click",function(){
+
+		if(!SFWToggled) {
+			document.cookie = "sfw=1;"+(new Date((new Date).getTime()+3.1536e10).toGMTString())+";path=/;domain=furaffinity.net"
+		} else {
+			document.cookie = "sfw=0;path=/;domain=furaffinity.net"
+		}
+	}).addClass(SFWToggled?"sfw-toggled":"").attr('href','javascript:void(0)')
+
 	theme = sessionStorage.getItem('theme')
 	if(!theme){sessionStorage.setItem('theme','simplex')}
 
