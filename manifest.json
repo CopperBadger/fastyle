@@ -150,7 +150,7 @@
 		// Cleanup
 		{
 			"matches": ["*://*.furaffinity.net/*"],
-			"js": ["cleanup.js"]
+			"js": ["footer.js","cleanup.js"]
 		}
 	]
 }
