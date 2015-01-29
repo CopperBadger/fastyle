@@ -27,3 +27,15 @@ window.fastyle.serialize = function(el) {
   });
   return o;
 }
+
+window.fastyle.getYouTubeIDs = function(src){
+  videoids = {};
+  videoMatches = src.match(/youtu[^\s]+/g)
+  for(vm in videoMatches){
+    if(id=(t=videoMatches[vm].match(/(?:v=|\.be\/)([^\s]{11})/))?t[1]:""){
+      videoids[id] = 1
+      console.log("Found "+id)
+    }
+  }
+  return $.map(videoids,function(e,i){return i})
+}

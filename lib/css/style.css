@@ -3,6 +3,11 @@
 	margin:2px;
 }
 
+.medium-thumb {
+	width: 72px;
+	margin: 2px;
+}
+
 .sfw-toggled {
 	background-color:rgba(0,0,0,0.2);
 }
