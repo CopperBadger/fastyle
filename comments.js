@@ -23,17 +23,32 @@ $(document).ready(function() {
 			'<div class="panel-body"><ul class="media-list" id="comment-list"></ul></div>' +
 		'</div>')
 
+	authorName = $('#author-name').text()
+	mentioned = $.map($('#author-information a[href*="/user"]'),function(e){
+		return (t=$(e).attr('href').match(/user\/([^\/]+)\/?$/))?t[1]:null;
+	})
+	console.log(mentioned)
+
 	var newComment = function(par,src,after){
 		if(!(t=$(src).attr('id'))||t.search(/cid\:\d+/)==-1){return null}
 
 		posterIconAnchor = $(src).find('.icon a')
 		posterHref = posterIconAnchor.attr('href')
+		posterTruncated = posterHref.match(/user\/([^\/]+)\/?/)[1]
+		console.log(posterTruncated)
 		posterAvatar = posterIconAnchor.find('img').attr('src')
 		posterName = $(src).find('.replyto-name').text()
 		commentContent = $(src).find('.replyto-message').html()
 		videoIDs = window.fastyle.getYouTubeIDs(commentContent)
 		pubdate = $(src).find('.popup_date').wrap('<span>').parent().html()
 		commentID = $(src).attr('id')
+		byAuthor = (posterName==authorName)
+		byYou = (posterName==window.fastyle.truncatedName)
+		byMentioned = false; for(m in mentioned){
+			if(posterTruncated==mentioned[m]){
+				byMentioned=true
+			}
+		}
 
 
 		// Fun fact that I didn't know until now: elements with numbers in their IDs
@@ -49,6 +64,9 @@ $(document).ready(function() {
 					'<h4>' +
 						'<a href="'+posterHref+'">'+posterName+'</a> ' +
 						'<small>' +
+							((byAuthor)?"<span title='Submitter' class='label label-primary'>S</span> ":"") +
+							((byYou)?"<span class='label label-info'>You</span> ":"") +
+							((byMentioned)?"<span title='Mentioned in Description' class='label label-success'>Mentioned</span> ":"") +
 							pubdate +
 							' &#183; ' +
 							'<a href="javascript:void(0)" class="reply-link" data-comment-id="'+commentID+'">Reply</a>' +

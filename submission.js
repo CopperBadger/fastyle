@@ -1,32 +1,89 @@
-$(document).ready(function() {
-	if(window.fastyle.disabled){return false;}
-	
-	row = $('<div class="row">').insertBefore(".content.maintable")
+submissionSkel = '<div class="container">' +
+	'<div class="row">' +
+		'<div class="col-xs-12 media">' +
+			'<div class="media-left">' +
+				'<a href="" class="author-anchor">' +
+					'<img src="" alt="" class="author-avatar img-rounded">' +
+				'</a>' +
+			'</div>' +
+			'<div class="media-body">' +
+				'<div class="media-heading">' +
+					'<h3 class="submission-title"></h3>' +
+				'</div>' +
+				'<span id="submission-subtitle">' +
+					'by <a href="" class="author-anchor author-display" id="author-name"></a>, ' +
+				'</span>' +
+			'</div>' +
+		'</div>' +
+	'</div>' +
+'</div>' +
+'<div class="container-fluid" style="text-align:center;margin:16px 0;">' +
+	'<div class="row">' +
+		'<div class="col-xs-12" id="submission-wrapper"></div>' +
+	'</div>' +
+'</div>' +
+'<div class="container" id="bottom-container">' +
+	'<div class="row">' +
+		'<div class="col-xs-12">' +
+			'<div class="panel panel-default">' +
+				'<div class="panel-body">' +
+					'<div class="row">' +
+						'<div class="col-xs-12" style="margin-bottom:16px">' +
+							'<div class="btn-group" id="action-well"></div>' +
+						'</div>' +
+					'</div>' +
+					'<div class="row">' +
+						'<div class="col-md-8">' +
+							'<div id="author-information"></div>' +
+						'</div>' +
+						'<div class="col-md-4" id="submission-information"></div>' +
+					'</div>' +
+				'</div>' +
+				'<div class="panel-footer">' +
+					'<ul class="btn-group" id="keyword-well" style="padding-left:0"></ul>' +
+				'</div>' +
+			'</div>' +
+		'</div>' +
+	'</div>' +
+	'<div class="row" id="comment-wrapper"></div>' +
+'</div>'
 
+$(document).ready(function() {
+	$(submissionSkel).insertAfter("#body-wrapper")
+
+	// Data population
 	subimg = $('#submissionImg')
 	subimgSrc = subimg.attr('src')
 	subimgName = $('.maintable .cat>b:first').text()
 	audio = (t=(t=$('embed[src="/embed/player.swf"]').attr('flashvars')||"").match(/file=(.+)$/))?t[1]:null;
 	text = $('strong:contains(File type)').parents('td').html()
 	flash = $('object[type="application/x-shockwave-flash"]')
+
 	infoWrapper = $('b:contains(Submission information)').parents('td:first')
 	author = $(infoWrapper).parents('table').eq(1).find('a[href*="/user"]')
 	authorHref = author.eq(0).attr('href')
 	authorName = author.eq(0).text()
 	authorAvatar = author.eq(1).find('img').attr('src')
+	submissionInformation = ((h=$(infoWrapper).html()).substring(0,(x=h.search(q='<b>Keywords'))!=-1?x:h.length))
+
+	tmp = $(author).eq(1).parents()
+	$(author).eq(1).remove()
+	description = $(tmp).html()
+
 	pubdate = $('.popup_date:first').wrap('<span>').parent().html()
-
-	// Header
-	$('<div class="col-xs-12 media">').appendTo(row)
-		.html("<div class='media-left'><a href='"+authorHref+"'><img src='"+authorAvatar+"' class='img img-rounded' /></a></div><div class='media-body'><div class='media-heading'><h3>"+subimgName+"</h3></div>by <a href='"+authorHref+"'>"+authorName+"</a>, "+pubdate+"</div>")
-
-	// Submission Content
 	eval($('.alt1 script').text()) // Grab image urls
 
-	imgwrap = $('<div class="container-fluid">').css({'text-align':'center',margin:'16px 0'}).insertAfter($(".container:first"))
-	$(imgwrap).html("<div class='row'><div class='col-xs-12' id='submission-wrapper'></div>")
+	// -- Header
+	$('.author-anchor').attr('href',authorHref)
+	$('.author-avatar').attr('src',authorAvatar)
+		.attr('alt',authorName)
+	$('.author-display').text(authorName)
+	$('#submission-subtitle').append(pubdate)
+	$('.submission-title').text(subimgName)
+
+	// -- Submission Content
 	if(subimgSrc){
-		$('#submission-wrapper').append("<img src='"+subimgSrc+"' id='sub-img'/>")
+		$('#submission-wrapper').append("<img src='"+subimgSrc+"' id='submission-image'/>")
 	}
 	if(audio){
 		$('#submission-wrapper')
@@ -37,72 +94,50 @@ $(document).ready(function() {
 		$('#submission-wrapper').append(flash.remove())
 	}
 
-	$('#sub-img').click(function(){
+	// -- Information
+	$('.actions b a').each(function(){
+		$(this).addClass("btn btn-primary").remove().appendTo('#action-well')
+	})
+
+	
+
+	// -- (Append YouTube embeds in description)
+	videoIDs = window.fastyle.getYouTubeIDs(description)
+	for(v in videoIDs) {
+		description += '<hr><div class="embed-responsive embed-responsive-16by9"><iframe src="//www.youtube.com/embed/'+videoIDs[v]+'" class="embed-responsive-item" frameborder="0" allowfullscreen> </iframe></div>'
+	}
+
+	$('#author-information').html(description)
+	$('#submission-information').html(submissionInformation)
+	if(text){$('#author-information').append("<hr><h4>File Text</h4>"+text)}
+
+	// -- Keywords
+
+	keywordAnchors = $('#keywords a')
+	if(keywordAnchors.length){
+		$(keywordAnchors).each(function(){
+			if($(this).text()){
+				$('#keyword-well').append("<a href='"+$(this).attr('href')+"' class='btn btn-default'>"+$(this).text()+"</a>")
+			}
+		})
+	} else {
+		if(!keywordAnchors.length){
+			$('#keyword-wrapper').html("<em>No Keywords</em>")
+		}
+	}
+
+	// Move footer inside new container
+	$('.footer').remove().appendTo('#bottom-container')
+
+	// Evevnt Bindings
+
+	// -- Clicking submission image
+	$('#submission-image').click(function(){
 		h = $(this).attr('src')
 		$(this).attr('src',h.search(/\/\/t/)!=-1?full_url:small_url)
 	}).css({cursor:'pointer',margin:'16px 0'})
 
-	// Information
-	infowrap = $('<div class="container">').insertAfter(imgwrap)
-	row = $('<div class="row">').appendTo(infowrap)
-
-	authorwrap = $('<div class="col-xs-12">').appendTo(row)
-	$('<div class="panel panel-default" id="author-info">').appendTo(authorwrap)
-		.append("<div class='panel-body'>")
-	$('#author-info .panel-body')
-		.append("<div id='sub-info-wrapper'><div class='btn-group' id='button-well'></div></div>")
-
-	$('.actions b a').each(function(){
-		$(this).addClass("btn btn-primary").remove().appendTo('#button-well')
-	})
-
-	description = $(author).eq(1).parents()
-	$(author).eq(1).remove()
-
-	$('#sub-info-wrapper').append("<div class='row'><div class='col-md-8' id='sub-info'>" +
-		description.html() + "</div><div class='col-md-4' style='padding:8px 0'>" +
-		(h=$(infoWrapper).html()).substring(0,(x=h.search(q='<b>Keywords'))!=-1?x:h.length) +
-	"</div></div>")
-
-	// Detect YouTube videos and embed
-	videoids = {};
-	videoMatches = $('#sub-info').html().match(/youtu[^\s]+/g)
-	for(vm in videoMatches){
-		if(id=(t=videoMatches[vm].match(/(?:v=|\.be\/)([^\s]{11})/))?t[1]:""){
-			videoids[id] = 1
-		}
-	}
-	for(v in videoids){
-		if(typeof videoids[v] == "number"){
-			$('#sub-info')
-				.append('<hr>')
-				.append('<div class="embed-responsive embed-responsive-16by9"><iframe src="//www.youtube.com/embed/'+v+'" class="embed-responsive-item" frameborder="0" allowfullscreen> </iframe></div>')
-		}
-	}
-
-	if(text){$('#sub-info').append("<hr><h4>File Text</h4>"+text)}
-
-	// Keywords
-	$("<ul class='list-group'><li class='list-group-item' id='keyword-wrapper'></li></ul>").appendTo('#author-info')
-	w = $('#keyword-wrapper')
-	keywordAnchors = $('#keywords a')
-	keywordAnchors.each(function(){
-		if($(this).text()){
-			w.append("<a href='"+$(this).attr('href')+"' class='btn btn-default' style='margin:2px;'>"+$(this).text()+"</a>")
-			
-		}
-	})
-	if(!keywordAnchors.length){
-		$('#keyword-wrapper').html("<em>No Keywords</em>")
-	}
-
-	// Prepare comment wrapper
-	row = $('<div class="row" id="comment-wrapper">').appendTo(infowrap)
-	commentwrap = $('<div class="col-md-12">').appendTo(row)
-
-	$('.footer').remove().insertAfter(infowrap)
-
-	// Make favorite button asynchronous
+	// -- Favorite button
 	$('a[href^="/fav/"]').on("click",function(){
 		msg = $(this).text().search("Remove")!=-1?"Unfaved":"Faved!"
 		$(this).text(window.fastyle.funTitles[Math.floor(Math.random()*window.fastyle.funTitles.length)])
