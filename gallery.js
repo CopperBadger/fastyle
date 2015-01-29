@@ -83,9 +83,9 @@ $(document).ready(function(){
 	renderImages()
 
 	var imagesExist = $('.r-general, .r-mature, .r-adult').length
-	if($('#no-images').length || !imagesExist){
+	if($('#no-images').length){
 		$('#gallery-container').append("<h3 style='text-align:center'>(No items to list)</h3>")
-	} else {
+	} else if(imagesExist) {
 
 		// Infinite Scroll
 		// Infinite scroll helper functions

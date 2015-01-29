@@ -27,7 +27,6 @@ $(document).ready(function() {
 	mentioned = $.map($('#author-information a[href*="/user"]'),function(e){
 		return (t=$(e).attr('href').match(/user\/([^\/]+)\/?$/))?t[1]:null;
 	})
-	console.log(mentioned)
 
 	var newComment = function(par,src,after){
 		if(!(t=$(src).attr('id'))||t.search(/cid\:\d+/)==-1){return null}
@@ -35,7 +34,6 @@ $(document).ready(function() {
 		posterIconAnchor = $(src).find('.icon a')
 		posterHref = posterIconAnchor.attr('href')
 		posterTruncated = posterHref.match(/user\/([^\/]+)\/?/)[1]
-		console.log(posterTruncated)
 		posterAvatar = posterIconAnchor.find('img').attr('src')
 		posterName = $(src).find('.replyto-name').text()
 		commentContent = $(src).find('.replyto-message').html()

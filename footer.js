@@ -1,4 +1,4 @@
-footskel = '<div class="row">' +
+footskel = '<div class="row" style="margin-top:92px;">' +
 	'<div class="col-xs-12">' +
 		'<div class="well">' +
 			'<div class="btn-group" id="footer-links"></div>' +

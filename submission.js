@@ -25,6 +25,9 @@ submissionSkel = '<div class="container">' +
 '<div class="container" id="bottom-container">' +
 	'<div class="row">' +
 		'<div class="col-xs-12">' +
+			'<nav id="pager-container">' +
+				'<ul class="pager"></ul>' +
+			'</nav>' +
 			'<div class="panel panel-default">' +
 				'<div class="panel-body">' +
 					'<div class="row">' +
@@ -94,12 +97,14 @@ $(document).ready(function() {
 		$('#submission-wrapper').append(flash.remove())
 	}
 
+	// -- Pager
+	if((pb = $('.prev.button')).length){$(pb).wrap("<li class='previous'>").parent().remove().appendTo('.pager')}
+	if((nb = $('.next.button')).length){$(nb).wrap("<li class='next'>").parent().remove().appendTo('.pager')}
+
 	// -- Information
 	$('.actions b a').each(function(){
 		$(this).addClass("btn btn-primary").remove().appendTo('#action-well')
 	})
-
-	
 
 	// -- (Append YouTube embeds in description)
 	videoIDs = window.fastyle.getYouTubeIDs(description)
@@ -153,5 +158,15 @@ $(document).ready(function() {
 		})
 		return false
 	})
+
+	// -- Next and previous arrow keys
+	setTimeout(function(){
+		$(document).on("keyup",function(e){
+			if($(e.target).is('body')){
+				if(e.which==37){document.location=$('.prev.button').attr('href')}
+				if(e.which==39){document.location=$('.next.button').attr('href')}
+			}
+		})
+	},1000)
 
 })
