@@ -347,7 +347,7 @@ $(document).ready(function(){
 		shouterName = shouterAnchor.text()
 		shouterHref = shouterAnchor.attr('href')
 		shouterAvatar = $(src).find('.alt1.bpix.tpix.lpix.rpix.addpad img').attr('src')
-		pubdate = $(src).find('popup_date').wrap('<span>').parent().html()
+		pubdate = $(src).find('.popup_date').wrap('<span>').parent().html()
 		shoutContent = $(src).find('table tr:last .no_overflow.alt1').html()
 
 		if(!shouterAnchor.length){return false}
@@ -360,7 +360,7 @@ $(document).ready(function(){
 			'</div>' +
 			'<div class="media-body">' +
 				'<div class="media-heading">' +
-					'<h4><a href="'+shouterHref+'">'+shouterName+'</a></h4>' +
+					'<h4><a href="'+shouterHref+'">'+shouterName+'</a> <small>'+pubdate+'</small></h4>' +
 				'</div>' +
 				shoutContent +
 			'</div>' +
