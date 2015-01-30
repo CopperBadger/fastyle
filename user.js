@@ -201,7 +201,10 @@ $(document).ready(function(){
 	$('.user-name-field').text(userName)
 	$('#user-profile-picture').attr('alt',userName)
 		.attr('src',userProfileID||userAvatar)
-	if(userProfileID){addRow('Avatar',"<img src='"+userAvatar+"' class='img img-rounded' />",'#user-summary-table')}
+	if(userProfileID){
+		addRow('Avatar',"<img src='"+userAvatar+"' class='img img-rounded' />",'#user-summary-table')
+		$('#user-profile-picture').wrap("<a href='"+userProfileIDHref+"'>")
+	}
 	addRow('Full Name',info['Full Name'],'#user-summary-table')
 	addRow('Species',info2['Species'],'#user-summary-table')
 	addRow('Age',info2['Age'],'#user-summary-table')

@@ -19,7 +19,7 @@ window.fastyle.uname = $('#my-username').text().substring(1)
 window.fastyle.domain = (t=document.location.host.match(/^([^\.]+)\./))?t[1]:"www"
 
 window.fastyle.truncateName = function(src) {
-	return (t=src.toLowerCase().match(/[a-z0-9-_~\.]+/g))?t.join(''):"";
+	return (t=src.toLowerCase().match(/[a-z0-9-~\.]+/g))?t.join(''):"";
 }
 
 window.fastyle.truncatedName = window.fastyle.truncateName(window.fastyle.uname)
