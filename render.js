@@ -6,7 +6,7 @@ function capitalize(src){
 precolor = $('body').css('background-color')
 	$('body').css({'background-color':precolor})
 $('link[rel=stylesheet]').remove()
-$('<link rel="stylesheet" href="'+ss+'" id="stylesheet">').appendTo('head')
+$('<link rel="stylesheet" href="'+window.fastyle.ss+'" id="stylesheet">').appendTo('head')
 
 if(!disabled){
 	$('body').wrapInner('<div class="container" id="body-wrapper"></div>')
@@ -87,14 +87,15 @@ $(document).ready(function() {
 	$('.navbar-nav a:contains(SFW)').on("click",function(){
 
 		if(!SFWToggled) {
-			document.cookie = "sfw=1;"+(new Date((new Date).getTime()+3.1536e10).toGMTString())+";path=/;domain=furaffinity.net"
+			window.fastyle.setCookie('sfw','1')
+			//document.cookie = "sfw=1;"+(new Date((new Date).getTime()+3.1536e10).toGMTString())+";path=/;domain=furaffinity.net"
 		} else {
-			document.cookie = "sfw=0;path=/;domain=furaffinity.net"
+			window.fastyle.setCookie('sfw','0')
+			//document.cookie = "sfw=0;path=/;domain=furaffinity.net"
 		}
 	}).addClass(SFWToggled?"sfw-toggled":"").attr('href','javascript:void(0)')
 
-	theme = sessionStorage.getItem('theme')
-	if(!theme){sessionStorage.setItem('theme','simplex')}
+	theme = window.fastyle.theme
 
 	$('<div id="theme-selector">').prependTo('body')
 		.html('<div class="btn-group dropup">' +
@@ -118,6 +119,8 @@ $(document).ready(function() {
 
 	$('body').on('click','.theme-anchor',function(){
 		$('#stylesheet').attr('href',"//maxcdn.bootstrapcdn.com/bootswatch/3.3.1/"+$(this).attr('data-theme')+"/bootstrap.min.css")
-		sessionStorage.setItem("theme",$(this).attr('data-theme'))
+		window.fastyle.setCookie('theme',$(this).attr('data-theme'))
+		//document.cookie = "theme="+$(this).attr('data-theme')+";directory=/;domain=furaffinity.net;"
+		//sessionStorage.setItem("theme",$(this).attr('data-theme'))
 	})
 })
