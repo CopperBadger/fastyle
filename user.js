@@ -195,6 +195,8 @@ $(document).ready(function(){
 				}
 			}
 		})
+	} else {
+		$('#user-banner').remove()
 	}
 
 	// -- User Badge
