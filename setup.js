@@ -39,3 +39,12 @@ window.fastyle.getYouTubeIDs = function(src){
   }
   return $.map(videoids,function(e,i){return i})
 }
+
+window.fastyle.capitalize = function(src){
+  return src?(src[0].toUpperCase()+src.substring(1)):src
+}
+
+window.fastyle.addCommas = function(strnum){
+  n = (l=strnum.length)%3
+  return ((p=strnum.substring(0,n))&&(p+(l>3?',':''))) + strnum.substring(n).replace(/(\d{3})(\d{3})/g,'$1,$2')
+}
