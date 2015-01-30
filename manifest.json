@@ -105,10 +105,17 @@
 		},
 		{
 			"matches": [
-				"*://*.furaffinity.net/controls/submissions*",
+				"*://*.furaffinity.net/controls/submissions/",
+				"*://*.furaffinity.net/controls/submissions",
 				"*://*.furaffinity.net/controls/favorites*"
 				],
 			"js": ["pagemanagementbar.js","submissioncontrol.js"]
+		},
+		{
+			"matches": [
+				"*://*.furaffinity.net/controls/submissions/changeinfo*"
+			],
+			"js": ["editsubmission.js"]
 		},
 		{
 			"matches": ["*://*.furaffinity.net/controls/shouts*"],
