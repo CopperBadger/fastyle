@@ -13,6 +13,49 @@ function makeCommentForm(cid) {
 	'</form>'
 }
 
+function makeSubmissionPreview(subLink, linkElement) {
+
+	$.ajax({
+		context: linkElement,
+	    url : subLink,
+		dataType : 'html',
+	    success: function(data){
+			var pageData = $(data);
+			var subImg = pageData.find("#submissionImg").attr('src');
+			var subTitle = pageData.find("#submissionImg").attr('alt');
+			
+			//linkElement.attr('title', "Submission Preview");
+			
+			var infoWrapper = pageData.find('b:contains(Submission information)').parents('td:first');
+			var author = pageData.find(infoWrapper).parents('table').eq(1).find('a[href*="/user"]');
+			var authorHref = author.eq(0).attr('href');
+			var authorName = author.eq(0).text();
+			
+			$(this).append('<img src="' + subImg + '" class="hidden popover-img-preload" />');
+			
+			$(".popover-img-preload").load(function(){
+				linkElement.addClass('preview-built').popover({
+					html: true,
+					placement: 'auto top',
+					title: "Submission Preview",
+					trigger: 'focus',
+					content: '<img src="' + subImg + '" class="img-responsive pull-left" style="width:50%; margin:5px 10px 15px 0;" />'+
+						'<strong>' + subTitle +'</strong><br />by ~<a href="'+authorHref+'">' + authorName +'</a><br />'+
+						'<a href="'+ subLink +'" class="btn btn-primary">Open &gt;</a>',
+					template: '<div class="popover" role="tooltip" style="width:275px;"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+				}).popover('show');	
+			})
+				
+			
+			console.log("triggered AJAX request");
+			
+	    },
+	    error: function (){
+	 		console.log("error");
+	    }
+	});
+}
+
 $(document).ready(function() {
 	row = $('#comment-wrapper')
 	if(!row.length){row = $("<div class='row'>").insertBefore(".content.maintable")}
@@ -149,4 +192,23 @@ $(document).ready(function() {
 				.append('<div class="embed-responsive embed-responsive-16by9"><iframe src="//www.youtube.com/embed/'+ids[vid]+'" class="embed-responsive-item" frameborder="0" allowfullscreen> </iframe></div>')
 		}
 	})
+	
+	// Add submission preview links
+	$('a[href*="furaffinity.net/view"],a[href*="furaffinity.net/full"]').each(function(){
+		
+		var link = $(this).attr('href');
+		
+		$(this).after('&nbsp;<span class="label label-primary label-sub-preview" data-link="'+ link +'">Preview</span>')
+		
+	});
+	
+	$('.label-sub-preview').click(function(e){
+		if ($(this).hasClass('preview-built')){
+			$(this).popover('toggle');
+		}
+		else {
+			var link = $(this).data('link');
+			makeSubmissionPreview(link, $(this));
+		}
+	});
 })
