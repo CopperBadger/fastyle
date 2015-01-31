@@ -14,17 +14,16 @@ function makeCommentForm(cid) {
 }
 
 function makeSubmissionPreview(subLink, linkElement) {
-
+	subLink = subLink.replace(/https?\:/,'')
+	$(linkElement).addClass('preview-built').text("Fetching preview...")
 	$.ajax({
 		context: linkElement,
-	    url : subLink,
+		url : subLink,
 		dataType : 'html',
-	    success: function(data){
+		success: function(data){
 			var pageData = $(data);
 			var subImg = pageData.find("#submissionImg").attr('src');
 			var subTitle = pageData.find("#submissionImg").attr('alt');
-			
-			//linkElement.attr('title', "Submission Preview");
 			
 			var infoWrapper = pageData.find('b:contains(Submission information)').parents('td:first');
 			var author = pageData.find(infoWrapper).parents('table').eq(1).find('a[href*="/user"]');
@@ -34,30 +33,32 @@ function makeSubmissionPreview(subLink, linkElement) {
 			$(this).append('<img src="' + subImg + '" class="hidden popover-img-preload" />');
 			
 			$(".popover-img-preload").load(function(){
-				linkElement.addClass('preview-built').popover({
+				linkElement.text("Preview").popover({
 					html: true,
 					placement: 'auto top',
 					title: "Submission Preview",
-					trigger: 'focus',
-					content: '<img src="' + subImg + '" class="img-responsive pull-left" style="width:50%; margin:5px 10px 15px 0;" />'+
-						'<strong>' + subTitle +'</strong><br />by ~<a href="'+authorHref+'">' + authorName +'</a><br />'+
-						'<a href="'+ subLink +'" class="btn btn-primary">Open &gt;</a>',
-					template: '<div class="popover" role="tooltip" style="width:275px;"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+					trigger: 'click',
+					content: '<strong>' + subTitle +'</strong><br>' +
+								'<img src="' + subImg + '" class="img-responsive pull-left" style="width:50%; margin:5px 10px 15px 0;" />'+
+								'by ~<a href="'+authorHref+'">' + authorName +'</a><br />'+
+								'<a href="'+ subLink +'" class="btn btn-primary">Open &gt;</a>',
+					template: '<div class="popover" role="tooltip" style="width:360px;">' +
+								'<div class="arrow"></div>' +
+								'<h3 class="popover-title"></h3>' + 
+								'<div class="popover-content"></div>' +
+								'</div>'
 				}).popover('show');	
 			})
-				
-			
-			console.log("triggered AJAX request");
-			
-	    },
-	    error: function (){
-	 		console.log("error");
-	    }
+		},
+		error: function (){
+			console.error("Error building popover!");
+		}
 	});
 }
 
 $(document).ready(function() {
 	row = $('#comment-wrapper')
+
 	if(!row.length){row = $("<div class='row'>").insertBefore(".content.maintable")}
 	row.append("<div class='col-xs-12'>")
 	$(row).find('.col-xs-12')
@@ -119,6 +120,13 @@ $(document).ready(function() {
 		'</li>')
 
 		if(after){o.insertAfter(par)} else {o.appendTo(par)}
+
+		// Add submission preview links
+		$('a[href*="furaffinity.net/view"]:not(.popover-bound), a[href*="furaffinity.net/full"]:not(.popover-bound)').each(function(){
+			var link = $(this).attr('href');
+			console.log("Writing new popover anchor for "+link)
+			$(this).after('&nbsp;<a href="javascript:void(0)" class="label label-primary label-sub-preview" data-link="'+ link +'">Preview</span>')
+		}).addClass('popover-bound');
 
 		if(videoIDs.length){
 			$('<button class="btn btn-default btn-xs show-youtube-embeds-button" data-video-ids="'+videoIDs.join(',')+'" type="button">Show Linked Video'+((videoIDs.length>1)?"s":"")+'</button>')
@@ -191,22 +199,8 @@ $(document).ready(function() {
 			$(par).append('<hr>')
 				.append('<div class="embed-responsive embed-responsive-16by9"><iframe src="//www.youtube.com/embed/'+ids[vid]+'" class="embed-responsive-item" frameborder="0" allowfullscreen> </iframe></div>')
 		}
-	})
-	
-	// Add submission preview links
-	$('a[href*="furaffinity.net/view"],a[href*="furaffinity.net/full"]').each(function(){
-		
-		var link = $(this).attr('href');
-		
-		$(this).after('&nbsp;<span class="label label-primary label-sub-preview" data-link="'+ link +'">Preview</span>')
-		
-	});
-	
-	$('.label-sub-preview').click(function(e){
-		if ($(this).hasClass('preview-built')){
-			$(this).popover('toggle');
-		}
-		else {
+	}).on('click','.label-sub-preview', function(e){
+		if (!$(this).hasClass('preview-built')){
 			var link = $(this).data('link');
 			makeSubmissionPreview(link, $(this));
 		}
