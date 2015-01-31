@@ -10,11 +10,21 @@ userskel = '<div class="row img-rounded" id="user-banner" style="margin:16px 0">
 					'<img src="" alt="" class="img img-rounded" id="user-profile-picture" />' +
 				'</div>' +
 			'</div>' +
-			'<table class="table" id="user-summary-table"></table>' +
+			'<table class="table" id="user-summary-table">' +
+				'<colgroup>' +
+					'<col style="width: 40%">' +
+					'<col>' +
+				'</colgroup>' +
+			'</table>' +
 		'</div>' +
 		'<div class="panel panel-default" id="user-full-info-panel">' +
 			'<div class="panel-expandable" data-short-height="196" style="overflow-y:hidden">' +
-				'<table class="table" id="user-full-info-table"></table>' +
+				'<table class="table" id="user-full-info-table">' +
+					'<colgroup>' +
+						'<col style="width: 40%">' +
+						'<col>' +
+					'</colgroup>' +
+				'</table>' +
 			'</div>' +
 			'<ul class="list-group">' +
 				'<a href="javascript:void(0)" class="list-group-item panel-expander">Show More</a>' +
@@ -226,7 +236,7 @@ $(document).ready(function(){
 			if(id=(t=v.match(/(?:v=|\.be\/)(.{11})/))?t[1]:""){
 				$('<div class="panel panel-default">' +
 					'<div class="panel-heading">'+k+'</div>' +
-					'<div class="panel-body">' +
+					'<div class="panel-body" style="padding:0">' +
 						'<div class="embed-responsive embed-responsive-16by9">' +
 							'<iframe src="//www.youtube.com/embed/'+id+'" frameborder="0" class="embed-responsive-item" frameborder="0" allowfullscreen> </iframe>' +
 						'</div>' +

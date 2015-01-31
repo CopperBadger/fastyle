@@ -54,7 +54,7 @@ $(document).ready(function() {
 		o = $('<li class="media" id="'+commentID+'" data-cid="'+commentID+'" style="margin-left:'+((100-parseInt($(src).attr('width')))*12)+'px">' +
 			'<div class="media-left">' +
 				'<a href="'+posterHref+'">' +
-					'<img src="'+posterAvatar+'" alt="'+posterName+'" class="medium-thumb media-object" />' +
+					'<img src="'+posterAvatar+'" alt="'+posterName+'" class="img img-rounded medium-thumb media-object" />' +
 				'</a>' +
 			'</div>' +
 			'<div class="media-body" style="width:100%">' +

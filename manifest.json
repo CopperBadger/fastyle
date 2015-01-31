@@ -14,8 +14,13 @@
 			"matches": [
 				"*://*.furaffinity.net/*"
 			],
-			"js": ["lib/js/jquery.min.js","lib/js/bootstrap.min.js","setup.js","render.js"],
-			"css": ["lib/css/style.css"]
+			"js": [
+				"lib/js/jquery.min.js",
+				"lib/js/bootstrap.min.js",
+				"js/system/setup.js",
+				"js/system/render.js"
+			],
+			"css": ["css/style.css"]
 		},
 		// Userbar content, in order
 		{
@@ -29,24 +34,24 @@
 				"*://*.furaffinity.net/favorites/*",
 				"*://*.furaffinity.net/stats/*"
 			],
-			"js": ["userbar.js"]
+			"js": ["js/user/userbar.js"]
 		},
 		{
 			"matches": ["*://*.furaffinity.net/user/*"],
-			"js": ["user.js"]
+			"js": ["js/user/user.js"]
 		},
 		{
 			"matches": ["*://*.furaffinity.net/commissions/*"],
-			"js": ["commissions.js"]
+			"js": ["js/user/commissions.js"]
 		},
 			// -- Gallery + Favorites + Scraps included in navbar section
 		{
 			"matches": ["*://*.furaffinity.net/journals/*"],
-			"js": ["journallist.js"]
+			"js": ["js/journals/journallist.js"]
 		},
 		{
 			"matches": ["*://*.furaffinity.net/journal/*"],
-			"js": ["journal.js","comments.js"]
+			"js": ["js/journals/journal.js","js/comments.js"]
 		},
 
 		// Navbar contents, in order
@@ -60,48 +65,48 @@
 				"*://*.furaffinity.net/favorites/*",
 				"*://*.furaffinity.net/msg/submissions*"
 			],
-			"js": ["gallery.js"],
-			"css": ["lib/css/gallery.css"]
+			"js": ["js/gallery.js"],
+			"css": ["css/gallery.css"]
 		},
 		{
 			"matches": [
 				"*://*.furaffinity.net/view/*",
 				"*://*.furaffinity.net/full/*"
 			],
-			"js": ["submission.js","comments.js"]
+			"js": ["js/submissions/submission.js","js/comments.js"]
 		},
 		{
 			"matches": ["*://*.furaffinity.net/search*"],
-			"js": ["search.js"]
+			"js": ["js/search.js"]
 		},
 		{
 			"matches": ["*://*.furaffinity.net/login*"],
-			"js": ["login.js"]
+			"js": ["js/general/login.js"]
 		},
 		{
 			"matches": [
 				"*://*.furaffinity.net/register/",
 				"*://*.furaffinity.net/register"
 				],
-			"js": ["register.js"]
+			"js": ["js/general/register.js"]
 		},
 		{
 			"matches": ["*://*.furaffinity.net/register/finalize*"],
-			"js": ["registerfinalize.js"]
+			"js": ["js/general/registerfinalize.js"]
 		},
 		{
 			"matches": ["*://*.furaffinity.net/register/welcome*"],
-			"js": ["welcome.js"]
+			"js": ["js/general/welcome.js"]
 		},
 		
 		// Page Management controls
 		{
 			"matches": ["*://*.furaffinity.net/controls/journal/*"],
-			"js": ["pagemanagementbar.js","composejournal.js"]
+			"js": ["js/controls/pagemanagementbar.js","js/journals/composejournal.js"]
 		},
 		{
 			"matches": ["*://*.furaffinity.net/controls/journalsettings*"],
-			"js": ["pagemanagementbar.js","journalsettings.js"]
+			"js": ["js/controls/pagemanagementbar.js","js/journals/journalsettings.js"]
 		},
 		{
 			"matches": [
@@ -109,41 +114,41 @@
 				"*://*.furaffinity.net/controls/submissions",
 				"*://*.furaffinity.net/controls/favorites*"
 				],
-			"js": ["pagemanagementbar.js","submissioncontrol.js"]
+			"js": ["js/controls/pagemanagementbar.js","js/submissions/submissioncontrol.js"]
 		},
 		{
 			"matches": [
 				"*://*.furaffinity.net/controls/submissions/changeinfo*"
 			],
-			"js": ["editsubmission.js"]
+			"js": ["js/submissions/editsubmission.js"]
 		},
 		{
 			"matches": ["*://*.furaffinity.net/controls/shouts*"],
-			"js": ["pagemanagementbar.js","shoutcontrol.js"]
+			"js": ["js/controls/pagemanagementbar.js","js/user/shoutcontrol.js"]
 		},
 		{
 			"matches": ["*://*.furaffinity.net/controls/buddylist*"],
-			"js": ["pagemanagementbar.js","buddycontrol.js"]
+			"js": ["js/controls/pagemanagementbar.js","js/user/buddycontrol.js"]
 		},
 
 		// Account Management controls
 		{
 			"matches": ["*://*.furaffinity.net/controls/profile*"],
-			"js": ["profileinfo.js"]
+			"js": ["js/user/profileinfo.js"]
 		},
 
 		// Notes and Notifications
 		{
 			"matches": ["*://*.furaffinity.net/msg/others*"],
-			"js": ["messages.js"]
+			"js": ["js/notifications/messages.js"]
 		},
 		{
 			"matches": ["*://*.furaffinity.net/controls/messages/"],
-			"js": ["messagelist.js"]
+			"js": ["js/notifications/messagelist.js"]
 		},
 		{
 			"matches": ["*://*.furaffinity.net/msg/pms*"],
-			"js": ["notes.js"]
+			"js": ["js/notes/notes.js"]
 		},
 		{
 			"matches": [
@@ -151,13 +156,13 @@
 				"*://*.furaffinity.net/msg/compose*",
 				"*://*.furaffinity.net/newpm*"
 			],
-			"js": ["notecompose.js"]
+			"js": ["js/notes/notecompose.js"]
 		},
 
 		// Cleanup
 		{
 			"matches": ["*://*.furaffinity.net/*"],
-			"js": ["footer.js","cleanup.js"]
+			"js": ["js/general/footer.js","js/system/cleanup.js"]
 		}
 	]
 }

@@ -1,0 +1,57 @@
+=== Layout 1
+
+.:
+comments.js  gallery.js  search.js
+
+./controls:
+buddycontrol.js  composejournal.js  editsubmission.js  journalsettings.js  pagemanagementbar.js  profileinfo.js  shoutcontrol.js  submissioncontrol.js
+
+./general:
+footer.js  login.js  registerfinalize.js  register.js  welcome.js
+
+./journals:
+journal.js  journallist.js
+
+./notes:
+notecompose.js  notes.js
+
+./notifications:
+messagelist.js  messages.js
+
+./submissions:
+submission.js
+
+./system:
+cleanup.js  render.js  setup.js
+
+./user:
+commissions.js  userbar.js  user.js
+
+=== Layout 2
+
+.:
+comments.js  gallery.js  search.js
+
+./controls:
+pagemanagementbar.js
+
+./general:
+footer.js  login.js  registerfinalize.js  register.js  welcome.js
+
+./journals:
+journal.js  journallist.js  composejournal.js  journalsettings.js
+
+./notes:
+notecompose.js  notes.js
+
+./notifications:
+messagelist.js  messages.js
+
+./submissions:
+submission.js  submissioncontrol.js  editsubmission.js
+
+./system:
+cleanup.js  render.js  setup.js
+
+./user:
+commissions.js  userbar.js  user.js  buddycontrol.js  profileinfo.js  shoutcontrol.js
