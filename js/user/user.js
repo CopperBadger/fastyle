@@ -422,6 +422,9 @@ $(document).ready(function(){
 				.removeClass('expanded')
 			$(this).text('Show More')
 		} else {
+			tmp = tgt.height()
+			fullHeight = tgt.css({'max-height':''}).height()
+			tgt.css({'max-height':tmp+'px'})
 			tgt.animate({'max-height':$(tgt).attr('data-full-height')})
 				.addClass('expanded')
 			$(this).text('Show Less')
@@ -432,4 +435,4 @@ $(document).ready(function(){
 	$('.watch-thumb').attr('data-placement','bottom').tooltip()
 
 	$('.content.maintable').hide()
-})
+})	
