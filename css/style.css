@@ -1,3 +1,8 @@
+.iconusername img {
+	max-width: 64px;
+	max-height: 64px;
+}
+
 .small-thumb {
 	width:42px;
 	margin:2px;

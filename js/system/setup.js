@@ -12,7 +12,8 @@ window.fastyle.setCookie = function(key,value) {
 developerMode = window.fastyle.developerMode = document.location.hash == "#dev"
 disabled = window.fastyle.disabled = document.location.hash == "#nofastyle"
 isHttps = window.fastyle.isHttps = document.location.protocol == "https:"
-window.fastyle.theme = window.fastyle.getCookie('theme','simplex')
+window.fastyle.defaultTheme = "darkly"
+window.fastyle.theme = window.fastyle.getCookie('theme',window.fastyle.defaultTheme)
 window.fastyle.ss = "//maxcdn.bootstrapcdn.com/bootswatch/3.3.1/"+(window.fastyle.theme)+"/bootstrap.min.css"
 window.fastyle.funTitles=["Give us a Moment","Just a Second","Please Wait","Doing the Thing","Hold on a Sec","Stuff is Happening"]
 window.fastyle.uname = $('#my-username').text().substring(1)

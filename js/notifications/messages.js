@@ -113,7 +113,7 @@ $(document).ready(function() {
 		if(uname) {
 			$("<img src='http://a.facdn.net/"+uname+".gif' class='img img-rounded' />").prependTo($(this).parents('.list-group-item'))
 				.wrap("<a href='"+$(this).attr("href")+"'>")
-				.css({width:'42px','padding-right':'8px'})
+				.css({width:'42px','margin-right':'8px'})
 		}
 	}).end().find('table').remove().end().find('.info').css({display:'inline'})
 })

@@ -85,15 +85,8 @@ $(document).ready(function() {
 
 	SFWToggled = parseInt((t=document.cookie.match(/sfw=(\d)/))?t[1]:0)
 	$('.navbar-nav a:contains(SFW)').on("click",function(){
-
-		if(!SFWToggled) {
-			window.fastyle.setCookie('sfw','1')
-			//document.cookie = "sfw=1;"+(new Date((new Date).getTime()+3.1536e10).toGMTString())+";path=/;domain=furaffinity.net"
-		} else {
-			window.fastyle.setCookie('sfw','0')
-			//document.cookie = "sfw=0;path=/;domain=furaffinity.net"
-		}
-	}).addClass(SFWToggled?"sfw-toggled":"").attr('href','javascript:void(0)')
+		window.fastyle.setCookie('sfw',SFWToggled?'0':'1')
+	}).parents('li:first').addClass(SFWToggled?"active":"")
 
 	theme = window.fastyle.theme
 
@@ -120,7 +113,5 @@ $(document).ready(function() {
 	$('body').on('click','.theme-anchor',function(){
 		$('#stylesheet').attr('href',"//maxcdn.bootstrapcdn.com/bootswatch/3.3.1/"+$(this).attr('data-theme')+"/bootstrap.min.css")
 		window.fastyle.setCookie('theme',$(this).attr('data-theme'))
-		//document.cookie = "theme="+$(this).attr('data-theme')+";directory=/;domain=furaffinity.net;"
-		//sessionStorage.setItem("theme",$(this).attr('data-theme'))
 	})
 })

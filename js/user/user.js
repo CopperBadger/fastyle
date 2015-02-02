@@ -87,7 +87,7 @@ userskel = '<div class="row img-rounded" id="user-banner" style="margin:16px 0">
 		'<div class="panel panel-default" id="user-shouts-panel">' +
 			'<div class="panel-heading">Shouts</div>' +
 			'<div class="panel-body">' +
-				'<form action="" class="form" id="shout-form" method="POST">' +
+				'<form action="javascript:void(0)" class="form" id="shout-form" method="POST">' +
 					'<div class="form-group">' +
 						'<label for="shout-message" class="control-label">Message</label>' +
 						'<textarea name="shout" id="shout-message" rows="5" class="form-control"></textarea>' +
@@ -268,7 +268,7 @@ $(document).ready(function(){
 			watchName = $(this).text()
 
 			$('<div class="col-xs-3">' +
-				'<a href="'+watchHref+'" class="thumbnail watch-thumb" style="background-image:url(\'//a.facdn.net/'+watchTruncatedName+'.gif\');"></a>' +
+				'<a href="'+watchHref+'" title="'+watchName+'" class="thumbnail watch-thumb" style="background-image:url(\'//a.facdn.net/'+watchTruncatedName+'.gif\');"></a>' +
 			'</div>').appendTo(row)
 		})
 	}
@@ -289,7 +289,7 @@ $(document).ready(function(){
 			watchName = $(this).text()
 
 			$('<div class="col-xs-3">' +
-				'<a href="'+watchHref+'" class="thumbnail watch-thumb" style="background-image:url(\'//a.facdn.net/'+watchTruncatedName+'.gif\');"></a>' +
+				'<a href="'+watchHref+'" title="'+watchName+'" class="thumbnail watch-thumb" style="background-image:url(\'//a.facdn.net/'+watchTruncatedName+'.gif\');"></a>' +
 			'</div>').appendTo(row)
 		})
 	}
@@ -425,6 +425,9 @@ $(document).ready(function(){
 			$(this).text('Show Less')
 		}
 	})
+
+	// -- Tooltips for watch thumbnails
+	$('.watch-thumb').attr('data-placement','bottom').tooltip()
 
 	$('.content.maintable').hide()
 })
