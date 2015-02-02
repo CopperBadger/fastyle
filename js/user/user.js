@@ -315,7 +315,7 @@ $(document).ready(function(){
 	$('.submission-count').text(stats['Submissions'])
 	$('#gallery-link').attr('href','/gallery/'+userNameTruncated)
 	$('#latest-submission-text').html("Last submission: "+firstSubmissionPubdate)
-	if(stats['Submissions']=='0'){$('#user-submissions-panel').remove()}
+	if(!submissions.length){$('#user-submissions-panel').remove()}
 	else {
 		idx = 0
 		var newRow = function(){return $('<div class="row">').appendTo('#user-submissions-container')}
@@ -337,7 +337,7 @@ $(document).ready(function(){
 	// -- User Favorites
 	$('#favorites-link').attr('href','/favorites/'+userNameTruncated)
 	$('#latest-favorite-text').html("Last favorite: "+firstFavoritePubdate)
-	if(stats['Favorites']=='0'){$('#user-favorites-panel').remove()}
+	if(!favorites.length){$('#user-favorites-panel').remove()}
 	else {
 		idx = 0
 		var newRow = function(){return $('<div class="row">').appendTo('#user-favorites-container')}
