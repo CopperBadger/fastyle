@@ -257,6 +257,7 @@ $(document).ready(function(){
 	if(watchingCount=='0'){$('#user-watching-panel').remove()}
 	else {
 		$('.watching-count').text(watchingCount)
+		$('#watching-link').attr('href',watchingHref)
 		idx = 0
 		var newRow = function(){return $('<div class="row">').appendTo('#user-watching-container')}
 		row = newRow()
@@ -278,6 +279,7 @@ $(document).ready(function(){
 	if(watchedByCount=='0'){$('#user-watched-by-panel').remove()}
 	else {
 		$('.watched-by-count').text(watchedByCount)
+		$('#watched-by-link').attr('href',watchedByHref)
 		idx = 0
 		var newRow = function(){return $('<div class="row">').appendTo('#user-watched-by-container')}
 		row = newRow()
