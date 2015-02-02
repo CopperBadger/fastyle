@@ -189,6 +189,7 @@ $(document).ready(function(){
 	firstFavoritePubdate = $('.userpage-first-favorite .popup_date').wrap('<span>').parent().html()
 
 	shouts = $('.cat>b:contains(Shouts)').parents('table:first').nextAll('table')
+	shoutAction = $('#JSForm').attr('action')
 
 	// -- User Banner Image
 	$('#user-banner-link').attr('href',featuredHref).text(featuredName)
@@ -298,7 +299,7 @@ $(document).ready(function(){
 
 	
 	// -- Latest Journal
-	if(!journalContainer.length){$('#user-latest-journal-panel').remove()}
+	if(!journalContainer.length||!journalName||!journalHref){$('#user-latest-journal-panel').remove()}
 	else {
 		$('#user-latest-journal-container')
 			.html('<h4><a href="'+journalHref+'">'+journalName+'</a></h4>' +
@@ -359,7 +360,7 @@ $(document).ready(function(){
 	}
 
 	// -- User Shouts
-	var addShout = function(src){
+	var addShout = function(src,afterLoad){
 		shouterAnchor = $(src).find('table tr:first a[href*=user]:last')
 		shouterName = shouterAnchor.text()
 		shouterHref = shouterAnchor.attr('href')
@@ -369,7 +370,7 @@ $(document).ready(function(){
 
 		if(!shouterAnchor.length){return false}
 
-		$('<li class="media">' +
+		m = $('<li class="media">' +
 			'<div class="media-left">' +
 				'<a href="'+shouterHref+'">' +
 					'<img src="'+shouterAvatar+'" alt="'+shouterName+'" class="media-object img img-rounded medium-thumb">' +
@@ -381,29 +382,36 @@ $(document).ready(function(){
 				'</div>' +
 				shoutContent +
 			'</div>' +
-		'</li>').appendTo('#shouts-list')
+		'</li>')
+
+		if(afterLoad){
+			m.prependTo('#shouts-list').hide().slideDown()
+		} else {
+			m.appendTo('#shouts-list')
+		}
 
 	}
 
 	$(shouts).each(function(){addShout(this)})
 
 	// Event Bindings
+
 	$('#shout-form').on("submit",function(){
 		$('#shout-chars-left').val($('#shout-message').val().length)
 		if($('#shout-message').val().length<=222){
 			$.ajax({
-				url:$(this).attr('action'),
+				url:shoutAction,
 				type: "POST",
-				data: serialize($(this)),
-				complete:function(xhr){
-					addShout($(xhr.responseText).find('.cat>b:contains(Shouts)').parents('table:first').nextAll('table:first'),true,true)
+				data: window.fastyle.serialize($(this)),
+				complete:function(xhr) {
+					addShout($(xhr.responseText).find('.cat>b:contains(Shouts)').parents('table:first').nextAll('table:first'),true)
 					tmp.remove()
 				}
 			})
 			$('#shout-message').val("").trigger("keyup")
 		}
 		return false;
-	}).attr('action',$('#JSForm').attr('action')).attr('method','POST')
+	}).attr('data-ajax-action',shoutAction)
 	$('#JSForm input[type=hidden]').remove().prependTo('#shout-form')
 	$('#shout-message').on("keyup",function(){
 		n = 222-$(this).val().length
