@@ -412,8 +412,13 @@ $(document).ready(function(){
 
 	// -- Bindings for panel expanders
 	$('.panel-expandable').each(function(){
-		$(this).attr('data-full-height',$(this).height())
-			.css({'max-height':$(this).attr('data-short-height')+"px"})
+		shortHeight = parseInt($(this).attr('data-short-height'))
+		if(!shortHeight||shortHeight>$(this).height()) {
+			$(this).removeClass('panel-expandable').css({'overflow-y':''})
+				.parents('.panel:first').find('.panel-expander').parents('ul:first').remove()
+		} else {
+			$(this).css({'max-height':shortHeight+"px"})
+		}
 	})
 	$('.panel-expander').on("click",function(){
 		tgt = $(this).parents('.panel:first').find('.panel-expandable')
@@ -425,7 +430,7 @@ $(document).ready(function(){
 			tmp = tgt.height()
 			fullHeight = tgt.css({'max-height':''}).height()
 			tgt.css({'max-height':tmp+'px'})
-			tgt.animate({'max-height':$(tgt).attr('data-full-height')})
+			tgt.animate({'max-height':fullHeight})
 				.addClass('expanded')
 			$(this).text('Show Less')
 		}
