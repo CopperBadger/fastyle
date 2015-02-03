@@ -56,6 +56,29 @@ function makeSubmissionPreview(subLink, linkElement) {
 	});
 }
 
+function makeExternalPreview(link, linkElement) {
+	link = link.replace(/https?\:/,'');
+	$(linkElement).addClass('preview-built')
+		.text("Fetching preview...")
+		.append('<img src="' + link + '" class="hidden popover-img-preload" />');
+	
+	$(".popover-img-preload").load(function(){
+		linkElement.text("Preview").popover({
+			html: true,
+			placement: 'auto top',
+			title: "Image Preview",
+			trigger: 'click',
+			content: '<img src="' + link + '" class="img-responsive" /><br />'+
+				'<a href="'+ link +'" class="btn btn-primary btn-xs pull-right">Open &gt;</a>',
+			template: '<div class="popover" role="tooltip" style="width:360px;">' +
+				'<div class="arrow"></div>' +
+				'<h3 class="popover-title"></h3>' + 
+				'<div class="popover-content clearfix"></div>' +
+				'</div>'
+		}).popover('show');
+	});
+}
+
 $(document).ready(function() {
 	row = $('#comment-wrapper')
 
@@ -126,6 +149,13 @@ $(document).ready(function() {
 			var link = $(this).attr('href');
 			console.log("Writing new popover anchor for "+link)
 			$(this).after('&nbsp;<a href="javascript:void(0)" class="label label-primary label-sub-preview" data-link="'+ link +'">Preview</span>')
+		}).addClass('popover-bound');
+		
+		// Add external image preview links
+		$('a[href*=".png"]:not(.popover-bound), a[href*=".gif"]:not(.popover-bound), a[href*=".jpg"]:not(.popover-bound), a[href*=".jpeg"]:not(.popover-bound)').each(function(){
+			var link = $(this).attr('href');
+			console.log("Writing new popover anchor for "+link)
+			$(this).after('&nbsp;<a href="javascript:void(0)" class="label label-primary label-external-preview" data-link="'+ link +'">Preview</span>')
 		}).addClass('popover-bound');
 
 		if(videoIDs.length){
@@ -203,6 +233,11 @@ $(document).ready(function() {
 		if (!$(this).hasClass('preview-built')){
 			var link = $(this).data('link');
 			makeSubmissionPreview(link, $(this));
+		}
+	}).on('click','.label-external-preview', function(e){
+		if (!$(this).hasClass('preview-built')){
+			var link = $(this).data('link');
+			makeExternalPreview(link, $(this));
 		}
 	});
 })
