@@ -23,7 +23,8 @@
 				"lib/js/jquery.min.js",
 				"lib/js/bootstrap.min.js",
 				"js/system/setup.js",
-				"js/system/render.js"
+				"js/system/render.js",
+				"js/general/navbar.js"
 			],
 			"css": ["css/style.css"]
 		},
@@ -63,7 +64,7 @@
 		{
 			"matches": [
 				"*://*.furaffinity.net/",
-				"*://*.furaffinity.net/browse/",
+				"*://*.furaffinity.net/browse*",
 				"*://*.furaffinity.net/search*",
 				"*://*.furaffinity.net/gallery/*",
 				"*://*.furaffinity.net/scraps/*",

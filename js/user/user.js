@@ -129,7 +129,7 @@ function retab(data){
 
 function addRow(key,val,table) {
 	return (key&&val)
-		?$('<tr>').appendTo(table).append("<td>"+key+"</td>").append("<td>"+capitalize(val)+"</td>")
+		?$('<tr>').appendTo(table).append("<td>"+key+"</td>").append("<td>"+window.fastyle.capitalize(val)+"</td>")
 		:null
 }
 
@@ -246,7 +246,7 @@ $(document).ready(function(){
 			}
 
 			//URL RegEx credit: http://code.tutsplus.com/tutorials/8-regular-expressions-you-should-know--net-6149
-			if(v.search(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/)==-1){v=capitalize(v)}
+			if(v.search(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/)==-1){v=window.fastyle.capitalize(v)}
 			else{v = "<a href='"+v+"' target='_blank'>"+v+"</a>"}
 			addRow(k,v,'#user-full-info-table')
 		}
@@ -448,4 +448,4 @@ $(document).ready(function(){
 	$('.watch-thumb').attr('data-placement','bottom').tooltip()
 
 	$('.content.maintable').hide()
-})	
+})

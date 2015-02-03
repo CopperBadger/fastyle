@@ -1,3 +1,14 @@
+.navbar a {
+	margin-left:0 !important;
+	margin-right:0 !important;
+}
+
+.navbar li.header a {
+	font-weight: bold;
+	padding: 6px 10px;
+	font-size: 10pt;
+}
+
 .iconusername img {
 	max-width: 64px;
 	max-height: 64px;
