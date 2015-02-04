@@ -40,11 +40,12 @@ window.fastyle.serialize = function(el) {
   return o;
 }
 
+// YouTube Video ID RegEx: http://markmail.org/message/jb6nsveqs7hya5la
 window.fastyle.getYouTubeIDs = function(src){
   videoids = {};
   videoMatches = src.match(/youtu[^\s]+/g)
   for(vm in videoMatches){
-    if(id=(t=videoMatches[vm].match(/(?:v=|\.be\/)([^\s]{11})/))?t[1]:""){
+    if(id=(t=videoMatches[vm].match(/(?:v=|\.be\/)([A-Za-z0-9_-]{11})/))?t[1]:""){
       videoids[id] = 1
       console.log("Found "+id)
     }
