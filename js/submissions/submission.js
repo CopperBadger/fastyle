@@ -163,8 +163,8 @@ $(document).ready(function() {
 	setTimeout(function(){
 		$(document).on("keyup",function(e){
 			if($(e.target).is('body')){
-				if(e.which==37){document.location=$('.prev.button').attr('href')}
-				if(e.which==39){document.location=$('.next.button').attr('href')}
+				if(e.which==37 && (to=$('.prev.button').attr('href'))){document.location=to}
+				if(e.which==39 && (to=$('.next.button').attr('href'))){document.location=to}
 			}
 		})
 	},1000)
