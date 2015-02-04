@@ -18,6 +18,7 @@ window.fastyle.ss = "//maxcdn.bootstrapcdn.com/bootswatch/3.3.1/"+(window.fastyl
 window.fastyle.funTitles=["Give us a Moment","Just a Second","Please Wait","Doing the Thing","Hold on a Sec","Stuff is Happening"]
 window.fastyle.uname = $('#my-username').text().substring(1)
 window.fastyle.domain = (t=document.location.host.match(/^([^\.]+)\./))?t[1]:"www"
+window.fastyle.loginSession = window.fastyle.getCookie("a")
 
 window.fastyle.truncateName = function(src) {
 	return (t=src.toLowerCase().match(/[a-z0-9-~\.]+/g))?t.join(''):"";
