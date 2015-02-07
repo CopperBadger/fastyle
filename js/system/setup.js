@@ -62,3 +62,8 @@ window.fastyle.addCommas = function(strnum){
   n = (l=strnum.length)%3
   return ((p=strnum.substring(0,n))&&(p+(l>3?',':''))) + strnum.substring(n).replace(/(\d{3})(\d{3})/g,'$1,$2')
 }
+
+window.fastyle.setNavbarPosition = function(fix){
+  $('#fastyle-navbar').toggleClass('navbar-fixed-top',fix)
+  $('#body-wrapper').css({'margin-top':(fix)?'72px':'8px'})
+}

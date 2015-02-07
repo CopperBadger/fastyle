@@ -7,12 +7,12 @@ if(window.fastyle.loginSession){
 					'<li><a href="/msg/pms/">Notes</a></li>' +
 					'<li><a href="/controls/journal">Journals</a></li>' +
 					'<li class="divider"></li>' +
-					'<li class="header"><a href="javascript:void(0)"><strong>Account Management</strong></a></li>' +
+					'<li role="presentation" class="dropdown-header">Account Management</li>' +
 					'<li><a href="/controls/settings/">Account Settings</a></li>' +
 					'<li><a href="/controls/site-settings/">Site Settings</a></li>' +
 					'<li><a href="/controls/profile/">Profile Info</a></li>' +
 					'<li><a href="/controls/avatar/">Update Avatar</a></li>' +
-					'<li class="header"><a href="javascript:void(0)"><strong>Page Management</strong></a></li>' +
+					'<li role="presentation" class="dropdown-header">Page Management</li>' +
 					'<li><a href="/controls/journal/">Journals</a></li>' +
 					'<li><a href="/controls/journalsettings/">Journal Settings</a></li>' +
 					'<li><a href="/controls/submissions/">Submissions</a></li>' +
@@ -20,24 +20,22 @@ if(window.fastyle.loginSession){
 					'<li><a href="/controls/shouts/">Page Shouts</a></li>' +
 					'<li><a href="/controls/favorites/">Favorites</a></li>' +
 					'<li><a href="/controls/buddylist/">Watch List</a></li>' +
-					'<li class="header"><a href="javascript:void(0)"><strong>Site Security</strong></a></li>' +
+					'<li role="presentation" class="dropdown-header">Site Security</li>' +
 					'<li><a href="/controls/sessions/logins/">Active Sessions</a></li>' +
 					'<li><a href="/controls/sessions/logs/">Activity Log</a></li>' +
 					'<li><a href="/controls/sessions/labels/">Browser Labels</a></li>' +
-					'<li class="divider"></li>' +
 					'<li><a href="/controls/troubletickets/">Report a Problem</a></li>' +
-					'<li class="header"><a href="javascript:void(0)"><strong>Community</strong></a></li>' +
+					'<li class="divider"></li>' +
+					'<li role="presentation" class="dropdown-header">Community</li>' +
 					'<li><a href="forums.furaffinity.net">FA Forums</a></li>' +
 					'<li><a href="//help.furaffinity.net/article/AA-00201/9/Fur-Affinity-IRC-Chat.html">IRC Chat</a></li>' +
-					'<li class="divider"></li>' +
 					'<li><a href="twitter.com/furaffinity">Twitter</a></li>' +
 					'<li><a href="www.facebook.com/furaffinity">Facebook</a></li>' +
-					'<li class="divider"></li>' +
 					'<li><a href="//help.furaffinity.net/article/AA-00210/7/Advertising.html">Advertising</a></li>' +
-					'<li class="header"><a href="javascript:void(0)"><strong>Support</strong></a></li>' +
+					'<li class="divider"></li>' +
+					'<li role="presentation" class="dropdown-header">Support</li>' +
 					'<li><a href="/journals/fender/">News and Updates</a></li>' +
 					'<li><a href="help.furaffinity.net">Knowledgebase</a></li>' +
-					'<li class="divider"></li>' +
 					'<li><a href="/staff/">Site Staff</a></li>' +
 					'<li><a href="//help.furaffinity.net/article/AA-00203/8/Terms-of-Service-TOS.html">Terms of Service</a></li>' +
 					'<li><a href="//help.furaffinity.net/article/AA-01065/0/Code-of-Conduct-COC.html">Code of Conduct</a></li>' +
@@ -50,7 +48,7 @@ if(window.fastyle.loginSession){
 	rightSkel = '<li><a href="/register/">Register</a></li>' +
 	'<li><a href="/login/">Log in</a></li>'
 }
-navbarSkel = '<div class="navbar navbar-default navbar-fixed-top" id="fastyle-navbar">' +
+navbarSkel = '<div class="navbar navbar-default" id="fastyle-navbar">' +
 	'<ul class="nav navbar-nav pull-right">' +
 	rightSkel +
 	'</ul>' +
@@ -93,4 +91,12 @@ $(document).ready(function(){
 	$('#sfw-switch').on("click",function(){
 		window.fastyle.setCookie('sfw',SFWToggled?'0':'1')
 	}).parents('li:first').addClass(SFWToggled?"active":"")
+
+	$('body').on("click",'.header-position-switch',function() {
+		tog = window.fastyle.headerFixed = !$('#fastyle-navbar').is('.navbar-fixed-top')
+		window.fastyle.setCookie('navpos',(tog)?'fixed':'static')
+		window.fastyle.setNavbarPosition(tog)
+	})
+
+	window.fastyle.setNavbarPosition(window.fastyle.getCookie('navpos','static')=='fixed')
 })

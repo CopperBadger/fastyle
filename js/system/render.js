@@ -4,7 +4,7 @@ precolor = $('body').css('background-color')
 $('link[rel=stylesheet]').remove()
 $('<link rel="stylesheet" href="'+window.fastyle.ss+'" id="stylesheet">').appendTo('head')
 
-$('body').wrapInner('<div class="container" id="body-wrapper" style="margin-top:64px;"></div>')
+$('body').wrapInner('<div class="container" id="body-wrapper" style="margin-top:72px;"></div>')
 $('#body-wrapper').hide()
 
 $(document).ready(function() {
@@ -55,6 +55,10 @@ $(document).ready(function() {
 			.text(window.fastyle.capitalize(t))
 			.wrapInner("<a href='javascript:void(0)' class='theme-anchor' data-theme='"+t+"'>")
 	}
+
+	$('#theme-list')
+		.append('<li class="divider"></li>')
+		.append('<li><a href="javascript:void(0)" class="header-position-switch">Toggle Navbar Fixture</a></li>')
 
 	$('body').on('click','.theme-anchor',function(){
 		$('#stylesheet').attr('href',"//maxcdn.bootstrapcdn.com/bootswatch/3.3.1/"+$(this).attr('data-theme')+"/bootstrap.min.css")
