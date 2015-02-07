@@ -4,7 +4,7 @@ precolor = $('body').css('background-color')
 $('link[rel=stylesheet]').remove()
 $('<link rel="stylesheet" href="'+window.fastyle.ss+'" id="stylesheet">').appendTo('head')
 
-$('body').wrapInner('<div class="container" id="body-wrapper"></div>')
+$('body').wrapInner('<div class="container" id="body-wrapper" style="margin-top:64px;"></div>')
 $('#body-wrapper').hide()
 
 $(document).ready(function() {
