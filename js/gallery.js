@@ -38,7 +38,7 @@ $(document).ready(function(){
 					'<button class="btn btn-default select-all" type="button">Select All</button>' +
 					'<button class="btn btn-default deselect-all" type="button">Deselect All</button>' +
 					'<button class="btn btn-primary submissions-clear" type="button">Remove Selected</button>' +
-					'<button class="btn btn-danger" type="button">Nuke All Submissions</button>' +
+					'<button class="btn btn-danger nuke-submissions" type="button">Nuke All Submissions</button>' +
 				'</div>' +
 			'</div>' +
 		'</div>').insertBefore('.content.maintable')
