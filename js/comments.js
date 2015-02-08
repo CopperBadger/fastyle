@@ -7,8 +7,11 @@ function makeCommentForm(cid) {
 			'<label class="control-label" for="reply-input">Reply</label>' +
 			'<textarea class="form-control" name="reply" id="reply-input"></textarea>' +
 		'</div>' +
-		'<div class="form-group">' +
-			'<input class="btn btn-default pull-right" type="submit" value="Reply" />' +
+		'<div class="form-group clearfix">' +
+			'<div class="btn-toolbar pull-right">' +
+				'<input class="btn btn-default" type="submit" value="Reply" />' +
+				((cid)?'<a href="javascript:void(0)" class="form-closer pull-right btn btn-danger">Cancel</a>':'') +
+			'</div>' +
 		'</div>' +
 	'</form>'
 }
@@ -100,8 +103,7 @@ $(document).ready(function() {
 	$('.reply-link').on("click",function(){
 		par = $(this).parents('li:first')
 		if($(par).is('.reply-form-open')){
-			$(par).removeClass('reply-form-open')
-			.next('li').slideUp(function(){$(this).remove();})
+			$(par).next('li').find('.form-closer').click()
 		} else {
 			$(par).addClass('reply-form-open')
 			$("<li class='media'>").insertAfter($(this).parents('li:first'))
@@ -133,7 +135,8 @@ $(document).ready(function() {
 			type: "POST",
 			data:obj,
 			complete:function(xhr){
-				$(self).find('textarea').val("");
+				$(self).find('textarea').val("").end()
+					.find('.form-closer').click();
 				newComment($(target),$(
 					$(xhr.responseText).find('.container-comment[data-timestamp!=""] a[href*="user"]')
 					.parents('.container-comment').sort(function(a,b){
@@ -151,5 +154,9 @@ $(document).ready(function() {
 			$(par).append('<hr>')
 				.append('<div class="embed-responsive embed-responsive-16by9"><iframe src="//www.youtube.com/embed/'+ids[vid]+'" class="embed-responsive-item" frameborder="0" allowfullscreen> </iframe></div>')
 		}
+	}).on("click",".form-closer",function(){
+		$(this).parents('.comment-form').parent('li').slideUp(function(){
+			$(this).remove()
+		}).prev('.reply-form-open').removeClass('reply-form-open')
 	});
 })
