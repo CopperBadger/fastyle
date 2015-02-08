@@ -5,10 +5,7 @@ $(document).ready(function(){
 	$('sup, sub').css({top:0,'line-height':'1em'})
 	$('.bbcode_center').css({'text-align':'center'})
 	$('#news').addClass('alert alert-info')
-
-	if(sessionStorage.getItem('theme')=="superhero") {
-		$('.panel-heading .text-muted').css({color:'rgba(255,255,255,0.8)'})
-	}
+	$('#search-query').val(sessionStorage.getItem('q'))
 
 	if(!window.fastyle.developerMode) {
 		$('.content.maintable').hide()

@@ -1,7 +1,7 @@
 var topSkel = 
 	'<div class="row" id="new-search-query">'+
 		'<div class="col-sm-12">'+
-			'<h3>Search results for <span id="query-text"></span></h3>'+
+			'<h3>Search results for <strong id="query-text"></strong></h3>'+
 		'</div>'+
 	'</div>'+
 	
@@ -151,48 +151,46 @@ function couldBeUsername(username) {
 
 $(document).ready(function(){
 	
+	var searchQuery = $("#q").val();
+	
 	if ($("#search-results").length > 0) {
 		$(topSkel).insertBefore("#gallery-container");
+		$("#query-text").text(searchQuery);
+		sessionStorage.setItem('q',searchQuery)
+
+		if (couldBeUsername(searchQuery)) {
+		
+			$.ajax({
+			    url : '/register/?phase=5&mode=check_username',
+			    type: 'POST',
+			    data : {
+				    username: searchQuery
+				},
+			    success: function(ret){
+				    
+				    var result = ret.replace("/*-secure-\n","").replace("*/","");
+					result = JSON.parse(result);
+					status = result.status;
+					if (status == 1) {
+						$("#username-link").removeClass('hidden').attr('href','/user/' + searchQuery);
+						$("#found-img").attr('src', '//a.facdn.net/'+ searchQuery +'.gif');
+					}
+					$("#username-searching").remove();
+					$("#username-error").remove();
+			    },
+			    error: function (result){
+			 		$("#username-link").removeClass('hidden').
+					$("#username-searching").remove();
+					$("#username-link").remove();
+			    }
+			});
+			
+		} else {
+			$("#username-searching").remove();
+			$("#username-error").remove();
+		}
 	}
+
 	$(formSkel).insertBefore('.content.maintable');
-
 	$('#search-form fieldset:first').hide();
-		
-	var searchQuery = $("#q").val();
-	$("#query-text").text(searchQuery);
-	
-	if (couldBeUsername(searchQuery)) {
-	
-		$.ajax({
-		    url : '/register/?phase=5&mode=check_username',
-		    type: 'POST',
-		    data : {
-			    username: searchQuery
-			},
-		    success: function(ret){
-			    
-			    var result = ret.replace("/*-secure-\n","").replace("*/","");
-				result = JSON.parse(result);
-				status = result.status;
-				if (status == 1) {
-					$("#username-link").removeClass('hidden').attr('href','/user/' + searchQuery);
-					$("#found-img").attr('src', '//a.facdn.net/'+ searchQuery +'.gif');
-				}
-				$("#username-searching").remove();
-				$("#username-error").remove();
-		    },
-		    error: function (result){
-		 		$("#username-link").removeClass('hidden').
-				$("#username-searching").remove();
-				$("#username-link").remove();
-		    }
-		});
-		
-	}
-	
-	else {
-		$("#username-searching").remove();
-		$("#username-error").remove();
-	}
-
 })

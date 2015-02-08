@@ -60,7 +60,7 @@ navbarSkel = '<div class="navbar navbar-default" id="fastyle-navbar">' +
 	'<form action="/search/" class="navbar-form navbar-left" role="search" method="POST">' +
 		'<div class="form-group">' +
 			'<div class="input-group">' +
-				'<input type="text" class="form-control" name="q" placeholder="Search" />' +
+				'<input type="text" class="form-control" name="q" id="search-query" placeholder="Search" />' +
 				'<span class="input-group-btn">' +
 					'<button class="btn btn-default" type="submit">Go</button>' +
 				'</span>' +
