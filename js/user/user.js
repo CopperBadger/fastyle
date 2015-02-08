@@ -246,7 +246,7 @@ $(document).ready(function(){
 			}
 
 			//URL RegEx credit: http://code.tutsplus.com/tutorials/8-regular-expressions-you-should-know--net-6149
-			if(v.search(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/)==-1){v=window.fastyle.capitalize(v)}
+			if(v.search(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})[^\s]+\/?$/)==-1){v=window.fastyle.capitalize(v)}
 			else{v = "<a href='"+v+"' target='_blank'>"+v+"</a>"}
 			addRow(k,v,'#user-full-info-table')
 		}
