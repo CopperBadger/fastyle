@@ -1,7 +1,12 @@
-skel = '<form action="/msg/send/" method="POST" id="reply-form">' +
+skel = '<div class="row" style="margin:16px 0">' +
+		'<div class="col-xs-12">' +
+			'<a href="/msg/pms/" class="btn btn-primary">Return to Notes</a>' +
+		'</div>' +
+	'</div>' +
+	'<form action="/msg/send/" method="POST" id="reply-form">' +
 	'<input type="hidden" name="key" id="message-key" value="" />' +
 	'<input type="hidden" name="submit" value="Post" />' +
-	'<div class="row" id="sender-row">' +
+	'<div class="row" id="sender-row" style="margin:16px 0">' +
 		'<div class="col-sm-12">' +
 			'<div class="media">' +
 				'<div class="media-left pull-left">' +
@@ -24,12 +29,14 @@ skel = '<form action="/msg/send/" method="POST" id="reply-form">' +
 					'<div class="row">' +
 						'<div class="col-sm-6">' +
 							'<div class="btn-group">' +
-								'<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Priority <span class="caret"></span></button>' +
+								'<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">' +
+									'<span id="prio-button-label">Priority</span> <span class="caret"></span>' +
+								'</button>' +
 								'<ul class="dropdown-menu" id="priority-dropdown" role="menu">' +
-									'<li><a href="javascript:void(0)"><span class="text-danger">High Priority</span></a></li>' +
-									'<li><a href="javascript:void(0)"><span class="text-warning">Medium Priority</span></a></li>' +
-									'<li><a href="javascript:void(0)"><span class="text-success">Low Priority</span></a></li>' +
-									'<li><a href="javascript:void(0)"><span class="text-faded">No Priority</span></a></li>' +
+									'<li><a href="javascript:void(0)" class="priority-option" data-prio="high"><span class="text-danger">High Priority</span></a></li>' +
+									'<li><a href="javascript:void(0)" class="priority-option" data-prio="medium"><span class="text-warning">Medium Priority</span></a></li>' +
+									'<li><a href="javascript:void(0)" class="priority-option" data-prio="low"><span class="text-success">Low Priority</span></a></li>' +
+									'<li><a href="javascript:void(0)" class="priority-option" data-prio="none"><span class="text-faded">No Priority</span></a></li>' +
 								'</ul>' +
 							'</div>' +
 						'</div>' +
@@ -100,6 +107,8 @@ skel = '<form action="/msg/send/" method="POST" id="reply-form">' +
 $(document).ready(function(){
 	$(skel).insertBefore('.content.maintable')
 
+	messageId = (t=document.location.pathname.match(/viewmessage\/(\d+)/))?t[1]:0;
+
 	if(document.location.href.search('viewmessage')==-1){
 		$('#sender-row, #message-row').hide()
 	} else {
@@ -136,6 +145,7 @@ $(document).ready(function(){
 		$('.reply-subject').val(replySubject)
 	}
 
+	senderName = ""
 	if(document.location.href.search("newpm")!=-1){
 		senderName = document.location.href.match(/([^\/]+)\/$/)[1]
 	}
@@ -145,4 +155,21 @@ $(document).ready(function(){
 	// Formatting
 	$('.bbcode_quote').wrapInner('<blockquote>')
 	$('.form-group').css({margin:'2px 0'})
+
+	// Event Binding
+	if(messageId){
+		$('.priority-option').on('click',function(){
+			$('#prio-button-label').text('Setting priority...')
+			$.ajax({
+				url: "/msg/pms/",
+				type: "POST",
+				data: {
+					'manage_notes':'1',
+					'items[]': messageId,
+					'set_prio': $(this).attr('data-prio')
+				},
+				complete: function(){$('#prio-button-label').text('Priority Set!')}
+			})
+		})
+	}
 })
