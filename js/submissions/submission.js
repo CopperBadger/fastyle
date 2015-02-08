@@ -73,6 +73,12 @@ $(document).ready(function() {
 	$(author).eq(1).remove()
 	description = $(tmp).html()
 
+	// (Remove initial line breaks from description)
+	failsafe = 0
+	while(++failsafe<25 && description.search(/^[\s\t\n]*?<br>/)!=-1){
+		description = description.replace(/^[\s\t\n]*?<br>\n?/,'')
+	}
+
 	pubdate = $('.popup_date:first').wrap('<span>').parent().html()
 	eval($('.alt1 script').text()) // Grab image urls
 
