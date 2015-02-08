@@ -86,6 +86,14 @@
 			"js": ["js/search.js"]
 		},
 		{
+			"matches": ["*://*.furaffinity.net/submit*"],
+			"js": ["js/submit/typeselect.js"]
+		},
+		{
+			"matches": ["*://*.furaffinity.net/submit/submission/4*"],
+			"js": ["js/submissions/editsubmission.js"]
+		},
+		{
 			"matches": ["*://*.furaffinity.net/login*"],
 			"js": ["js/general/login.js"]
 		},

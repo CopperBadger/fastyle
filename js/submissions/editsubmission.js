@@ -4,7 +4,24 @@ subskel = '<div class="page-header">' +
 	'</h2>' +
 	'<small>Edit submission information</small>' +
 '</div>' +
+'<img id="submission-preview" class="center-block" style="margin-bottom:16px" />' +
 '<form action="" class="form well" method="POST" id="edit-submission-form">' +
+	'<div class="row">' +
+		'<div class="col-xs-12">' +
+			'<div class="form-group">' +
+				'<label for="submission-title-input" class="control-label">Title</label>' +
+				'<input type="text" name="title" id="submission-title-input" class="form-control">' +
+			'</div>' +
+			'<div class="form-group">' +
+				'<label for="submission-comment-input" class="control-label">Comment</label>' +
+				'<textarea name="message" id="submission-comment-input" class="form-control" rows="7"></textarea>' +
+			'</div>' +
+			'<div class="form-group">' +
+				'<label for="submission-keyword-input" class="control-label">Keywords &#183; <span id="submission-keyword-chars-left"></span></label>' +
+				'<textarea name="keywords" id="submission-keyword-input" class="form-control" rows="3"></textarea>' +
+			'</div>' +
+		'</div>' +
+	'</div>' +
 	'<div class="row">' +
 		'<div class="col-sm-6">' +
 			'<div class="row">' +
@@ -63,22 +80,6 @@ subskel = '<div class="page-header">' +
 	'<div class="row">' +
 		'<div class="col-xs-12">' +
 			'<div class="form-group">' +
-				'<label for="submission-title-input" class="control-label">Title</label>' +
-				'<input type="text" name="title" id="submission-title-input" class="form-control">' +
-			'</div>' +
-			'<div class="form-group">' +
-				'<label for="submission-comment-input" class="control-label">Comment</label>' +
-				'<textarea name="message" id="submission-comment-input" class="form-control" rows="7"></textarea>' +
-			'</div>' +
-			'<div class="form-group">' +
-				'<label for="submission-keyword-input" class="control-label">Keywords &#183; <span id="submission-keyword-chars-left"></span></label>' +
-				'<textarea name="keywords" id="submission-keyword-input" class="form-control" rows="3"></textarea>' +
-			'</div>' +
-		'</div>' +
-	'</div>' +
-	'<div class="row">' +
-		'<div class="col-xs-12">' +
-			'<div class="form-group">' +
 				'<button class="btn btn-primary pull-right" type="submit">Update</button>' +
 			'</div>' +
 		'</div>' +
@@ -87,16 +88,26 @@ subskel = '<div class="page-header">' +
 
 $(document).ready(function(){
 	$(subskel).insertBefore('.content.maintable')
+	$('form[name=MsgForm]').attr('id','myform')
+	srcForm = $('#myform')
 
 	// Data Population
+	// -- Put in preview image if present
+	if(imgSrc = $('img[alt=submission]').attr('src')){
+		$('#submission-preview').attr('src',imgSrc)
+	} else {
+		$('#submission-preview').remove()
+	}
+
 	// -- Set page title to submission title
-	$('#submission-name-field').text($('form[name=MsgForm] [name=title]').val())
+	name = srcForm.find('[name=title]').val()
+	$('#submission-name-field').text(name||"New Submission")
 
 	// -- Form action
-	$('#edit-submission-form').attr('action',$('form[name=MsgForm]').attr('action'))
+	$('#edit-submission-form').attr('action',srcForm.attr('action'))
 
 	// -- Iterate through all input fields (excluding rating) and automatically populate
-	$('form[name=MsgForm]').find('input:not([type=radio]), textarea').each(function(){
+	srcForm.find('input:not([type=radio]), textarea').each(function(){
 		$('#edit-submission-form [name='+$(this).attr('name')+']')
 			.val($(this).val())
 	})
@@ -111,11 +122,11 @@ $(document).ready(function(){
 	.end().find('[type=hidden]').remove().prependTo('#edit-submission-form')
 
 	// -- Select submission rating
-	selectedRating = $('form[name=MsgForm]').find('[name=rating]:checked').val()
+	selectedRating = srcForm.find('[name=rating]:checked').val()
 	$('.rating-select[value='+selectedRating+']').click()
 
 	// -- Set destination default
-	$('#submission-gallery-select option:contains('+(($('form[name=MsgForm] [name=scrap]').is(':checked'))?'Scraps':'Gallery')+')')
+	$('#submission-gallery-select option:contains('+((srcForm.find('[name=scrap]').is(':checked'))?'Scraps':'Gallery')+')')
 		.prop('selected',true)
 
 	// Event Bindings
