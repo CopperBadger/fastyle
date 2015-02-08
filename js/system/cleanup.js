@@ -7,6 +7,14 @@ $(document).ready(function(){
 	$('#news').addClass('alert alert-info')
 	$('#search-query').val(sessionStorage.getItem('q'))
 
+
+	sysmsg = $('.cat b:contains(System Message)').parents('table:first').find('.alt1').html()
+	if(sysmsg){
+		$('<div class="alert alert-info">' +
+			'<strong>System Message</strong>' + sysmsg +
+		'</div>').insertAfter('#fastyle-navbar')
+	}
+
 	if(!window.fastyle.developerMode) {
 		$('.content.maintable').hide()
 	}
