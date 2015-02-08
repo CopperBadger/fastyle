@@ -86,7 +86,7 @@ userskel = '<div class="row img-rounded" id="user-banner" style="margin:16px 0">
 		'</div>' +
 		'<div class="panel panel-default" id="user-shouts-panel">' +
 			'<div class="panel-heading">Shouts</div>' +
-			'<div class="panel-body">' +
+			'<div class="panel-body allow-previews">' +
 				'<form action="javascript:void(0)" class="form" id="shout-form" method="POST">' +
 					'<div class="form-group">' +
 						'<label for="shout-message" class="control-label">Message</label>' +
@@ -390,12 +390,15 @@ $(document).ready(function(){
 			m.appendTo('#shouts-list')
 		}
 
+		$('body').trigger('render-previews')
+
 	}
 
 	$(shouts).each(function(){addShout(this)})
 
 	// Event Bindings
 
+	// -- Binding for shout form
 	$('#shout-form').on("submit",function(){
 		$('#shout-chars-left').val($('#shout-message').val().length)
 		if($('#shout-message').val().length<=222){

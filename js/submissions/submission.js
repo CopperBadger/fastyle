@@ -37,7 +37,7 @@ submissionSkel = '<div class="container">' +
 					'</div>' +
 					'<div class="row">' +
 						'<div class="col-md-8">' +
-							'<div id="author-information"></div>' +
+							'<div id="author-information" class="allow-previews"></div>' +
 						'</div>' +
 						'<div class="col-md-4" id="submission-information"></div>' +
 					'</div>' +

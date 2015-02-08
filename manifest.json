@@ -168,7 +168,11 @@
 		// Cleanup
 		{
 			"matches": ["*://*.furaffinity.net/*"],
-			"js": ["js/general/footer.js","js/system/cleanup.js"]
+			"js": [
+				"js/previews.js",
+				"js/general/footer.js",
+				"js/system/cleanup.js"
+			]
 		}
 	]
 }
