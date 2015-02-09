@@ -28,6 +28,9 @@ submissionSkel = '<div class="container">' +
 			'<nav id="pager-container">' +
 				'<ul class="pager"></ul>' +
 			'</nav>' +
+			'<nav id="comic-pager-container">' +
+				'<ul class="pager"></ul>' +
+			'</nav>' +
 			'<div class="panel panel-default">' +
 				'<div class="panel-body">' +
 					'<div class="row">' +
@@ -104,8 +107,8 @@ $(document).ready(function() {
 	}
 
 	// -- Pager
-	if((pb = $('.prev.button')).length){$(pb).wrap("<li class='previous'>").parent().remove().appendTo('.pager')}
-	if((nb = $('.next.button')).length){$(nb).wrap("<li class='next'>").parent().remove().appendTo('.pager')}
+	if((pb = $('.prev.button')).length){$(pb).wrap("<li class='previous'>").parent().remove().appendTo('#pager-container .pager')}
+	if((nb = $('.next.button')).length){$(nb).wrap("<li class='next'>").parent().remove().appendTo('#pager-container .pager')}
 
 	// -- Information
 	$('.actions b a').each(function(){
@@ -123,7 +126,6 @@ $(document).ready(function() {
 	if(text){$('#author-information').append("<hr><h4>File Text</h4>"+text)}
 
 	// -- Keywords
-
 	keywordAnchors = $('#keywords a')
 	if(keywordAnchors.length){
 		$(keywordAnchors).each(function(){
@@ -174,5 +176,40 @@ $(document).ready(function() {
 			}
 		})
 	},1000)
+
+	// -- Comic pager
+	links = $('#author-information a').filter(function(){
+		indText = $(this).text().toLowerCase().replace(/[^a-z\s]+/g,'').replace('last','previous').trim()
+		if(indText.search(/^(next|prev(ious)?|first)(\spage)?$/)==0){
+			$(this).attr('data-pager-initial',indText[0])
+				.attr('href',$(this).attr('href').replace('view','full'))
+			return true
+		}
+	})
+
+	if(links.length){
+		if(next = $('[data-pager-initial=n]').attr('href')){
+			$('<li class="next"><a href="'+next+'">Next Page <kbd>n</kbd></a></li>').appendTo('#comic-pager-container .pager')
+		}
+		if(prev = $('[data-pager-initial=p]').attr('href')){
+			$('<li class="previous"><a href="'+prev+'">Previous Page <kbd>p</kbd></a></li>').appendTo('#comic-pager-container .pager')
+		}
+		if(first = $('[data-pager-initial=f]').attr('href')){
+			$('<li><a href="'+first+'">First Page <kbd>f</kbd></a></li>').appendTo('#comic-pager-container .pager')
+		}
+
+
+		setTimeout(function(){
+			$(document).on("keyup",function(e){
+				if($(e.target).is('body')){
+					if(e.which==78 && (to=next)){document.location=to}
+					if(e.which==80 && (to=prev)){document.location=to}
+					if(e.which==70 && (to=first)){document.location=to}
+				}
+			})
+		},1000)
+	} else {
+		$('#comic-pager-container').remove()
+	}
 
 })
