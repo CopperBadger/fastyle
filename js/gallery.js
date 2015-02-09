@@ -130,12 +130,19 @@ $(document).ready(function(){
 				u = getNextURL()
 
 				// For search results or browse page, get search params from form, incrementing page
+				isSearch = $('#search-form').length
 				d = window.fastyle.serialize($('#search-form, #browse-form'));
 					d.perpage = window.fastyle.fetchSize
 					d.go=d.btn="Next"
-					for(i in n=['general','mature','adult']){(d['rating_'+n[i]]*=1)}
-					if($('#search-form').length){d.page = window.fastyle.pageNumber-1}
+					for(i in n=['general','mature','adult']){
+						if(typeof (src=d['rating_'+n[i]])=="boolean"){
+								d['rating_'+n[i]]*=1
+							}
+						}
+					if(isSearch){d.page = window.fastyle.pageNumber-1}
 					delete d.do_search
+
+				for(p in d){if(!d[p]){delete d[p]}}
 
 				console.log(d)
 
