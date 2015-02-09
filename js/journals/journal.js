@@ -27,6 +27,6 @@ $(document).ready(function(){
 
 	$('#journal-heading').append(pubDate.remove())
 
-	$("<div class='col-xs-12 well'>").appendTo(row)
+	$("<div class='col-xs-12 well allow-previews'>").appendTo(row)
 		.html($(tab).find('td.alt1 .no_overflow').html())
 })
