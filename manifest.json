@@ -63,6 +63,12 @@
 		// Navbar contents, in order
 		{
 			"matches": [
+				"*://*.furaffinity.net/browse*"
+			],
+			"js": ["js/general/browse.js"]
+		},
+		{
+			"matches": [
 				"*://*.furaffinity.net/",
 				"*://*.furaffinity.net/browse*",
 				"*://*.furaffinity.net/search*",

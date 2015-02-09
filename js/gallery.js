@@ -1,4 +1,4 @@
-skel = '<div id="gallery-container"></div>'
+skel = '<div class="row" id="gallery-container"></div>'
 
 function renderImages(src){
 	row = $('#gallery-container')
@@ -129,30 +129,30 @@ $(document).ready(function(){
 				window.fastyle.pageNumber++
 				u = getNextURL()
 
-				// For search results, get search params from form, incrementing page
-				d = window.fastyle.serialize(sf=$('#search-form'));
+				// For search results or browse page, get search params from form, incrementing page
+				d = window.fastyle.serialize($('#search-form, #browse-form'));
 					d.perpage = window.fastyle.fetchSize
-					d.go="Next"
-					if(sf.length){d.page = window.fastyle.pageNumber-1}
+					d.go=d.btn="Next"
+					for(i in n=['general','mature','adult']){(d['rating_'+n[i]]*=1)}
+					if($('#search-form').length){d.page = window.fastyle.pageNumber-1}
 					delete d.do_search
 
-				console.log("Triggered! Going to "+u+" with parameters")
 				console.log(d)
 
 				$.ajax({
 					url:u,
-					type:(window.fastyle.pageString=="/browse/")?"GET":"POST",
+					type:"POST",
 					data:d,
 					complete:function(xhr){
 						res = $(xhr.responseText)
 						window.fastyle.nextHref = $(res).find('a.more:first').attr('href')
 						n = renderImages(res)
 						if(n!=0) {
+							$('#load-more-button').text("Load More")
 							setTimeout(function(){
 								window.fastyle.clearToLoad = true
 								window.fastyle.scrollThresh = getScrollThresh()
 								$(document).trigger('scroll')
-								$('#load-more-button').text("Load More")
 							},5000)
 						} else {
 							$('#load-more-button').before("<p>No more images to load!</p>").remove()
