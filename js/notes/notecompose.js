@@ -109,6 +109,8 @@ $(document).ready(function(){
 
 	messageId = (t=document.location.pathname.match(/viewmessage\/(\d+)/))?t[1]:0;
 
+	senderName = ""
+
 	if(document.location.href.search('viewmessage')==-1){
 		$('#sender-row, #message-row').hide()
 	} else {
@@ -143,11 +145,11 @@ $(document).ready(function(){
 		$('.message-container').html(messageContent)
 		$('.reply-content').val(replyContent)
 		$('.reply-subject').val(replySubject)
+
 	}
 
-	senderName = ""
 	if(document.location.href.search("newpm")!=-1){
-		senderName = document.location.href.match(/([^\/]+)\/$/)[1]
+		senderName = document.location.href.match(/([^\/]+)\/?$/)[1]
 	}
 	$('#reply-to').val(senderName)
 	$('#message-key').val($('#MsgForm [name=key]').val())
