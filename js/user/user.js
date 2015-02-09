@@ -181,6 +181,7 @@ $(document).ready(function(){
 	journalName = journalAnchor.text()
 	journalContent = journalContainer.find('tr .no_overflow.alt1').html()
 	journalPubDate = journalContainer.find('.popup_date').wrap('<span>').parent().html()
+	journalExists = journalHref&&journalHref.search('journal')!=-1
 
 	submissions = $('.flow.userpage-submissions.twolines a')
 	firstSubmissionPubdate = $('.userpage-first-submission .popup_date').wrap('<span>').parent().html()
@@ -299,7 +300,7 @@ $(document).ready(function(){
 
 	
 	// -- Latest Journal
-	if(!journalContainer.length||!journalName||!journalHref){$('#user-latest-journal-panel').remove()}
+	if(!journalExists||!journalContainer.length||!journalName||!journalHref){$('#user-latest-journal-panel').remove()}
 	else {
 		$('#user-latest-journal-container')
 			.html('<h4><a href="'+journalHref+'">'+journalName+'</a></h4>' +

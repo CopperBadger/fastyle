@@ -34,6 +34,7 @@ typeSelectSkel = '<div class="row">' +
 				'</a>' +
 				'<a href="javascript:void(0)" data-type="poetry" class="list-group-item type-select">' +
 					'<h4>Other Prose and Poetry</h4>' +
+					'<p>Anything that doesn\'t fit into the "stories" category</p>' +
 				'</a>' +
 			'</ul>' +
 		'</div>' +
