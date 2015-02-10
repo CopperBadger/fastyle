@@ -11,3 +11,14 @@
 .checked-for-deletion {
 	border:solid 2px #F00 !important;
 }
+
+.submission-type {
+	position: absolute; 
+	right: 15px;
+	bottom: 15px;
+	background: rgba(0,0,0,0.5);
+	font-size: 1.5em;
+	padding: 10px;
+	margin: 10px 7px;
+	border-radius: 100px;
+}

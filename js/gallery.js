@@ -3,16 +3,37 @@ skel = '<div class="row" id="gallery-container"></div>'
 function renderImages(src){
 	row = $('#gallery-container')
 	return $(src||'body').find('.r-general, .r-mature, .r-adult').each(function(){
+		
+		var thisTable = $(this).closest('table');
+		var tableHead = thisTable.find('tr').first().text();
+		
+		if($(this).hasClass('t-image') || tableHead.indexOf("Artwork") > -1) {
+			subType = "image";
+		}
+		else if($(this).hasClass('t-audio') || tableHead.indexOf("Music") > -1) {
+			subType = "audio";
+			subGlyph = "headphones";
+		}
+		else if($(this).hasClass('t-text') || tableHead.indexOf("Writing") > -1) {
+			subType = "text";
+			subGlyph = "book";
+		}
+		else {
+			subType = "undefined";
+		}
+		
 		au = $(this).find('small a')
 		cbx = $(this).find('small input[type=checkbox]')
-		s = $('<a href="'+(href=(hor=$(this).find('s a')).attr('href'))+'" class="submission-item" style="text-decoration:none">').appendTo(row)
+		s = $('<a href="'+(href=(hor=$(this).find('s a')).attr('href'))+'" class="submission-item submission-'+ subType +'" style="text-decoration:none">').appendTo(row)
 			.addClass('thumbnail contain-hover').attr('title',title=$(this).find('span').text())
 			.css({background:'transparent url("'+($(this).find('img').attr('src').replace(/@\d+/,'@400'))+'") 50% 50% / cover no-repeat',height:'224px',padding:'0'})
 			.wrap('<div class="col-md-3 col-xs-6">')
 			.html("<div class='thumb-title'>" +
 					"<strong>"+title+"</strong>" +
 					(au.length?(" by "+$(au).text()):"") +
-				"</div>")
+				"</div>" +
+				((subType!="image")&&(subType!="undefined")?("<div class='submission-type'><span class='glyphicon glyphicon-" + subGlyph +"'></span>"):"")
+				)
 		if(cbx.length){
 			$(s).append("<a href='javascript:void(0)' style='background-color:rgba(64,0,0,0.6);color:#FFF;padding:6px;display:block;text-decoration:none' class='thumb-checkbox'>" +
 					" <strong>Select</strong>" +
