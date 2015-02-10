@@ -54,7 +54,6 @@ if(window.fastyle.loginSession){
 					'<li><a href="//help.furaffinity.net/article/AA-00205/8/Acceptable-Upload-Policy-AUP.html">Acceptable Upload Policy</a></li>' +
 				'</ul>' +
 			'</li>' +
-			'<p class="navbar-text" id="messages"></p>'+
 			'<li id="sfw-switch-item"><a href="?" id="sfw-switch">SFW</a></li>' +
 			'<li><a href="/logout/">Log Out</a></li>'
 } else {
@@ -122,18 +121,23 @@ $(document).ready(function(){
 					var messageGlyph = (lk=iconLookup[messageType])?lk.i:"question-sign"
 					var messageLabel = (lk=iconLookup[messageType])?lk.l:"Notifications"
 					
-					var messageHTML = 
-						'<a href="' + messageLink + '" class="message-icon" data-toggle="tooltip" data-placement="bottom" title="'+messageNum+' '+messageLabel+(messageNum!=1?'s':'')+'">' + 
-							'<span class="glyphicon glyphicon-' + messageGlyph + '"></span>'+
-							'<div class="message-num label label-danger">' + messageNum + '</div>'+
-						'</a>';
+					var messageHTML = '<li>' +
+							'<a href="' + messageLink + '" class="message-icon" data-toggle="tooltip" data-placement="bottom" title="'+messageNum+' '+messageLabel+(messageNum!=1?'s':'')+'">' + 
+								'<span class="glyphicon glyphicon-' + messageGlyph + '"></span>'+
+								'<div class="message-num label label-danger">' + messageNum + '</div>'+
+							'</a>' +
+						'</li>';
 					
-					msg = $(messageHTML).appendTo('#messages')
-					$(msg).css({'padding-right':$(msg).find('.message-num').width()+4})
+					msg = $(messageHTML).insertBefore('#sfw-switch-item')
+					$(msg).find('a').css({'padding-right':$(msg).find('.message-num').width()+12})
 				}
 				
 			}
 		}
+	})
+
+	$('.message-icon').css({
+		color: $('#')
 	})
 
 	// Event Bindings
