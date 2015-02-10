@@ -271,7 +271,7 @@ $(document).ready(function(){
 			watchName = $(this).text()
 
 			$('<div class="col-xs-3">' +
-				'<a href="'+watchHref+'" title="'+watchName+'" class="thumbnail watch-thumb" style="background-image:url(\'//a.facdn.net/'+watchTruncatedName+'.gif\');"></a>' +
+				'<a href="'+watchHref+'" title="'+watchName+'" class="thumbnail watch-thumb" data-toggle="tooltip" data-placement="bottom" style="background-image:url(\'//a.facdn.net/'+watchTruncatedName+'.gif\');"></a>' +
 			'</div>').appendTo(row)
 		})
 	}
@@ -293,7 +293,7 @@ $(document).ready(function(){
 			watchName = $(this).text()
 
 			$('<div class="col-xs-3">' +
-				'<a href="'+watchHref+'" title="'+watchName+'" class="thumbnail watch-thumb" style="background-image:url(\'//a.facdn.net/'+watchTruncatedName+'.gif\');"></a>' +
+				'<a href="'+watchHref+'" title="'+watchName+'" class="thumbnail watch-thumb" data-toggle="tooltip" data-placement="bottom" style="background-image:url(\'//a.facdn.net/'+watchTruncatedName+'.gif\');"></a>' +
 			'</div>').appendTo(row)
 		})
 	}
@@ -447,9 +447,6 @@ $(document).ready(function(){
 			$(this).text('Show Less')
 		}
 	})
-
-	// -- Tooltips for watch thumbnails
-	$('.watch-thumb').attr('data-placement','bottom').tooltip()
 
 	$('.content.maintable').hide()
 })

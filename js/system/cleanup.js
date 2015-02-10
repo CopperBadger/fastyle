@@ -7,6 +7,8 @@ $(document).ready(function(){
 	$('#news').addClass('alert alert-info')
 	$('#search-query').val(sessionStorage.getItem('q'))
 
+	$('[data-toggle="tooltip"]').tooltip()
+
 
 	sysmsg = $('.cat b:contains(System Message)').parents('table:first').find('.alt1').html()
 	if(sysmsg){

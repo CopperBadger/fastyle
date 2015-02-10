@@ -93,10 +93,18 @@ $(document).ready(function(){
 
 	$('#user-anchor').text(username)
 		.attr('href',userHref)
+
+	// -- Notification icons
+	iconLookup = {
+		S: {i:"picture",l:"Submission"},
+		C: {i:"comment",l:"Comment"},
+		J: {i:"pencil",l:"Journal"},
+		W: {i:"user",l:"Watcher"},
+		T: {i:"exclamation-sign",l:"Ticket"},
+		N: {i:"envelope",l:"Note"}
+	}
 	$(messageItems).each(function(){
 		if(!!$(this).text()){
-			//$('#sfw-switch-item').before($(this).wrap('<li>').parent().remove())
-			
 			var messageText = $(this).text();
 			var messageLink = $(this).attr('href');
 			
@@ -111,42 +119,20 @@ $(document).ready(function(){
 					
 					var messageType = messageArr[index].charAt(messageArr[index].length-1);
 					var messageNum = messageArr[index].substr(0, messageArr[index].length-1);
-					
-					console.log("type: " + messageType);
-					console.log("num: " + messageNum);
-					
-					var messageGlyph;
-					
-					if (messageType == "S") {
-						messageGlyph = "picture";
-					}
-					else if (messageType == "C") {
-						messageGlyph = "comment";
-					}
-					else if (messageType == "J") {
-						messageGlyph = "pencil";
-					}
-					else if (messageType == "W") {
-						messageGlyph = "user";
-					}
-					else if (messageType == "T") {
-						messageGlyph = "exclamation-sign";
-					}
-					else if (messageType == "N") {
-						messageGlyph = "envelope";
-					}
+					var messageGlyph = (lk=iconLookup[messageType])?lk.i:"question-sign"
+					var messageLabel = (lk=iconLookup[messageType])?lk.l:"Notifications"
 					
 					var messageHTML = 
-						'<a href="' + messageLink + '" class="message-icon">' + 
+						'<a href="' + messageLink + '" class="message-icon" data-toggle="tooltip" data-placement="bottom" title="'+messageNum+' '+messageLabel+(messageNum!=1?'s':'')+'">' + 
 							'<span class="glyphicon glyphicon-' + messageGlyph + '"></span>'+
 							'<div class="message-num label label-danger">' + messageNum + '</div>'+
 						'</a>';
 					
-					$("#messages").append(messageHTML);
+					msg = $(messageHTML).appendTo('#messages')
+					$(msg).css({'padding-right':$(msg).find('.message-num').width()+4})
 				}
 				
 			}
-			//$('#sfw-switch-item').before($(messages).wrap('<li>').parent().remove());
 		}
 	})
 
