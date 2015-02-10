@@ -100,7 +100,10 @@ $(document).ready(function(){
 			var messageText = $(this).text();
 			var messageLink = $(this).attr('href');
 			
-			if (messageLink != "/controls/messages/") {
+			if (messageText == "No Messages") {
+				$("#messages").remove();
+			}
+			else if (messageLink != "/controls/messages/") {
 				
 				var messageArr = messageText.split(", ");
 				
@@ -160,4 +163,4 @@ $(document).ready(function(){
 	})
 
 	window.fastyle.setNavbarPosition(window.fastyle.getCookie('navpos','static')=='fixed')
-})
+});
