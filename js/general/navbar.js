@@ -42,6 +42,7 @@ if(window.fastyle.loginSession){
 					'<li><a href="//help.furaffinity.net/article/AA-00205/8/Acceptable-Upload-Policy-AUP.html">Acceptable Upload Policy</a></li>' +
 				'</ul>' +
 			'</li>' +
+			'<p class="navbar-text" id="messages"></p>'+
 			'<li id="sfw-switch-item"><a href="?" id="sfw-switch">SFW</a></li>' +
 			'<li><a href="/logout/">Log Out</a></li>'
 } else {
@@ -82,7 +83,55 @@ $(document).ready(function(){
 		.attr('href',userHref)
 	$(messageItems).each(function(){
 		if(!!$(this).text()){
-			$('#sfw-switch-item').before($(this).wrap('<li>').parent().remove())
+			//$('#sfw-switch-item').before($(this).wrap('<li>').parent().remove())
+			
+			var messageText = $(this).text();
+			var messageLink = $(this).attr('href');
+			
+			if (messageLink != "/controls/messages/") {
+				
+				var messageArr = messageText.split(", ");
+				
+				for (index = 0; index<messageArr.length; index++) {
+					
+					var messageType = messageArr[index].charAt(messageArr[index].length-1);
+					var messageNum = messageArr[index].substr(0, messageArr[index].length-1);
+					
+					console.log("type: " + messageType);
+					console.log("num: " + messageNum);
+					
+					var messageGlyph;
+					
+					if (messageType == "S") {
+						messageGlyph = "picture";
+					}
+					else if (messageType == "C") {
+						messageGlyph = "comment";
+					}
+					else if (messageType == "J") {
+						messageGlyph = "pencil";
+					}
+					else if (messageType == "W") {
+						messageGlyph = "user";
+					}
+					else if (messageType == "T") {
+						messageGlyph = "exclamation-sign";
+					}
+					else if (messageType == "N") {
+						messageGlyph = "envelope";
+					}
+					
+					var messageHTML = 
+						'<a href="' + messageLink + '" class="message-icon">' + 
+							'<span class="glyphicon glyphicon-' + messageGlyph + '"></span>'+
+							'<div class="message-num label label-danger">' + messageNum + '</div>'+
+						'</a>';
+					
+					$("#messages").append(messageHTML);
+				}
+				
+			}
+			//$('#sfw-switch-item').before($(messages).wrap('<li>').parent().remove());
 		}
 	})
 
