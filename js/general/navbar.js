@@ -7,12 +7,18 @@ if(window.fastyle.loginSession){
 					'<li><a href="/msg/pms/">Notes</a></li>' +
 					'<li><a href="/controls/journal">Journals</a></li>' +
 					'<li class="divider"></li>' +
-					'<li role="presentation" class="dropdown-header">Account Management</li>' +
+					'<li role="presentation" class="dropdown-submenu">' +
+					'<a href="#">Account Management</a>' +
+					'<ul class="dropdown-menu">' +
 					'<li><a href="/controls/settings/">Account Settings</a></li>' +
 					'<li><a href="/controls/site-settings/">Site Settings</a></li>' +
 					'<li><a href="/controls/profile/">Profile Info</a></li>' +
 					'<li><a href="/controls/avatar/">Update Avatar</a></li>' +
-					'<li role="presentation" class="dropdown-header">Page Management</li>' +
+					'</ul>' +
+					'</li>' +
+					'<li role="presentation" class="dropdown-submenu">' +
+					'<a href="#">Page Management</a>' +
+					'<ul class="dropdown-menu">' +
 					'<li><a href="/controls/journal/">Journals</a></li>' +
 					'<li><a href="/controls/journalsettings/">Journal Settings</a></li>' +
 					'<li><a href="/controls/submissions/">Submissions</a></li>' +
@@ -20,11 +26,17 @@ if(window.fastyle.loginSession){
 					'<li><a href="/controls/shouts/">Page Shouts</a></li>' +
 					'<li><a href="/controls/favorites/">Favorites</a></li>' +
 					'<li><a href="/controls/buddylist/">Watch List</a></li>' +
-					'<li role="presentation" class="dropdown-header">Site Security</li>' +
+					'</ul>' +
+					'</li>' +
+					'<li role="presentation" class="dropdown-submenu">' +
+					'<a href="#">Site Security</a>' +
+					'<ul class="dropdown-menu">' +
 					'<li><a href="/controls/sessions/logins/">Active Sessions</a></li>' +
 					'<li><a href="/controls/sessions/logs/">Activity Log</a></li>' +
 					'<li><a href="/controls/sessions/labels/">Browser Labels</a></li>' +
 					'<li><a href="/controls/troubletickets/">Report a Problem</a></li>' +
+					'</ul>' +
+					'</li>' +
 					'<li class="divider"></li>' +
 					'<li role="presentation" class="dropdown-header">Community</li>' +
 					'<li><a href="forums.furaffinity.net">FA Forums</a></li>' +
