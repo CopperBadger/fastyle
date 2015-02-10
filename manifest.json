@@ -26,7 +26,7 @@
 				"js/system/render.js",
 				"js/general/navbar.js"
 			],
-			"css": ["css/style.css"]
+			"css": ["css/style.css","css/menu.css"]
 		},
 		// Userbar content, in order
 		{
