@@ -46,7 +46,8 @@
 		},
 		{
 			"matches": ["*://*.furaffinity.net/user/*"],
-			"js": ["js/user/user.js"]
+			"js": ["js/user/user.js"],
+			"css": ["css/user.css"]
 		},
 		{
 			"matches": ["*://*.furaffinity.net/commissions/*"],
@@ -60,6 +61,11 @@
 		{
 			"matches": ["*://*.furaffinity.net/journal/*"],
 			"js": ["js/journals/journal.js","js/comments.js"]
+		},
+		{
+			"matches": ["*://*.furaffinity.net/stats/*"],
+			"js": ["js/user/stats.js"],
+			"css": ["css/stats.css"]
 		},
 
 		// Navbar contents, in order

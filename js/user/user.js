@@ -19,7 +19,7 @@ userskel = '<div class="row img-rounded" id="user-banner" style="margin:16px 0">
 		'</div>' +
 		'<div class="panel panel-default" id="user-full-info-panel">' +
 			'<div class="panel-expandable" data-short-height="196" style="overflow-y:hidden">' +
-				'<table class="table" id="user-full-info-table">' +
+				'<table class="table table-condensed" id="user-full-info-table">' +
 					'<colgroup>' +
 						'<col style="width: 40%">' +
 						'<col>' +

@@ -98,6 +98,7 @@ $(document).ready(function(){
 		S: {i:"picture",l:"Submission"},
 		C: {i:"comment",l:"Comment"},
 		J: {i:"pencil",l:"Journal"},
+		F: {i:"heart",l:"Favorite"},
 		W: {i:"user",l:"Watcher"},
 		T: {i:"exclamation-sign",l:"Ticket"},
 		N: {i:"envelope",l:"Note"}
@@ -119,7 +120,7 @@ $(document).ready(function(){
 					var messageType = messageArr[index].charAt(messageArr[index].length-1)
 					var messageNum = window.fastyle.addCommas(""+messageArr[index].substr(0, messageArr[index].length-1))
 					var messageGlyph = (lk=iconLookup[messageType])?lk.i:"question-sign"
-					var messageLabel = (lk=iconLookup[messageType])?lk.l:"Notifications"
+					var messageLabel = (lk=iconLookup[messageType])?lk.l:"Notification"
 					
 					var messageHTML = '<li>' +
 							'<a href="' + messageLink + '" class="message-icon" data-toggle="tooltip" data-placement="bottom" title="'+messageNum+' '+messageLabel+(messageNum!=1?'s':'')+'">' + 
