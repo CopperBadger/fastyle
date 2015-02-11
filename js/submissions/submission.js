@@ -42,7 +42,9 @@ submissionSkel = '<div class="container">' +
 						'<div class="col-md-8">' +
 							'<div id="author-information" class="allow-previews"></div>' +
 						'</div>' +
-						'<div class="col-md-4" id="submission-information"></div>' +
+						'<div class="col-md-4" id="submission-information">' +
+							'<table class="table table-condensed" id="submission-information-table"></table>' +
+						'</div>' +
 					'</div>' +
 				'</div>' +
 				'<div class="panel-footer">' +
@@ -122,7 +124,20 @@ $(document).ready(function() {
 	}
 
 	$('#author-information').html(description)
-	$('#submission-information').html(submissionInformation)
+
+	// -- Process submission info HTML
+	a=submissionInformation.replace(/(\&nbsp;|\n(\s*)?)/g,'').split('<br>')
+	for(b in a){if((typeof (c=a[b]))=="string"){
+		tkns = c.match(/<b>([^<]+)<\/b>\s*(.+)?/)
+		if(!tkns||tkns.length<3){continue;}
+		tkns[1] = tkns[1].replace(/\:/g,'')
+		if(!tkns[2]){
+			$('<tr><th colspan="2">'+tkns[1]+'</th></tr>').appendTo('#submission-information-table')
+		} else {
+			$('<tr><td>'+tkns[1]+'</td><td>'+tkns[2]+'</td></tr>').appendTo('#submission-information-table')
+		}
+	}}
+
 	if(text){$('#author-information').append("<hr><h4>File Text</h4>"+text)}
 
 	// -- Keywords

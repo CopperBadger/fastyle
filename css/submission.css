@@ -1,0 +1,4 @@
+#submission-information-table tr td:nth-child(1){
+	text-align: right;
+	opacity: 0.6;
+}

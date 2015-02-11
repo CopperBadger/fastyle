@@ -93,7 +93,8 @@
 				"*://*.furaffinity.net/view/*",
 				"*://*.furaffinity.net/full/*"
 			],
-			"js": ["js/submissions/submission.js","js/comments.js"]
+			"js": ["js/submissions/submission.js","js/comments.js"],
+			"css": ["css/submission.css"]
 		},
 		{
 			"matches": ["*://*.furaffinity.net/search*"],
