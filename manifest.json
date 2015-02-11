@@ -151,6 +151,13 @@
 			"js": ["js/submissions/editsubmission.js"]
 		},
 		{
+			"matches": [
+				"*://*.furaffinity.net/controls/submissions/changethumbnail*",
+				"*://*.furaffinity.net/controls/submissions/changesubmission*"
+			],
+			"js": ["js/submissions/changethumbnail.js"]
+		},
+		{
 			"matches": ["*://*.furaffinity.net/controls/shouts*"],
 			"js": ["js/controls/pagemanagementbar.js","js/user/shoutcontrol.js"]
 		},
