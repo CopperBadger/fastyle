@@ -162,7 +162,7 @@ $(document).ready(function(){
 
 	info = retab(extractInfo(profile.html()))
 	stats = retab(extractInfo(profileRow.children('td:last').html()))
-	for(s in stats){stats[s]=window.fastyle.addCommas(stats[s])}
+	for(s in stats){stats[s]=window.fastyle.addCommas(stats[s].trim())}
 	info2 = retab(extractInfo($('.user-info').html()))
 	contact = {};
 		$('td.user-contacts tr').each(function(){contact[$(this).find('th').text()]=$(this).find('td').html()})

@@ -59,8 +59,14 @@ window.fastyle.capitalize = function(src){
 }
 
 window.fastyle.addCommas = function(strnum){
-  n = (l=strnum.length)%3
-  return ((p=strnum.substring(0,n))&&(p+(l>3?',':''))) + strnum.substring(n).replace(/(\d{3})(\d{3})/g,'$1,$2')
+  out = ""
+  l = strnum.length
+  i = -1
+  while(++i<l){
+    out+=strnum[i]
+    if(((l-i)%3)==1&&(i+1)!=l){out+=","}
+  }
+  return out
 }
 
 window.fastyle.setNavbarPosition = function(fix){

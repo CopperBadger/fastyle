@@ -116,8 +116,8 @@ $(document).ready(function(){
 				
 				for (index = 0; index<messageArr.length; index++) {
 					
-					var messageType = messageArr[index].charAt(messageArr[index].length-1);
-					var messageNum = messageArr[index].substr(0, messageArr[index].length-1);
+					var messageType = messageArr[index].charAt(messageArr[index].length-1)
+					var messageNum = window.fastyle.addCommas(""+messageArr[index].substr(0, messageArr[index].length-1))
 					var messageGlyph = (lk=iconLookup[messageType])?lk.i:"question-sign"
 					var messageLabel = (lk=iconLookup[messageType])?lk.l:"Notifications"
 					
