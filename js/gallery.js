@@ -1,54 +1,61 @@
 skel = '<div class="row" id="gallery-container"></div>'
 
+
 function renderImages(src){
-	row = $('#gallery-container')
-	return $(src||'body').find('.r-general, .r-mature, .r-adult').each(function(){
-		
-		var thisTable = $(this).closest('table');
-		var tableHead = thisTable.find('tr').first().text();
-		
-		if($(this).hasClass('t-image') || tableHead.indexOf("Artwork") > -1) {
-			subType = "image";
-		}
-		else if($(this).hasClass('t-audio') || tableHead.indexOf("Music") > -1) {
-			subType = "audio";
-			subGlyph = "headphones";
-		}
-		else if($(this).hasClass('t-text') || tableHead.indexOf("Writing") > -1) {
-			subType = "text";
-			subGlyph = "book";
-		}
-		else {
-			subType = "undefined";
-		}
+	gallery = $('#gallery-container')
+
+	iconLookup = {
+		audio: "headphones",
+		text: "book"
+	}
+
+	$(src||'body').find('.t-image').attr('data-type','image').removeClass('t-image')
+		.end().find('.t-audio').attr('data-type','audio').removeClass('t-audio')
+		.end().find('.t-text').attr('data-type','text').removeClass('t-text')
+
+	out = $(src||'body').find('.r-general, .r-mature, .r-adult').each(function(){
 		
 		au = $(this).find('small a')
 		cbx = $(this).find('small input[type=checkbox]')
-		s = $('<a href="'+(href=(hor=$(this).find('s a')).attr('href'))+'" class="submission-item submission-'+ subType +'" style="text-decoration:none">').appendTo(row)
-			.addClass('thumbnail contain-hover').attr('title',title=$(this).find('span').text())
-			.css({background:'transparent url("'+($(this).find('img').attr('src').replace(/@\d+/,'@400'))+'") 50% 50% / cover no-repeat',height:'224px',padding:'0'})
-			.wrap('<div class="col-md-3 col-xs-6">')
-			.html("<div class='thumb-title'>" +
-					"<strong>"+title+"</strong>" +
-					(au.length?(" by "+$(au).text()):"") +
-				"</div>" +
-				((subType!="image")&&(subType!="undefined")?("<div class='submission-type'><span class='glyphicon glyphicon-" + subGlyph +"'></span>"):"")
-				)
+		anchor = $(this).find('s a')
+		href = anchor.attr('href')
+		title = $(this).find('span').text()
+		imgSrc = $(this).find('img').attr('src').replace(/@\d+/,'@400')
+		subtext = (au.length?(" by "+$(au).text()):"")
+		subType = $(this).attr('data-type')
+		icon = ((ic=iconLookup[subType])?'<div class="submission-type"><span class="glyphicon glyphicon-'+ic+'"></span></div>':'')
+		console.log("iconLookup['"+subType+"'] = "+icon)
+
+		checkbox = ""
 		if(cbx.length){
-			$(s).append("<a href='javascript:void(0)' style='background-color:rgba(64,0,0,0.6);color:#FFF;padding:6px;display:block;text-decoration:none' class='thumb-checkbox'>" +
-					" <strong>Select</strong>" +
-				"</a>").find('.thumb-checkbox').prepend($(cbx).remove())
-				.on("click",function(e){
-					
-					$(this).parents('.contain-hover').toggleClass('checked-for-deletion',
-						$(this).find('[type=checkbox]').click().is(':checked'));
-				})
-				.hide()
+			checkbox = '<label href="javascript:void(0)" class="thumb-checkbox" style="display:none;">' +
+				($(cbx).wrap('span').parent().html()) +
+				' <strong>Select</strong>' +
+			'</label>'
 		}
+
+		$('<div class="col-md-3 col-xs-6">' +
+			'<a href="'+href+'" class="submission-item submission-'+subType+' thumbnail contain-hover" style="background-image:url(\''+imgSrc+'\')">' +
+				'<div class="thumb-title">' +
+					'<strong>'+title+'</strong>' +
+					subtext +
+				'</div>' +
+				checkbox +
+				icon +
+			'</a>' +
+		'</div>').appendTo(gallery)
 	}).length
+	return out
 }
 
 $(document).ready(function(){
+
+	$('.cat:contains("Recent Artwork")').parents("table:first")
+		.find(".r-general, .r-mature, .r-adult").attr('data-type','image')
+	$('.cat:contains("Recent Writing")').parents("table:first")
+		.find(".r-general, .r-mature, .r-adult").attr('data-type','text')
+	$('.cat:contains("Recent Music")').parents("table:first")
+		.find(".r-general, .r-mature, .r-adult").attr('data-type','audio')
 
 	// First, insert and bind controls if this is the submissions page
 	if(document.location.pathname=="/msg/submissions/") {
@@ -65,8 +72,8 @@ $(document).ready(function(){
 		'</div>').insertBefore('.content.maintable')
 
 		$('.select-all, .deselect-all').on("click",function(){
-			$('.thumb-checkbox').find('[type=checkbox]').prop('checked',$(this).is('.deselect-all'))
-				.end().click()
+			$('.thumb-checkbox').find('[type=checkbox]').prop('checked',$(this).is('.select-all'))
+				.end().trigger('update-display')
 		})
 
 		$('.submissions-clear').on("click",function(){
@@ -96,6 +103,11 @@ $(document).ready(function(){
 				})
 			}
 		})
+
+		$('body').on("update-display",".thumb-checkbox",function(){
+			$(this).parents('.contain-hover').toggleClass('checked-for-deletion',
+				$(this).find('[type=checkbox]').is(':checked'));
+		}).on("click",".thumb-checkbox",function(){$(this).trigger('update-display')})
 	}
 
 

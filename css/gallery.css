@@ -22,3 +22,19 @@
 	margin: 10px 7px;
 	border-radius: 100px;
 }
+
+.submission-item {
+	background: transparent none 50% 50% / cover no-repeat;
+	display: block;
+	height: 224px;
+	padding: 0 !important;
+	text-decoration: none !important;
+}
+
+.thumb-checkbox {
+	background-color:rgba(64,0,0,0.6);
+	color:#FFF;
+	padding:6px;
+	display:block;
+	text-decoration: none !important;
+}
