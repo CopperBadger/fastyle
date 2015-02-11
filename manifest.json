@@ -17,7 +17,9 @@
 			"exclude_matches": [
 				"*://help.furaffinity.net/*",
 				"*://forums.furaffinity.net/*",
-				"*://status.furaffinity.net/*"
+				"*://status.furaffinity.net/*",
+				"*://*.furaffinity.net/controls/troubletickets*",
+				"*://*.furaffinity.net/controls/sessions*"
 			],
 			"js": [
 				"lib/js/jquery.min.js",

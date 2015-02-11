@@ -34,9 +34,9 @@ if(window.fastyle.loginSession){
 					'<li><a href="/controls/sessions/logins/">Active Sessions</a></li>' +
 					'<li><a href="/controls/sessions/logs/">Activity Log</a></li>' +
 					'<li><a href="/controls/sessions/labels/">Browser Labels</a></li>' +
-					'<li><a href="/controls/troubletickets/">Report a Problem</a></li>' +
 					'</ul>' +
 					'</li>' +
+					'<li><a href="/controls/troubletickets/">Report a Problem</a></li>' +
 					'<li class="divider"></li>' +
 					'<li role="presentation" class="dropdown-header">Community</li>' +
 					'<li><a href="forums.furaffinity.net">FA Forums</a></li>' +
@@ -47,7 +47,7 @@ if(window.fastyle.loginSession){
 					'<li class="divider"></li>' +
 					'<li role="presentation" class="dropdown-header">Support</li>' +
 					'<li><a href="/journals/fender/">News and Updates</a></li>' +
-					'<li><a href="help.furaffinity.net">Knowledgebase</a></li>' +
+					'<li><a href="//help.furaffinity.net">Knowledgebase</a></li>' +
 					'<li><a href="/staff/">Site Staff</a></li>' +
 					'<li><a href="//help.furaffinity.net/article/AA-00203/8/Terms-of-Service-TOS.html">Terms of Service</a></li>' +
 					'<li><a href="//help.furaffinity.net/article/AA-01065/0/Code-of-Conduct-COC.html">Code of Conduct</a></li>' +
