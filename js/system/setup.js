@@ -1,4 +1,5 @@
-// -- Spoofs missing nasty FlashObject constructor bug
+// -- (Hopefully) fixes nasty missing FlashObject constructor bug. Triggering source shown below:
+// (Must come first to ensure it doesn't slip by)
 /*// <![CDATA[
 var ox_swf = new FlashObject('//rv.furaffinity.net/www/images/267cad750afe564faedb977713f07ab3.swf', 'Advertisement', '300', '200', '9');
 ox_swf.addVariable('clickTARGET', '_blank');

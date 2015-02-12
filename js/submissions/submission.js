@@ -134,6 +134,7 @@ $(document).ready(function() {
 		if(!tkns[2]){
 			$('<tr><th colspan="2">'+tkns[1]+'</th></tr>').appendTo('#submission-information-table')
 		} else {
+			if((tkns[2]=tkns[2].trim()).search(/^\d+$/)!=-1){tkns[2]=window.fastyle.addCommas(tkns[2])}
 			$('<tr><td>'+tkns[1]+'</td><td>'+tkns[2]+'</td></tr>').appendTo('#submission-information-table')
 		}
 	}}
