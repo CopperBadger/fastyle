@@ -1,6 +1,7 @@
 // Replace native style, make background color transition smooth
 precolor = $('body').css('background-color')
 	$('body').css({'background-color':precolor})
+
 $('link[rel=stylesheet]').remove()
 $('<link rel="stylesheet" href="'+window.fastyle.ss+'" id="stylesheet">').appendTo('head')
 
@@ -9,10 +10,8 @@ $('#body-wrapper').hide()
 
 $(document).ready(function() {
 
-	//banner = $('#fa_header').css('background-image')
-	
 	logo = $('.falogo').remove()
-	$('.ads').remove()
+	$('.ad img').addClass('img img-responsive')
 
 	// Add jQuery to user-side if in developer mode
 	if(window.fastyle.developerMode) {

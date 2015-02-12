@@ -57,6 +57,10 @@ userskel = '<div class="row img-rounded" id="user-banner" style="margin:16px 0">
 				'<a href="" class="list-group-item user-full-journal-link">View Full Journal</a>' +
 			'</ul>' +
 		'</div>' +
+		'<div class="ad-container"></div>' +
+		'<div class="ad-container"></div>' +
+		'<div class="ad-container"></div>' +
+		'<div class="ad-container"></div>' +
 	'</div>' +
 	'<div class="col-md-8">' +
 		'<div class="panel panel-default" id="user-about-panel">' +

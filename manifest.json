@@ -19,7 +19,8 @@
 				"*://forums.furaffinity.net/*",
 				"*://status.furaffinity.net/*",
 				"*://*.furaffinity.net/controls/troubletickets*",
-				"*://*.furaffinity.net/controls/sessions*"
+				"*://*.furaffinity.net/controls/sessions*",
+				"*://*.furaffinity.net/commissions/*/manage*"
 			],
 			"js": [
 				"lib/js/jquery.min.js",
@@ -46,7 +47,7 @@
 		},
 		{
 			"matches": ["*://*.furaffinity.net/user/*"],
-			"js": ["js/user/user.js"],
+			"js": ["js/system/headless.js","js/user/user.js"],
 			"css": ["css/user.css"]
 		},
 		{
@@ -93,7 +94,7 @@
 				"*://*.furaffinity.net/view/*",
 				"*://*.furaffinity.net/full/*"
 			],
-			"js": ["js/submissions/submission.js","js/comments.js"],
+			"js": ["js/system/headless.js","js/submissions/submission.js","js/comments.js"],
 			"css": ["css/submission.css"]
 		},
 		{

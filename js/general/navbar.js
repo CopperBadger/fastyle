@@ -81,14 +81,23 @@ navbarSkel = '<div class="navbar navbar-default" id="fastyle-navbar">' +
 	'</form>' +
 '</div>'
 
+adContainers = '<div class="row" id="ad-bar" style="margin-bottom:8px">' +
+	'<div class="col-sm-6" id="site-header-container">' + 
+	'</div>' +
+	'<div class="col-sm-3 ad-container ad-short-only"></div>' +
+	'<div class="col-sm-3 ad-container ad-short-only"></div>' +
+'</div>'
+
 $(document).ready(function(){
 	$(navbarSkel).insertBefore('.block-menu-top')
+	$(adContainers).insertBefore('.block-menu-top')
 	$('.block-menu-top').hide()
 
 	// Data population
 	username = $('#my-username').text()
 	userHref = $('#my-username').attr('href')
 	messageItems = $('.block-menu-top li.noblock:first a')
+	$('#site-header-container').html("<a href='/' style='background-image:"+window.fastyle.banner+"' class='site-header'></a>")
 
 	$('#user-anchor').text(username)
 		.attr('href',userHref)

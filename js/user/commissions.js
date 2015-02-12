@@ -1,13 +1,16 @@
 skel = 
+	'<div class="row" id="manage-button-wrapper">' +
+		'<div class="col-xs-12" style="margin:16px 0">' +
+			'<a href="manage" class="btn btn-primary">Edit Commission Information</a>' +
+		'</div>' +
+	'</div>' +
 	'<div class="row">'+
 			'<div class="col-sm-12">'+
 				'<div class="panel panel-default" id="comminfo-panel">'+
 					'<div class="panel-heading"></div>'+
-					'<div class="panel-body" style="padding:0px;">'+
-						'<table class="table table-striped" id="comminfo-table" style="margin-bottom:0;">'+
-							'<tbody></tbody>'+
-						'</table>'+
-					'</div>'+
+					'<table class="table table-striped" id="comminfo-table" style="margin-bottom:0;">'+
+						'<tbody></tbody>'+
+					'</table>'+
 				'</div>'+
 			'</div>'+
 		'</div>';
@@ -15,6 +18,10 @@ skel =
 $(document).ready(function(){
 	$(skel).insertBefore('.content.maintable');
 	
+	if(!$('.content.maintable a[href*=manage]:not(#cancel)').length){
+		$('#manage-button-wrapper').remove()
+	}
+
 	// data population
 	
 	if ($("#no-images").length) { 
