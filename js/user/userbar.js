@@ -9,36 +9,20 @@ $(document).ready(function(){
 	}).end().remove()
 
 	// Make Watch / Unwatch asynchronous
-	
-	$('a[href*="furaffinity.net/unwatch"]')
-	.on("click",function(){
-		$(this).text(window.fastyle.funTitles[Math.floor(Math.random()*window.fastyle.funTitles.length)])
-		self = this
-		$.ajax({
-			url:$(this).attr("href"),
+	doWatch = function(self,msg){
+		$(self).text(window.fastyle.funTitles[Math.floor(Math.random()*window.fastyle.funTitles.length)])
+		window.fastyle.ajax({
+			url:$(self).attr("href"),
 			type:"GET",
-			complete:function(xhr){
-				$(self).text("Unwatched!")
+			success:function() {
+				$(self).text(msg)
 					.unbind("click")
 					.on("click",function(){return false})
 			}
 		})
 		return false
-	})
+	}
 
-	$('a[href*="furaffinity.net/watch"]')
-	.on("click",function(){
-		$(this).text(window.fastyle.funTitles[Math.floor(Math.random()*window.fastyle.funTitles.length)])
-		self = this
-		$.ajax({
-			url:$(this).attr("href"),
-			type:"GET",
-			complete:function(xhr){
-				$(self).text("Watched!")
-					.unbind("click")
-					.on("click",function(){return false})
-			}
-		})
-		return false
-	})
+	$('a[href*="furaffinity.net/unwatch"]').on("click",function(){return doWatch(this,"Unwatched!")})
+	$('a[href*="furaffinity.net/watch"]').on("click",function(){return doWatch(this,"Watched!")})
 })

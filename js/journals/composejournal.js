@@ -63,10 +63,10 @@ $(document).ready(function(){
 	$('.delete-confirm').on("click",function(){
 		if(confirm("Are you sure you want to delete this journal?")){
 			toBeRemoved = $(this).parents('li.list-group-item').css({opacity:0.8})
-			$.ajax({
+			window.fastyle.ajax({
 				url: $(this).attr('data-target'),
 				type: "GET",
-				complete: function(xhr){
+				success: function(){
 					$(toBeRemoved).slideUp(function(){$(this).remove()})
 				}
 			})

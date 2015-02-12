@@ -76,11 +76,11 @@ $(document).ready(function(){
 		$('#username-input').on("change",function(){
 			$('#username-message').html("Checking availability")
 			$('#username-check').val("")
-			$.ajax({
+			window.fastyle.ajax({
 				url: "/register/?phase=5&mode=check_username",
 				type: "POST",
 				data: {username: $(this).val()},
-				complete:function(xhr) {
+				success:function(res) {
 					// This request will return with a JSON response with keys "username", "status", and "extra"
 					// username contains the submitted username. Status is a number indicating the status of the
 					// username-- the codes and their meanings are stored in the usernameMessages object. The extra
@@ -88,7 +88,7 @@ $(document).ready(function(){
 					// number of seconds are left until the username becomes available. For errors (status=255),
 					// it contains an error message
 					try {
-						obj = JSON.parse(xhr.responseText.replace(/^[^\{]+/,'').replace(/[^\}]+$/,''))
+						obj = JSON.parse(res.replace(/^[^\{]+/,'').replace(/[^\}]+$/,''))
 						obj.status = parseInt(obj.status)
 						if(obj.status==0){$('#username-check').val("check")}
 						if(typeof (m=usernameMessages[obj.status]) == "string"){
@@ -108,6 +108,9 @@ $(document).ready(function(){
 					} catch(e){
 						$('#username-message').html("There was a problem checking the availability of your chosen username")
 					}
+				},
+				error:function(){
+					$('#username-message').html("There was a problem checking the availability of your chosen username")
 				}
 			})
 		})

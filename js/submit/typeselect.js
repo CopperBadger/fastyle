@@ -107,18 +107,21 @@ $(document).ready(function(){
 			$('#upload-form-src').remove()
 			$('#upload-wrapper').css({opacity:0.6})
 
-			$.ajax({
+			window.fastyle.ajax({
 				url: "/submit/",
-				type: "POST",
 				data: {
 					part:"2",
 					'submission_type':$(this).attr('data-type')
 				},
-				complete:function(xhr){
-					$(xhr.responseText).find('form[name=myform]').appendTo('body').hide()
+				success:function(res) {
+					$(res).find('form[name=myform]').appendTo('body').hide()
 						.attr('id','upload-form-src')
 					renderUploadForm()
 					$('#upload-wrapper').css({opacity:1})
+				},
+				impatient: function() {
+					$('#upload-wrapper').html("")
+					return "Please wait a moment before select another option."
 				}
 			})
 		})

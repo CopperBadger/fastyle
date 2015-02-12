@@ -75,11 +75,10 @@ $(document).ready(function(){
 				:""
 			))) {
 			$(tgt).css({opacity:0.8})
-			$.ajax({
+			window.fastyle.ajax({
 				url: "/controls/shouts/",
-				type: "POST",
 				data: {'shouts[]':$.map(checked,function(e){return $(e).val()}),do:'update'},
-				complete: function(xhr) {
+				success: function() {
 					$(tgt).hide("fast",function(){$(this).remove()})
 				}
 			})

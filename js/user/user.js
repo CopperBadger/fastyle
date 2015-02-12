@@ -198,22 +198,20 @@ $(document).ready(function(){
 
 	// -- User Banner Image
 	$('#user-banner-link').attr('href',featuredHref).text(featuredName)
+	err = function(){$('#user-banner').remove()}
 	if(featuredHref){
-		$.ajax({
+		window.fastyle.ajax({
 			url: featuredHref.replace('view','full'),
 			type: "GET",
-			complete: function(xhr){
-				if(featuredSrc = $(xhr.responseText).find('#submissionImg').attr('src')){
+			success: function(res){
+				if(featuredSrc = $(res).find('#submissionImg').attr('src')){
 					$('#user-banner').css('background-image','url("'+featuredSrc+'")')
 						.show()
-				} else {
-					$('#user-banner').remove()
-				}
-			}
+				} else {err()}
+			},
+			error: err
 		})
-	} else {
-		$('#user-banner').remove()
-	}
+	} else {err()}
 
 	// -- User Badge
 	$('.user-name-field').text(userName)
@@ -407,16 +405,20 @@ $(document).ready(function(){
 	$('#shout-form').on("submit",function(){
 		$('#shout-chars-left').val($('#shout-message').val().length)
 		if($('#shout-message').val().length<=222){
-			$.ajax({
+			window.fastyle.ajax({
 				url:shoutAction,
-				type: "POST",
 				data: window.fastyle.serialize($(this)),
-				complete:function(xhr) {
-					addShout($(xhr.responseText).find('.cat>b:contains(Shouts)').parents('table:first').nextAll('table:first'),true)
+				success:function(res) {
+					addShout($(res).find('.cat>b:contains(Shouts)').parents('table:first').nextAll('table:first'),true)
 					tmp.remove()
+				},
+				error: function(res){
+					window.fastyle.showMessage("There was an error while posting your shout")
 				}
 			})
 			$('#shout-message').val("").trigger("keyup")
+		} else {
+			window.fastyle.showMessage("Shout input is too long")
 		}
 		return false;
 	}).attr('data-ajax-action',shoutAction)

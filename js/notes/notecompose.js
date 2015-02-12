@@ -162,15 +162,15 @@ $(document).ready(function(){
 	if(messageId){
 		$('.priority-option').on('click',function(){
 			$('#prio-button-label').text('Setting priority...')
-			$.ajax({
+			window.fastyle.ajax({
 				url: "/msg/pms/",
-				type: "POST",
 				data: {
 					'manage_notes':'1',
 					'items[]': messageId,
 					'set_prio': $(this).attr('data-prio')
 				},
-				complete: function(){$('#prio-button-label').text('Priority Set!')}
+				success: function(){$('#prio-button-label').text('Priority Set!')},
+				error: function(){$('#prio-button-label').text('Error setting priority')}
 			})
 		})
 	}

@@ -30,11 +30,10 @@ $(document).ready(function() {
 		})
 		dat['remove-all'] = "Global remove selected"
 		$('.panel').css({opacity:0.8})
-		$.ajax({
+		window.fastyle.ajax({
 			url:"/msg/others/",
-			type: "POST",
 			data: dat,
-			complete: function(){
+			success: function(){
 				$('.panel').fadeOut(function(){$(this).remove()})
 			}
 		})
@@ -83,12 +82,13 @@ $(document).ready(function() {
 		checked.parents('a.list-group-item').css({opacity:0.6})
 		list = $(this).parents('.list-group:first')
 
-		$.ajax({
+		window.fastyle.ajax({
 			url: "/msg/others/",
 			data: dat,
-			type: "POST",
-			complete:function(xhr) {
-				$(list).find(':checked').parents('a.list-group-item').slideUp(function(){$(this).remove()})
+			success:function(xhr) {
+				$(list).find(':checked').parents('a.list-group-item').slideUp(function() {
+					$(this).remove()
+				})
 			}
 		})
 	})
@@ -97,11 +97,10 @@ $(document).ready(function() {
 		tgt = $(this).parents('ul').find('a.list-group-item').css({opacity:'0.8'})
 		dat = {};
 		dat[$(this).attr('name')] = $(this).attr('data-value')
-		$.ajax({
+		window.fastyle.ajax({
 			url: "/msg/others/",
-			type: "POST",
 			data: dat,
-			complete:function(xhr){
+			success:function(xhr){
 				$(tgt).slideUp(function(){$(this).remove()})
 			}
 		})

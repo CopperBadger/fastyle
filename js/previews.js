@@ -1,7 +1,7 @@
 function makeSubmissionPreview(subLink, linkElement) {
 	subLink = subLink.replace(/https?\:/,'')
 	$(linkElement).addClass('preview-built').text("Fetching preview...")
-	$.ajax({
+	window.fastyle.ajax({
 		context: linkElement,
 		url : subLink,
 		dataType : 'html',

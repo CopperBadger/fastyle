@@ -103,3 +103,40 @@ window.fastyle.setNavbarPosition = function(fix){
   $('#fastyle-navbar').toggleClass('navbar-fixed-top',fix)
   $('#body-wrapper').css({'margin-top':(fix)?'72px':'8px'})
 }
+
+window.fastyle.requests = {}
+window.fastyle.requestCount = 0
+window.fastyle.requestDelay = 1500
+window.fastyle.ajax = function(opt) {
+  if(opt&&opt.url){
+    if(!window.fastyle.requests[opt.url]) {
+      console.log(
+          "-- Request #"+(++window.fastyle.requestCount)+": "+opt.url + 
+          ((opt.data)?" % "+JSON.stringify(opt.data).replace(/(.{0,64}).*/,'$1 (...)'):"")
+        )
+      obj = $.extend(true,{type:"POST"},opt)
+      obj.complete = function(xhr) {
+        setTimeout(function() {
+          // Clear new request
+          window.fastyle.requests[opt.url]=false
+        },window.fastyle.requestDelay)
+        if(opt.complete){opt.complete(xhr)}
+        if(opt.always){opt.always()}
+      }
+      window.fastyle.requests[opt.url] = $.ajax(obj)
+    } else {
+      if(opt.always){opt.always()}
+      if(opt.impatient){
+        if(msg=opt.impatient()){
+          window.fastyle.showMessage(msg)
+        }
+      }
+      console.warn("Impatient request to "+opt.url)
+    }
+  }
+}
+
+// TODO: add on-screen message system, post messages to it using this function
+window.fastyle.showMessage = function(msg){
+  console.log("User message: "+msg)
+}

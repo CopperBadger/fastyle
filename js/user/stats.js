@@ -69,17 +69,16 @@ $(document).ready(function(){
 	// Event Bindings
 	$('body').on('click','#more-button:not(.processing)',function(){
 		$(this).text("Loading...").addClass('processing')
-		$.ajax({
+		done = function(){$('#more-button').text("Nothing more to load")}
+		window.fastyle.ajax({
 			url: document.location.pathname+(++window.fastyle.statsPage)+"/",
 			data: pageParameters,
-			type: "POST",
-			complete:function(xhr){
-				if(renderSubmissions(xhr.responseText)!=0){
+			success:function(res){
+				if(renderSubmissions(res)!=0){
 					$('#more-button').removeClass('processing').text("Load More")
-				} else {
-					$('#more-button').text("Nothing more to load")
-				}
-			}
+				} else {done()}
+			},
+			error: done
 		})
 	})
 

@@ -124,26 +124,28 @@ $(document).ready(function() {
 	}
 
 	$('body').on("submit",".comment-form",function(){
+
 		obj = window.fastyle.serialize(this)
 		obj.subject = ""
 		obj.f = ""
 		target = after = undefined
 		target = (after=!!(n=obj.replyto))?$('[data-cid="cid:'+n+'"]'):$('#comment-list li.media:last');
 		self = this
-		$.ajax({
+
+		window.fastyle.ajax({
 			url: document.location.href,
-			type: "POST",
 			data:obj,
-			complete:function(xhr){
+			success:function(res){
 				$(self).find('textarea').val("").end()
 					.find('.form-closer').click();
 				newComment($(target),$(
-					$(xhr.responseText).find('.container-comment[data-timestamp!=""] a[href*="user"]')
-					.parents('.container-comment').sort(function(a,b){
-						return parseInt($(a).attr('data-timestamp'))>parseInt($(b).attr('data-timestamp'))
-					}).last()),after
+					$(res).find('.container-comment[data-timestamp!=""] a[href*="user"]')
+						.parents('.container-comment').sort(function(a,b){
+							return parseInt($(a).attr('data-timestamp'))>parseInt($(b).attr('data-timestamp'))
+						}).last()),after
 				).hide().slideDown()
-			}
+			},
+			error: function(){window.fastyle.showMessage("There was an error posting your comment.")}
 		})
 	}).on("click",".show-youtube-embeds-button:not(.opened)",function(){
 		$(this).addClass('opened')

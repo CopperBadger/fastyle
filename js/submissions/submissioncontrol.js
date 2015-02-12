@@ -71,10 +71,9 @@ $(document).ready(function(){
 	$('.delete-confirm').on("click",function(){
 		if(confirm("Are you absolutely sure you want to remove this submission?")){
 			tgt = $(this).parents('.submission-row:first').css({opacity:0.8})
-			$.ajax({
+			window.fastyle.ajax({
 				url: $(this).attr('data-delete-path'),
-				type: "POST",
-				complete: function(){
+				success: function(){
 					$(tgt).css({opacity:0.2})
 						.find('.submission-title').text("Removed")
 				}

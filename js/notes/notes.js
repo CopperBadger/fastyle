@@ -115,9 +115,8 @@ $(document).ready(function(){
 		dat['items[]'] = $.map(checkedNotes,function(e){return $(e).val()})
 		checkedNotes = $(checkedNotes).parents('tr')
 		if(prefire){prefire(checkedNotes)}
-		$.ajax({
+		window.fastyle.ajax({
 			url: "/msg/pms/",
-			type: "POST",
 			data: dat,
 			complete: function(xhr){callback(xhr,checkedNotes)}
 		})

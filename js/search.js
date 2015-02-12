@@ -170,14 +170,10 @@ $(document).ready(function(){
 
 		if (couldBeUsername(searchQuery)) {
 		
-			$.ajax({
-			    url : '/register/?phase=5&mode=check_username',
-			    type: 'POST',
-			    data : {
-				    username: searchQuery
-				},
-			    success: function(ret){
-				    
+			window.fastyle.ajax({
+				url:"/register/?phase=5&mode=check_username",
+				data:{username: searchQuery},
+				success:function(ret){
 				    var result = ret.replace("/*-secure-\n","").replace("*/","");
 					result = JSON.parse(result);
 					status = result.status;
@@ -187,13 +183,13 @@ $(document).ready(function(){
 					}
 					$("#username-searching").remove();
 					$("#username-error").remove();
-			    },
-			    error: function (result){
+		    	},
+		    	error:function (result){
 			 		$("#username-link").removeClass('hidden').
 					$("#username-searching").remove();
 					$("#username-link").remove();
 			    }
-			});
+			})
 			
 		} else {
 			$("#username-searching").remove();

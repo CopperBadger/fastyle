@@ -171,10 +171,9 @@ $(document).ready(function() {
 		msg = $(this).text().search("Remove")!=-1?"Unfaved":"Faved!"
 		$(this).text(window.fastyle.funTitles[Math.floor(Math.random()*window.fastyle.funTitles.length)])
 		self = this
-		$.ajax({
-			url:$(this).attr("href"),
-			type:"GET",
-			complete:function(xhr){
+		window.fastyle.ajax({
+			url: $(this).attr("href"),
+			success: function(res){
 				$(self).text(msg)
 					.unbind("click")
 					.on("click",function(){return false})

@@ -50,10 +50,9 @@ $(document).ready(function(){
 	$('.delete-confirm').on("click",function(){
 		if(confirm("Are you sure you want to unwatch this person?")){
 			tgt = $(this).parents('.buddy-row').css({opacity:0.8})
-			$.ajax({
+			window.fastyle.ajax({
 				url: $(this).attr('data-delete-path'),
-				type: "POST",
-				complete: function(){
+				success: function(){
 					$(tgt).css({opacity:0.2})
 						.find('.buddy-name').html("Unwatched")
 				}

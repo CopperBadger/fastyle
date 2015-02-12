@@ -24,7 +24,6 @@ function renderImages(src){
 		subtext = (au.length?(" by "+$(au).text()):"")
 		subType = $(this).attr('data-type')
 		icon = ((ic=iconLookup[subType])?'<div class="submission-type"><span class="glyphicon glyphicon-'+ic+'"></span></div>':'')
-		console.log("iconLookup['"+subType+"'] = "+icon)
 
 		checkbox = ""
 		if(cbx.length){
@@ -80,11 +79,10 @@ $(document).ready(function(){
 			dat = {'messagecenter-action':'Remove checked'}
 			dat['submissions[]'] = $.map(chx=$('.submission-item :checked'),function(e){return $(e).val()})
 			tgt = $(chx).parents(".submission-item").css({opacity:0.8})
-			$.ajax({
+			window.fastyle.ajax({
 				url:"/msg/submissions/",
 				data: dat,
-				type: "POST",
-				complete: function(xhr){
+				success: function(){
 					tgt.html("<div class='thumb-title'>Deleted</div>").css({opacity:0.2})
 				}
 			})
@@ -93,11 +91,10 @@ $(document).ready(function(){
 		$('.nuke-submissions').on("click",function(){
 			$('#gallery-container').css({opacity:'0.8'})
 			if(confirm("Are you sure you want to remove all submissions from your messages?")){
-				$.ajax({
+				window.fastyle.ajax({
 					url: "/msg/submissions/",
-					type: "POST",
 					data: {'messagecenter-action':'Nuke all Submissions'},
-					complete:function(xhr){
+					success:function(xhr){
 						$('#gallery-container').remove()
 					}
 				})
@@ -144,8 +141,6 @@ $(document).ready(function(){
 		window.fastyle.clearToLoad = true // If false, no loading will be allowed
 		window.fastyle.nextHref = null // The href attribute of a.more, if such an element exists
 
-		console.log("pageString = "+window.fastyle.pageString)
-
 		$('.content.maintable').hide()
 		window.fastyle.scrollThresh = getScrollThresh()
 		console.log("Threshold = "+window.fastyle.scrollThresh + ", doc height = "+$(document).height())
@@ -177,14 +172,13 @@ $(document).ready(function(){
 
 				for(p in d){if(!d[p]){delete d[p]}}
 
-				console.log(d)
-
-				$.ajax({
+				done = function(){
+					$('#load-more-button').before("<p>No more images to load!</p>").remove()
+				}
+				window.fastyle.ajax({
 					url:u,
-					type:"POST",
 					data:d,
-					complete:function(xhr){
-						res = $(xhr.responseText)
+					success: function(res){
 						window.fastyle.nextHref = $(res).find('a.more:first').attr('href')
 						n = renderImages(res)
 						if(n!=0) {
@@ -194,10 +188,9 @@ $(document).ready(function(){
 								window.fastyle.scrollThresh = getScrollThresh()
 								$(document).trigger('scroll')
 							},5000)
-						} else {
-							$('#load-more-button').before("<p>No more images to load!</p>").remove()
-						}
-					}
+						} else {done()}
+					},
+					error: done
 				})
 			} else {
 				$('#load-more-button').text("Please wait...")
