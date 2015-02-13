@@ -41,7 +41,7 @@ $(document).ready(function() {
 		posterAvatar = posterIconAnchor.find('img').attr('src')
 		posterName = $(src).find('.replyto-name').text()
 		commentContent = $(src).find('.replyto-message').html()
-		videoIDs = window.fastyle.getYouTubeIDs(commentContent)
+		videoIDs = $.map(window.fastyle.getYouTubeData(commentContent),function(e){return e.id+"?start="+e.start})
 		pubdate = $(src).find('.popup_date').wrap('<span>').parent().html()
 		commentID = $(src).attr('id')
 		byAuthor = (posterName==authorName)

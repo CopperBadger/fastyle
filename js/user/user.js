@@ -114,7 +114,8 @@ function extractInfo(html){
 	}
 	mat = html.match(/(?:b|n)\>[^<]+\<\/(?:b|span)\>[^<]+\<br/g)
 	out = {}
-	for(m in mat) {
+	m = -1
+	while(++m<mat.length) {
 		parts = $.map(mat[m].match(/(?:>)([^<]+)/g),function(e){return e.substring(1).trim()})
 		if(!parts.length==2){continue;}
 		else {
@@ -170,7 +171,7 @@ $(document).ready(function(){
 	info2 = retab(extractInfo($('.user-info').html()))
 	contact = {};
 		$('td.user-contacts tr').each(function(){contact[$(this).find('th').text()]=$(this).find('td').html()})
-		retab(contact)
+		contact = retab(contact)
 
 	watching = $('#is-watching td a')
 	watchingHref = $(watchingAnchor).attr('href')
@@ -236,21 +237,32 @@ $(document).ready(function(){
 		$('<tr><th colspan="2">'+lookups[a][0]+'</th></tr>').appendTo('#user-full-info-table')
 		for(k in lookups[a][1]){
 			v = lookups[a][1][k]
+			console.log(k+": "+v)
 
-			if(id=(t=v.match(/(?:v=|\.be\/)(.{11})/))?t[1]:""){
-				$('<div class="panel panel-default">' +
-					'<div class="panel-heading">'+k+'</div>' +
-					'<div class="panel-body" style="padding:0">' +
-						'<div class="embed-responsive embed-responsive-16by9">' +
-							'<iframe src="//www.youtube.com/embed/'+id+'" frameborder="0" class="embed-responsive-item" frameborder="0" allowfullscreen> </iframe>' +
+			if(videoEmbeds=window.fastyle.getYouTubeEmbeds(v)) {
+				i = -1
+				while(++i<videoEmbeds.length){
+					$('<div class="panel panel-default">' +
+						'<div class="panel-heading">'+k+'</div>' +
+						'<div class="panel-body" style="padding:0">' +
+							'<div class="embed-responsive embed-responsive-16by9">' +
+								videoEmbeds[i] +
+							'</div>' +
 						'</div>' +
-					'</div>' +
-				'</div>').insertBefore('#user-full-info-panel')
+					'</div>').insertBefore('#user-full-info-panel')
+				}
 			}
 
+			console.log(k+": "+v)
+
 			//URL RegEx credit: http://code.tutsplus.com/tutorials/8-regular-expressions-you-should-know--net-6149
-			if(v.search(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})[^\s]+\/?$/)==-1){v=window.fastyle.capitalize(v)}
-			else{v = "<a href='"+v+"' target='_blank'>"+v+"</a>"}
+			if(v.search(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})[^\s]+\/?$/)==-1){ 
+				v=window.fastyle.capitalize(v)
+			} else {
+				if(v.search(/^http/)!=0){v=document.location.protocol+"//"+v}
+				v = "<a href='"+v+"' target='_blank'>"+v+"</a>"
+			}
+
 			addRow(k,v,'#user-full-info-table')
 		}
 	}

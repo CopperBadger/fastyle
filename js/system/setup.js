@@ -73,6 +73,7 @@ window.fastyle.serialize = function(el) {
 
 // YouTube Video ID RegEx: http://markmail.org/message/jb6nsveqs7hya5la
 window.fastyle.getYouTubeIDs = function(src){
+  console.warn("Calling deprecated getYouTubeIDs function. Use getYouTubeEmbeds instead.")
   videoids = {};
   videoMatches = src.match(/youtu[^\s]+/g)
   for(vm in videoMatches){
@@ -82,6 +83,35 @@ window.fastyle.getYouTubeIDs = function(src){
     }
   }
   return $.map(videoids,function(e,i){return i})
+}
+
+tlkp={s:1,m:60,h:3600}
+window.fastyle.getYouTubeData = function(src){
+  ids = {}
+  out = []
+  l = (videoMatches = src.match(/youtu[^\s]+/g)||[]).length
+  i=-1
+  while(++i<l&&(wm=videoMatches[i])){
+    start = 0
+    id=(t=wm.match(/(?:v=|\.be\/)([A-Za-z0-9_-]{11})/))?t[1]:""
+    if(!id||!!ids[id]){continue;}
+    ids[id] = 1
+    if(timestamp = ((t=wm.match(/t=([\dhms]+)/))?t[1]:'')){
+      j = -1
+      e=timestamp.match(/\d+[hms]/g)
+      while(++j<e.length){
+        start+=parseInt(e[j])*tlkp[e[j][e[j].length-1]]
+      }
+    }
+    out.push({id:id,start:start})
+  }
+  return out;
+}
+
+window.fastyle.getYouTubeEmbeds = function(src){
+  return $.map(window.fastyle.getYouTubeData(src),function(e){
+    return '<iframe src="//www.youtube.com/embed/'+e.id+'?start='+e.start+'" class="embed-responsive-item" frameborder="0" allowfullscreen> </iframe>'
+  })
 }
 
 window.fastyle.capitalize = function(src){

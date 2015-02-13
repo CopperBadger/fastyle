@@ -118,9 +118,11 @@ $(document).ready(function() {
 	})
 
 	// -- (Append YouTube embeds in description)
-	videoIDs = window.fastyle.getYouTubeIDs(description)
-	for(v in videoIDs) {
-		description += '<hr><div class="embed-responsive embed-responsive-16by9"><iframe src="//www.youtube.com/embed/'+videoIDs[v]+'" class="embed-responsive-item" frameborder="0" allowfullscreen> </iframe></div>'
+	if(embeds = window.fastyle.getYouTubeEmbeds(description)){
+		description += "<hr>"
+		for(e in embeds){
+			description += '<div class="embed-responsive embed-responsive-16by9">'+embeds[e]+'</div>'
+		}
 	}
 
 	$('#author-information').html(description)
@@ -158,7 +160,7 @@ $(document).ready(function() {
 	// Move footer inside new container
 	$('.footer').remove().appendTo('#bottom-container')
 
-	// Evevnt Bindings
+	// Event Bindings
 
 	// -- Clicking submission image
 	$('#submission-image').click(function(){
