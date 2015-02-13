@@ -31,13 +31,13 @@ submissionSkel = '<div class="container">' +
 			'<nav id="comic-pager-container">' +
 				'<ul class="pager"></ul>' +
 			'</nav>' +
+			'<div class="row">' +
+				'<div class="col-xs-12" style="margin-bottom:16px">' +
+					'<div class="btn-group" id="action-well"></div>' +
+				'</div>' +
+			'</div>' +
 			'<div class="panel panel-default">' +
 				'<div class="panel-body">' +
-					'<div class="row">' +
-						'<div class="col-xs-12" style="margin-bottom:16px">' +
-							'<div class="btn-group" id="action-well"></div>' +
-						'</div>' +
-					'</div>' +
 					'<div class="row">' +
 						'<div class="col-md-8">' +
 							'<div id="author-information" class="allow-previews"></div>' +
