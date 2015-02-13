@@ -90,3 +90,11 @@ a.message-icon {
 	display:block;
 	background: transparent none 0 50% / contain no-repeat;
 }
+
+#message-button {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	margin: 16px;
+	z-index: 50;
+}

@@ -12,6 +12,7 @@ $(document).ready(function() {
 
 	logo = $('.falogo').remove()
 	$('.ad img').addClass('img img-responsive')
+		.css({'margin-left':'auto'})
 
 	// Add jQuery to user-side if in developer mode
 	if(window.fastyle.developerMode) {
@@ -34,6 +35,7 @@ $(document).ready(function() {
 	})
 
 
+	// Add theme selector
 	theme = window.fastyle.theme
 	$('<div id="theme-selector">').prependTo('body')
 		.html('<div class="btn-group dropup">' +
@@ -61,6 +63,10 @@ $(document).ready(function() {
 
 	$('body').on('click','.theme-anchor',function(){
 		$('#stylesheet').attr('href',"//maxcdn.bootstrapcdn.com/bootswatch/3.3.1/"+$(this).attr('data-theme')+"/bootstrap.min.css")
+		window.fastyle.showMessage("Set theme to "+$(this).attr('data-theme'))
 		window.fastyle.setCookie('theme',$(this).attr('data-theme'))
 	})
+
+	// Add message button
+	$("<button class='btn btn-primary' id='message-button' style='display:none;'></button>").prependTo('body')
 })

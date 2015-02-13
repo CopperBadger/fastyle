@@ -166,7 +166,10 @@ window.fastyle.ajax = function(opt) {
   }
 }
 
-// TODO: add on-screen message system, post messages to it using this function
 window.fastyle.showMessage = function(msg){
-  console.log("User message: "+msg)
+  $('#message-button').html(msg+" (click to dismiss)").fadeIn("fast")
+  setTimeout(function(){
+    $('#message-button').click()
+  },6000)
 }
+$('body').on('click','#message-button',function(){$(this).fadeOut("fast");})

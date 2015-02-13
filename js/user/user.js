@@ -115,7 +115,7 @@ function extractInfo(html){
 	mat = html.match(/(?:b|n)\>[^<]+\<\/(?:b|span)\>[^<]+\<br/g)
 	out = {}
 	m = -1
-	while(++m<mat.length) {
+	while(mat&&(++m<mat.length)) {
 		parts = $.map(mat[m].match(/(?:>)([^<]+)/g),function(e){return e.substring(1).trim()})
 		if(!parts.length==2){continue;}
 		else {
@@ -237,7 +237,6 @@ $(document).ready(function(){
 		$('<tr><th colspan="2">'+lookups[a][0]+'</th></tr>').appendTo('#user-full-info-table')
 		for(k in lookups[a][1]){
 			v = lookups[a][1][k]
-			console.log(k+": "+v)
 
 			if(videoEmbeds=window.fastyle.getYouTubeEmbeds(v)) {
 				i = -1
@@ -252,8 +251,6 @@ $(document).ready(function(){
 					'</div>').insertBefore('#user-full-info-panel')
 				}
 			}
-
-			console.log(k+": "+v)
 
 			//URL RegEx credit: http://code.tutsplus.com/tutorials/8-regular-expressions-you-should-know--net-6149
 			if(v.search(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})[^\s]+\/?$/)==-1){ 
