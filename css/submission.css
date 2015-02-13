@@ -4,15 +4,15 @@
 	border-bottom: solid 1px rgba(0,0,0,0.1);
 }
 
-#submission-information-table th {
+.submission-information-table th {
 	padding-left: 12px;
 }
 
-#submission-information-table th:nth-child(1){
+.submission-information-table tr:nth-child(1) th{
 	border-top: none;
 }
 
-#submission-information-table tr td:nth-child(1){
+.submission-information-table tr td:nth-child(1){
 	text-align: right;
 	opacity: 0.6;
 }

@@ -196,7 +196,7 @@ $(document).ready(function(){
 			$("#username-error").remove();
 		}
 	} else {
-		$(formSkel).insertAfter('#fastyle-navbar');
+		$(formSkel).insertAfter('#ad-bar');
 	}
 
 	// Event Binding

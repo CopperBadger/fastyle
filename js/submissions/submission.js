@@ -42,11 +42,12 @@ submissionSkel = '<div class="container">' +
 						'<div class="col-md-8">' +
 							'<div id="author-information" class="allow-previews"></div>' +
 						'</div>' +
-						'<div class="col-md-4" id="submission-information">' +
-							'<table class="table table-condensed" id="submission-information-table"></table>' +
+						'<div class="col-md-4 hidden-sm hidden-xs" id="submission-information">' +
+							'<table class="table table-condensed submission-information-table" id="submission-information-table"></table>' +
 						'</div>' +
 					'</div>' +
 				'</div>' +
+				'<table class="table table-condensed hidden-lg hidden-md submission-information-table"></table>' +
 				'<div class="panel-footer">' +
 					'<ul class="btn-group" id="keyword-well" style="padding-left:0"></ul>' +
 				'</div>' +
@@ -134,10 +135,10 @@ $(document).ready(function() {
 		if(!tkns||tkns.length<3){continue;}
 		tkns[1] = tkns[1].replace(/\:/g,'')
 		if(!tkns[2]){
-			$('<tr><th colspan="2">'+tkns[1]+'</th></tr>').appendTo('#submission-information-table')
+			$('<tr><th colspan="2">'+tkns[1]+'</th></tr>').appendTo('.submission-information-table')
 		} else {
 			if((tkns[2]=tkns[2].trim()).search(/^\d+$/)!=-1){tkns[2]=window.fastyle.addCommas(tkns[2])}
-			$('<tr><td>'+tkns[1]+'</td><td>'+tkns[2]+'</td></tr>').appendTo('#submission-information-table')
+			$('<tr><td>'+tkns[1]+'</td><td>'+tkns[2]+'</td></tr>').appendTo('.submission-information-table')
 		}
 	}}
 
@@ -148,7 +149,7 @@ $(document).ready(function() {
 	if(keywordAnchors.length){
 		$(keywordAnchors).each(function(){
 			if($(this).text()){
-				$('#keyword-well').append("<a href='"+$(this).attr('href')+"' class='btn btn-default'>"+$(this).text()+"</a>")
+				$('#keyword-well').append("<a href='"+$(this).attr('href')+"' class='btn btn-sm btn-default'>"+$(this).text()+"</a>")
 			}
 		})
 	} else {

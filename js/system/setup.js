@@ -119,6 +119,7 @@ window.fastyle.capitalize = function(src){
 }
 
 window.fastyle.addCommas = function(strnum){
+  if(typeof strnum!="string"){return strnum}
   out = ""
   l = strnum.length
   i = -1

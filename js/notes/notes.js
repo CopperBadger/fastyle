@@ -21,7 +21,7 @@ skel =
 		'<button class="btn btn-default" id="select-withprio">Select With Priority</button>' +
 	'</div>' +
 	'<div class="col-sm-6 text-right">' +
-		'<button class="btn btn-default" id="restore-button" style="display:none">Restore</button> ' +
+		'<button class="btn btn-default folder-button" data-target-folder="restore" id="restore-button" style="display:none">Restore</button> ' +
 		'<div class="btn-group text-left">' +
 			'<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Priority <span class="caret"></span></button>' +
 			'<ul class="dropdown-menu prio-menu" role="menu">' +
@@ -31,8 +31,8 @@ skel =
 				'<li><a href="javascript:void(0)" data-prio-param="none"><span class="text-faded">No Priority</span></a></li>' +
 			'</ul>' +
 		'</div> ' +
-		'<button class="btn btn-default" id="archive-button">Archive</button> ' +
-		'<button class="btn btn-default" id="trash-button"><span class="glyphicon glyphicon-trash"></span></button> ' +
+		'<button class="btn btn-default folder-button" data-target-folder="archive" id="archive-button">Archive</button> ' +
+		'<button class="btn btn-default folder-button" data-target-folder="trash" id="trash-button"><span class="glyphicon glyphicon-trash"></span></button> ' +
 		'<a href="/msg/compose/" class="btn btn-primary">Compose</a>' +
 	'</div>' +
 '</div>' +
@@ -141,12 +141,14 @@ $(document).ready(function(){
 		})
 	})
 
-	$('#archive-button, #trash-button').on("click",function(){
-		tgt = ($(this).is('#archive-button'))?"archive":"trash";
-		note_action({move_to:tgt},function(xhr,checkedNotes){
-			$(checkedNotes).hide("fast",function(){$(this).remove()})
-		},function(checkedNotes){
-			$(checkedNotes).css({opacity:0.8})
-		})
+	$('.folder-button').on("click",function(){
+		/*tgt = ($(this).is('#archive-button'))?"archive":"trash";*/
+		if(tgt=$(this).attr('data-target-folder')){
+			note_action({move_to:tgt},function(xhr,checkedNotes){
+				$(checkedNotes).hide("fast",function(){$(this).remove()})
+			},function(checkedNotes){
+				$(checkedNotes).css({opacity:0.8})
+			})
+		}
 	})
 })

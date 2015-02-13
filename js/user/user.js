@@ -234,9 +234,13 @@ $(document).ready(function(){
 		["Statistics",stats]
 	]
 	for(a in lookups){
-		$('<tr><th colspan="2">'+lookups[a][0]+'</th></tr>').appendTo('#user-full-info-table')
+		th = $('<tr><th colspan="2">'+lookups[a][0]+'</th></tr>').appendTo('#user-full-info-table')
+		idx = 0
 		for(k in lookups[a][1]){
+			++idx
 			v = lookups[a][1][k]
+			if(typeof v!="string"){continue}
+			console.log(k+": "+v)
 
 			if(videoEmbeds=window.fastyle.getYouTubeEmbeds(v)) {
 				i = -1
@@ -262,6 +266,7 @@ $(document).ready(function(){
 
 			addRow(k,v,'#user-full-info-table')
 		}
+		if(!idx){th.remove()}
 	}
 
 	// -- (Embed YouTube videos that match)

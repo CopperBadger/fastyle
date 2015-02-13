@@ -1,3 +1,7 @@
+#user-full-info-table tr:nth-child(1) th{
+	border-top: none;
+}
+
 #user-full-info-table tr td:nth-child(1), #user-summary-table tr td:nth-child(1){
 	text-align: right;
 	opacity: 0.6;
