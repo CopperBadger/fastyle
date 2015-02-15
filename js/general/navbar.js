@@ -22,7 +22,7 @@ if(window.fastyle.loginSession){
 					'<li><a href="/controls/journal/">Journals</a></li>' +
 					'<li><a href="/controls/journalsettings/">Journal Settings</a></li>' +
 					'<li><a href="/controls/submissions/">Submissions</a></li>' +
-					'<li><a href="/commissions/(USER)">Commission Info</a></li>' +
+					'<li><a href="/commissions/'+window.fastyle.truncatedName+'/">Commission Info</a></li>' +
 					'<li><a href="/controls/shouts/">Page Shouts</a></li>' +
 					'<li><a href="/controls/favorites/">Favorites</a></li>' +
 					'<li><a href="/controls/buddylist/">Watch List</a></li>' +
