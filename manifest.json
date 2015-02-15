@@ -170,6 +170,14 @@
 
 		// Account Management controls
 		{
+			"matches": ["*://*.furaffinity.net/controls/settings*"],
+			"js": ["js/user/accountsettings.js"]
+		},
+		{
+			"matches": ["*://*.furaffinity.net/controls/site-settings*"],
+			"js": ["js/user/sitesettings.js"]
+		},
+		{
 			"matches": ["*://*.furaffinity.net/controls/profile*"],
 			"js": ["js/user/profileinfo.js"]
 		},
