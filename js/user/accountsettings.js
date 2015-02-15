@@ -1,23 +1,8 @@
-// Stores currently selected values, as they're overridden after appending skeleton
-var fullname = $('input[name=fullname]').val();
-var userID = $('td.alt1').filter(function() {
-    return this.textContent.match(/^\d{7}$/);
-}).text();
-var useremail = $('input[name=useremail]').val();
-var timezone = $('select[name=timezone]').val();
-var timezone_dst = $('input[name=timezone_dst]').prop('checked');
-var bdaymonth = $('select[name=bdaymonth]').val();
-var bdayday = $('select[name=bdayday]').val();
-var bdayyear = $('select[name=bdayyear]').val();
-var viewmature = $('select[name=viewmature]').val();
-var account_disabled = $('select[name=account_disabled]').val(); // <select> in FA's source - turned into radios in FAStyle
-var stylesheet = $('select[name=stylesheet]').val(); // <select> in FA's source - turned into radios in FAStyle
-
 var skel = '<div class="alert" id="updateConfirmation" role="alert" style="text-align: center"></div>' +
 '<div class="panel panel-default">' +
 	'<div class="panel-heading">Account Settings</div>' +
 	'<div class="panel-body">' +
-    	'<form class="form-horizontal" method="POST" action="https://www.furaffinity.net/controls/settings/">' +
+    	'<form class="form-horizontal" method="POST" action="https://www.furaffinity.net/controls/settings/" id="account-form">' +
     		'<input type="hidden" name="do" value="update" />' + 
     		'<div class="form-group">' +
 				'<label for="fullname" class="col-sm-2 control-label">Name</label>' +
@@ -39,39 +24,6 @@ var skel = '<div class="alert" id="updateConfirmation" role="alert" style="text-
 				'<label for="timezone" class="col-sm-2 control-label">Timezone</label>' +
 				'<div class="col-sm-10">' +
 					'<select name="timezone" class="form-control col-sm-10">' +
-						'<option value="-1200">[-1200] International Date Line West</option>' +
-						'<option value="-1100">[-1100] Midway Island, Samoa</option>' +
-						'<option value="-1000">[-1000] Hawaii</option>' +
-						'<option value="-0900">[-0900] Alaska</option>' +
-						'<option value="-0800">[-0800] Pacific Time (US &amp; Canada), Tijuana, Baja California</option>' +
-						'<option value="-0700">[-0700] Mountain Time (US &amp; Canada), Arizona, Chihuahua, La Paz, Mazatlan</option>' +
-						'<option value="-0600">[-0600] Central Time (US &amp; Canada), Central America, Mexico City, Saskatchewan, Guadalajara, Monterrey</option>' +
-						'<option value="-0500">[-0500] Eastern Time (US &amp; Canada), Indiana (East), Bogota, Lima, Quito, Rio Branco</option>' +
-						'<option value="-0430">[-0430] Caracas</option>' +
-						'<option value="-0400">[-0400] Atlantic Time (Canada), Santiago, Manaus, La Paz</option>' +
-						'<option value="-0330">[-0330] Newfoundland</option>' +
-						'<option value="-0300">[-0300] Brasilia, Buenos Aires, Montevideo, Greenland, Georgetown</option>' +
-						'<option value="-0200">[-0200] Mid-Atlantic</option>' +
-						'<option value="-0100">[-0100] Cape Verde Is., Azores</option>' +
-						'<option value="+0000">[+0000] Greenwich Mean Time, London, Casablanca, Dublin, Edinburgh, Lisbon, Monrovia, Reykjavik</option>' +
-						'<option value="+0100">[+0100] Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna, Belgrade, Bratislava, Budapest, Ljubljana, Prague, Brussels, Copenhagen, Madrid, Paris, Sarajevo, Skopje, Warsaw, Zagreb, West Central Africa</option>' +
-						'<option value="+0200">[+0200] Amman, Athens, Bucharest, Istanbul, Beirut, Cairo, Harare, Pretoria, Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius, Jerusalem, Minsk, Windhoek</option>' +
-						'<option value="+0300">[+0300] Baghdad, Kuwait, Riyadh, Moscow, St. Petersburg, Volgograd, Nairobi, Tbilisi</option>' +
-						'<option value="+0330">[+0330] Tehran</option>' +
-						'<option value="+0400">[+0400] Abu Dhabi, Muscat, Baku, Caucasus Standard Time, Port Louis, Yerevan</option>' +
-						'<option value="+0430">[+0430] Kabul</option>' +
-						'<option value="+0500">[+0500] Ekaterinburg, Islamabad, Karachi, Tashkent</option>' +
-						'<option value="+0530">[+0530] Chennai, Kolkata, Mumbai, New Delhi, Sri Jayawardenepura</option>' +
-						'<option value="+0545">[+0545] Kathmandu</option>' +
-						'<option value="+0600">[+0600] Almaty, Novosibirsk, Astana, Dhaka</option>' +
-						'<option value="+0630">[+0630] Yangon (Rangoon)</option>' +
-						'<option value="+0700">[+0700] Bangkok, Hanoi, Jakarta, Krasnoyarsk</option>' +
-						'<option value="+0800">[+0800] Beijing, Chongqing, Hong Kong, Urumqi, Irkutsk, Ulaan Bataar, Kuala Lumpur, Singapore, Perth, Taipei</option>' +
-						'<option value="+0900">[+0900] Osaka, Sapporo, Tokyo, Seoul, Yakutsk</option>' +
-						'<option value="+0930">[+0930] Adelaide, Darwin</option>' +
-						'<option value="+1000">[+1000] Brisbane, Canberra, Melbourne, Sydney, Guam, Port Moresby, Hobart, Vladivostok</option>' +
-						'<option value="+1100">[+1100] Magadan, Solomon Is., New Caledonia</option>' +
-						'<option value="+1200">[+1200] Auckland, Wellington, Fiji, Kamchatka, Marshall Is.</option>' +
 					'</select>' +
 				'</div>' +
 				'<br />' +
@@ -86,58 +38,14 @@ var skel = '<div class="alert" id="updateConfirmation" role="alert" style="text-
 				'<label for="bday" class="col-sm-2 control-label">Date of birth</label>' +
 				'<div class="col-sm-4">' +
 					'<select name="bdaymonth" class="form-control">' +
-						'<option value="1">January</option>' +
-						'<option value="2">February</option>' +
-						'<option value="3">March</option>' +
-						'<option value="4">April</option>' +
-						'<option value="5">May</option>' +
-						'<option value="6">June</option>' +
-						'<option value="7">July</option>' +
-						'<option value="8">August</option>' +
-						'<option value="9">September</option>' +
-						'<option value="10">October</option>' +
-						'<option value="11">November</option>' +
-						'<option value="12">December</option>' +
 					'</select>' +
 				'</div>' +
 				'<div class="col-sm-2">' +
 					'<select name="bdayday" class="form-control">' +
-						'<option value="1">1</option>' +
-						'<option value="2">2</option>' +
-						'<option value="3">3</option>' +
-						'<option value="4">4</option>' +
-						'<option value="5">5</option>' +
-						'<option value="6">6</option>' +
-						'<option value="7">7</option>' +
-						'<option value="8">8</option>' +
-						'<option value="9">9</option>' +
-						'<option value="10">10</option>' +
-						'<option value="11">11</option>' +
-						'<option value="12">12</option>' +
-						'<option value="13">13</option>' +
-						'<option value="14">14</option>' +
-						'<option value="15">15</option>' +
-						'<option value="16">16</option>' +
-						'<option value="17">17</option>' +
-						'<option value="18">18</option>' +
-						'<option value="19">19</option>' +
-						'<option value="20">20</option>' +
-						'<option value="21">21</option>' +
-						'<option value="22">22</option>' +
-						'<option value="23">23</option>' +
-						'<option value="24">24</option>' +
-						'<option value="25">25</option>' +
-						'<option value="26">26</option>' +
-						'<option value="27">27</option>' +
-						'<option value="28">28</option>' +
-						'<option value="29">29</option>' +
-						'<option value="30">30</option>' +
-						'<option value="31">31</option>' +
 					'</select>' +
 				'</div>' +
 				'<div class="col-sm-2">' +
 					'<select name="bdayyear" id="bdayyear" class="form-control">' +
-						'<!-- Populate options with JS, since the range of values is 100 years ago -> current year -->' +
 					'</select>' +
 				'</div>' +
 			'</div>' +
@@ -145,9 +53,6 @@ var skel = '<div class="alert" id="updateConfirmation" role="alert" style="text-
 				'<label for="viewmature" class="col-sm-2 control-label">Content Maturity filter</label>' +
 				'<div class="col-sm-10">' +
 					'<select name="viewmature" class="form-control">' +
-						'<option value="0">General content only</option>' +
-						'<option value="2">General and Mature content only</option>' +
-						'<option value="1">General, Mature, and Adult content</option>' +
 					'</select>' +
 				'</div>' +
 			'</div>' +
@@ -215,31 +120,38 @@ var skel = '<div class="alert" id="updateConfirmation" role="alert" style="text-
 
 $(document).ready(function() {
 	if ($("td:contains('System Message')").length === 0) { // If not on a confirmation page...
+
+		// Gathers variables before writing skeleton
+		var timezone_dst = $('input[name=timezone_dst]').prop('checked');
+		var account_disabled = $('select[name=account_disabled]').val(); // <select> in FA's source - turned into radios in FAStyle
+		var stylesheet = $('select[name=stylesheet]').val(); // <select> in FA's source - turned into radios in FAStyle*/
+
 		$(skel).insertBefore('.content.maintable');
+
+		// Data population
+		// Fill inputs automatically
+		var srcForm = $('form[name=MsgForm]')
+		$(srcForm).find('select').each(function(){
+			$('#account-form select[name="'+$(this).attr('name')+'"]')
+				.html($(this).html())
+		}).end().find('input').each(function(){
+			$('#account-form [name="'+$(this).attr('name')+'"]')
+				.val($(this).val())
+		})
+		var userID = $(srcForm).find('td.alt1').filter(function() {
+		    return this.textContent.match(/^\d+$/);
+		}).text();
 
 		var updateSuccess = sessionStorage.getItem('updateSuccess'); // Boolean to add update confirmation dialog
 
-		// Populates the "Birth Year" select area
-		var currYear = (new Date).getFullYear();
-		for (var i = 0; i < 100; i++) {
-			var year = currYear - i;
-			var yearOption = "<option value=" + year + ">" + year + "</option>";
-			$('#bdayyear').append(yearOption);
-		};
 
 		// Inserts stored values
-		$('input[name=fullname]').val(fullname);
 		$('#userID').text(userID);
-		$('input[name=useremail]').val(useremail);
-		$('select[name=timezone').val(timezone);
 		$('#timezone_dst').prop("checked", timezone_dst);
-		$('select[name=bdaymonth]').val(bdaymonth);
-		$('select[name=bdayday]').val(bdayday);
-		$('select[name=bdayyear]').val(bdayyear);
-		$('select[name=viewmature]').val(viewmature);
 		$('input[name=account_disabled]').val([account_disabled]);
 		$('input[name=stylesheet]').val([stylesheet]);
 
+		// Event Bindings
 		// Confirmation dialog
 		if (updateSuccess !== null) {
 			if (updateSuccess == -1) {

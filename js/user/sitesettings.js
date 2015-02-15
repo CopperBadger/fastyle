@@ -1,17 +1,7 @@
-// Stores currently selected values, as they're overwritten after appending skeleton
-var disable_avatars = $('input[name=disable_avatars]:checked').val();
-var date_format = $('input[name=date_format]:checked').val();
-var perpage = $('select[name=perpage]').val();
-var newsubmissions_direction = $('select[name=newsubmissions_direction]').val(); // <select> in FA's source - turned into radios in FAStyle
-var thumbnail_size = $('select[name=thumbnail_size').val();
-var hide_favorites = $('select[name=hide_favorites').val();
-var no_guests = $('select[name=no_guests').val(); // <select> in FA's source - turned into radios in FAStyle
-var no_notes = $('select[name=no_notes').val(); // <select> in FA's source - turned into radios in FAStyle
-
 var skel = '<div class="panel panel-default">' +
 	'<div class="panel-heading">Site Settings</div>' +
 	'<div class="panel-body">' +
-		'<form class="form-horizontal" method="POST" action="/controls/site-settings/">' +
+		'<form class="form-horizontal" method="POST" action="/controls/site-settings/" id="settings-form">' +
 			'<input type="hidden" name="do" value="update"/>' +
 			'<div class="form-group">' +
 				'<label for="disableavatars" class="col-sm-2 control-label">Disable avatars</label>' +
@@ -43,10 +33,6 @@ var skel = '<div class="panel panel-default">' +
 				'<label for="perpage" class="col-sm-2 control-label">Default number of items shown per page</label>' +
 				'<div class="col-sm-10">' +
 					'<select class="form-control" name="perpage">' +
-						'<option value="24">24</option>' +
-						'<option value="36">36</option>' +
-						'<option value="48">48</option>' +
-						'<option value="60">60</option>' +
 					'</select>' +
 				'</div>' +
 			'</div>' +
@@ -67,9 +53,6 @@ var skel = '<div class="panel panel-default">' +
 				'<label for="thumbnailsize" class="col-sm-2 control-label">Thumbnail size (in pixels)</label>' +
 				'<div class="col-sm-10">' +
 					'<select class="form-control" name="thumbnail_size">' +
-						'<option value="100">100</option>' +
-						'<option value="150">150</option>' +
-						'<option value="200">200</option>' +
 					'</select>' +
 				'</div>' +
 			'</div>' +
@@ -77,10 +60,6 @@ var skel = '<div class="panel panel-default">' +
 				'<label for="hidefavorites" class="col-sm-2 control-label">Hide favorites</label>' +
 				'<div class="col-sm-10">' +
 					'<select class="form-control" name="hide_favorites">' +
-						'<option value="n">Show everything</option>' +
-						'<option value="a">Hide Adult content</option>' +
-						'<option value="ma">Hide Mature and Adult content</option>' +
-						'<option value="e">Hide everything</option>' +
 					'</select>' +
 				'</div>' +
 			'</div>' +
@@ -116,15 +95,24 @@ var skel = '<div class="panel panel-default">' +
 '</div>';
 
 $(document).ready(function(){
+	// Gather variables before writing skeleton
+	var newsubmissions_direction = $('select[name=newsubmissions_direction]').val(); // <select> in FA's source - turned into radios in FAStyle
+	var no_guests = $('select[name=no_guests').val(); // <select> in FA's source - turned into radios in FAStyle
+	var no_notes = $('select[name=no_notes').val(); // <select> in FA's source - turned into radios in FAStyle
+
 	$(skel).insertBefore('.content.maintable');
 
+	// Data population
+	// Fill inputs automatically
+	var srcForm = $('form[action="/controls/site-settings/"]:not(#settings-form)')
+	$('#settings-form select').each(function(){
+		$(this).html($(srcForm).find('select[name="'+$(this).attr('name')+'"]').html())
+	}).end().find(':checked').each(function(){
+		$('#settings-form [name="'+$(this).attr('name')+'"]').prop('checked',true)
+	})
+
 	// Inserts stored values
-	$('input[name=disable_avatars]').val([disable_avatars]);
-	$('input[name=date_format]').val([date_format]);
-	$('select[name=perpage]').val(perpage);
 	$('input[name=newsubmissions_direction]').val([newsubmissions_direction]);
-	$('select[name=thumbnail_size]').val(thumbnail_size);
-	$('select[name=hide_favorites]').val(hide_favorites);
 	$('input[name=no_guests]').val([no_guests]);
 	$('input[name=no_notes]').val([no_notes]);
 });
