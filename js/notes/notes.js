@@ -49,8 +49,8 @@ skel =
 			'<div class="panel-footer text-center" style="padding: 6px 0 2px 0;">' +
 				'<nav>' +
 					'<ul class="pagination" style="margin: 0;">' +
-						'<li><a href="#">&larr; Previous</a></li>' +
-						'<li><a href="#">Next &rarr;</a></li>' +
+						'<li><a href="#" id="prev-page">&larr; Previous</a></li>' +
+						'<li><a href="#" id="next-page">Next &rarr;</a></li>' +
 					'</ul>' +
 				'</nav>' +
 			'</div>' +
@@ -84,9 +84,12 @@ $(document).ready(function(){
 			.append("<td><a href='"+msgHref+"'>"+msgName+"</a></td>")
 			.append("<td><a href='"+senderHref+"'>"+senderName+"</a></td>")
 			.append("<td>"+sentDate+"</td>")
-		.addClass(msgPrio+" "+prios[msgPrio])
+		.addClass((msgPrio||"")+" "+(prios[msgPrio]||""))
 		.addClass((msgUnread)?"info":"")
 	})
+
+	$('#next-page').attr('href',$('a:contains(Next page)').attr('href'))
+	$('#prev-page').attr('href',$('a:contains(Previous page)').attr('href'))
 
 	// Formatting. TODO: Make CSS
 	$('.small-thumb').css({width:'42px'})
@@ -142,7 +145,6 @@ $(document).ready(function(){
 	})
 
 	$('.folder-button').on("click",function(){
-		/*tgt = ($(this).is('#archive-button'))?"archive":"trash";*/
 		if(tgt=$(this).attr('data-target-folder')){
 			note_action({move_to:tgt},function(xhr,checkedNotes){
 				$(checkedNotes).hide("fast",function(){$(this).remove()})
