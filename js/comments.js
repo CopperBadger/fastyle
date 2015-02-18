@@ -1,6 +1,6 @@
 function makeCommentForm(cid) {
 	cidn = cid&&cid.match(/\d+$/)[0]
-	return '<form action="javascript:void(0)" class="form well comment-form" '+((cid)?'style="margin-left:'+($('[data-cid="'+cid+'"]').css('margin-left')):"")+'">' +
+	return '<form action="javascript:void(0)" class="'+((cid)?"well":"")+' comment-form" '+((cid)?'style="margin-left:'+($('[data-cid="'+cid+'"]').css('margin-left')):'')+'">' +
 		'<input type="hidden" name="action" value="'+((cid)?'replyto':'reply')+'" />' +
 		'<input type="hidden" name="replyto" value="'+(cidn||'')+'" />' +
 		'<div class="form-group">' +
@@ -24,7 +24,8 @@ $(document).ready(function() {
 	$(row).find('.col-xs-12')
 		.html('<div class="panel panel-default">' +
 			'<div class="panel-heading" id="comment-header"></div>' +
-			'<div class="panel-body"><ul class="media-list" id="comment-list"></ul></div>' +
+			'<div class="panel-body" id="comments-body"><ul class="media-list" id="comment-list"></ul></div>' +
+			'<div class="panel-footer" id="comments-footer"></div>' +
 		'</div>')
 
 	authorName = $('#author-name').text()
@@ -44,6 +45,11 @@ $(document).ready(function() {
 		videoIDs = $.map(window.fastyle.getYouTubeData(commentContent),function(e){return e.id+"?start="+e.start})
 		pubdate = $(src).find('.popup_date').wrap('<span>').parent().html()
 		commentID = $(src).attr('id')
+
+		factor = 100-parseInt($(src).attr('width'))
+		balance = (factor%6)==0
+		margin = (factor*12)
+
 		byAuthor = (posterName==authorName)
 		byYou = (posterName==window.fastyle.truncatedName)
 		byMentioned = false; for(m in mentioned){
@@ -52,10 +58,9 @@ $(document).ready(function() {
 			}
 		}
 
-
 		// Fun fact that I didn't know until now: elements with numbers in their IDs
 		//	can't be found using jQuery. Therefore, data-cid.
-		o = $('<li class="media" id="'+commentID+'" data-cid="'+commentID+'" style="margin-left:'+((100-parseInt($(src).attr('width')))*12)+'px">' +
+		o = $('<li class="media '+((balance)?"comment-odd":"comment-even")+'" id="'+commentID+'" data-cid="'+commentID+'" style="padding-left:'+margin+'px">' +
 			'<div class="media-left">' +
 				'<a href="'+posterHref+'">' +
 					'<img src="'+posterAvatar+'" alt="'+posterName+'" class="img img-rounded medium-thumb media-object" />' +
@@ -116,20 +121,17 @@ $(document).ready(function() {
 
 	$("#comment-header").html("Comments &#183; "+num)
 
-	$('<div id="comment-form-wrapper"></div>').insertAfter('#comment-list')
+	$('<div id="comment-form-wrapper"></div>').appendTo('#comments-footer')
 		.html(makeCommentForm())
 	
-	var getId = function(e){
-		return parseInt(t=((t=$(e).attr('id'))?t.match(/\d+/):["0","0"])?t[1]:0)
-	}
-
+	var getId = function(e){return parseInt(t=((t=$(e).attr('id'))?t.match(/\d+/):["0","0"])?t[1]:0)}
 	$('body').on("submit",".comment-form",function(){
 
 		obj = window.fastyle.serialize(this)
 		obj.subject = ""
 		obj.f = ""
 		target = after = undefined
-		target = (after=!!(n=obj.replyto))?$('[data-cid="cid:'+n+'"]'):$('#comment-list li.media:last');
+		target = (after=!!(n=obj.replyto))? $('[data-cid="cid:'+n+'"]'): $('#comment-list');
 		self = this
 
 		window.fastyle.ajax({
@@ -138,12 +140,12 @@ $(document).ready(function() {
 			success:function(res){
 				$(self).find('textarea').val("").end()
 					.find('.form-closer').click();
-				newComment($(target),$(
-					$(res).find('.container-comment[data-timestamp!=""] a[href*="user"]')
-						.parents('.container-comment').sort(function(a,b){
-							return parseInt($(a).attr('data-timestamp'))>parseInt($(b).attr('data-timestamp'))
-						}).last()),after
-				).hide().slideDown()
+				// Find newly posted comment in the returned page:
+				newC = $($(res).find('.container-comment[data-timestamp!=""] a[href*="user"]')
+					.parents('.container-comment').sort(function(a,b){
+						return parseInt($(a).attr('data-timestamp'))>parseInt($(b).attr('data-timestamp'))
+					}).last())
+				newComment($(target),newC,after).hide().slideDown()
 			},
 			error: function(){window.fastyle.showMessage("There was an error posting your comment.")}
 		})
