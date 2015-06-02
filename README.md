@@ -1,4 +1,7 @@
+**PLEASE NOTE**: FurAffinity.net is undergoing changes to its markup that keep fastyle from working correctly. It is unclear how frequent or permanent these changes will be, and because of that, development of fastyle has been suspended. Development may resume at any time, but in the meantime, thank you everyone who has supported the development of the extension!
+
 # fastyle
+
 Chrome and Firefox extension to restyle and enhance FurAffinity.net
 
 ### Wait No Longer!
